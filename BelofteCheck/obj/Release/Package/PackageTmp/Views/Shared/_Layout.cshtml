@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+    <div class="bc-wrapper">
+        <div class="bc-top">
+            <div class="bc-title">
+                B&nbsp;e&nbsp;l&nbsp;o&nbsp;f&nbsp;t&nbsp;e&nbsp;C&nbsp;h&nbsp;e&nbsp;c&nbsp;k&nbsp;.&nbsp;n&nbsp;l 
+            </div>
+            
+        </div>
+
+        <div class="bc-mid">
+            <div class="bc-left">
+                <ul class="bc-ullink">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Over ons", "About", "Home")</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li>&nbsp;</li>
+                    <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+                    <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+                    <li>@Html.ActionLink("Update Partijen", "Index", "Partijen")</li>
+                    <li>@Html.ActionLink("Update Onderwerpen", "Index", "Onderwerpen")</li>
+
+                </ul>
+            </div>
+            <div class="bc-content">
+                @RenderBody()
+            </div>
+            <div class="bc-right">
+                &nbsp;
+            </div>
+        </div>
+
+
+        <div class="bc-foot">
+            <footer>
+                <p>&copy; @DateTime.Now.Year - BelofteCheck.nl</p>
+            </footer>
+        </div>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
