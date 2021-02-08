@@ -23,9 +23,9 @@
             @Html.DisplayFor(modelItem => item.Omschrijving)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.OnderwerpID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.OnderwerpID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.OnderwerpID })
+            @Html.ActionLink("Bewerk", "Edit", new { OnderwerpID=item.OnderwerpID }) |
+            @Html.ActionLink("Bekijk", "Details", new { OnderwerpID=item.OnderwerpID }) |
+            @Html.ActionLink("Verwijder", "Delete", new { OnderwerpID=item.OnderwerpID })
         </td>
     </tr>
 }

@@ -10,6 +10,7 @@ using BelofteCheck;
 
 namespace BelofteCheck.Controllers
 {
+    [Authorize]
     public class OnderwerpenController : Controller
     {
         private BCentities db = new BCentities();
@@ -21,13 +22,13 @@ namespace BelofteCheck.Controllers
         }
 
         // GET: Onderwerpen/Details/5
-        public ActionResult Details(string id)
+        public ActionResult Details(string OnderwerpID)
         {
-            if (id == null)
+            if (OnderwerpID == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Onderwerpen onderwerpen = db.Onderwerpen.Find(id);
+            Onderwerpen onderwerpen = db.Onderwerpen.Find(OnderwerpID);
             if (onderwerpen == null)
             {
                 return HttpNotFound();
@@ -59,13 +60,13 @@ namespace BelofteCheck.Controllers
         }
 
         // GET: Onderwerpen/Edit/5
-        public ActionResult Edit(string id)
+        public ActionResult Edit(string OnderwerpID)
         {
-            if (id == null)
+            if (OnderwerpID == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Onderwerpen onderwerpen = db.Onderwerpen.Find(id);
+            Onderwerpen onderwerpen = db.Onderwerpen.Find(OnderwerpID);
             if (onderwerpen == null)
             {
                 return HttpNotFound();
@@ -90,13 +91,13 @@ namespace BelofteCheck.Controllers
         }
 
         // GET: Onderwerpen/Delete/5
-        public ActionResult Delete(string id)
+        public ActionResult Delete(string OnderwerpID)
         {
-            if (id == null)
+            if (OnderwerpID == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Onderwerpen onderwerpen = db.Onderwerpen.Find(id);
+            Onderwerpen onderwerpen = db.Onderwerpen.Find(OnderwerpID);
             if (onderwerpen == null)
             {
                 return HttpNotFound();
@@ -107,9 +108,9 @@ namespace BelofteCheck.Controllers
         // POST: Onderwerpen/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id)
+        public ActionResult DeleteConfirmed(string OnderwerpID)
         {
-            Onderwerpen onderwerpen = db.Onderwerpen.Find(id);
+            Onderwerpen onderwerpen = db.Onderwerpen.Find(OnderwerpID);
             db.Onderwerpen.Remove(onderwerpen);
             db.SaveChanges();
             return RedirectToAction("Index");

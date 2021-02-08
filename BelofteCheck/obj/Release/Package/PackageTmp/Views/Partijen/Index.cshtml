@@ -41,9 +41,9 @@
             @Html.DisplayFor(modelItem => item.TotDatum)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.PartijID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.PartijID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.PartijID })
+            @Html.ActionLink("Edit", "Edit", new { PartijID=item.PartijID }) |
+            @Html.ActionLink("Details", "Details", new { PartijID=item.PartijID }) |
+            @Html.ActionLink("Delete", "Delete", new { PartijID=item.PartijID })
         </td>
     </tr>
 }

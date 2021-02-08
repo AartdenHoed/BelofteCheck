@@ -10,6 +10,7 @@ using BelofteCheck;
 
 namespace BelofteCheck.Controllers
 {
+    [Authorize]
     public class PartijenController : Controller
     {
         private BCentities db = new BCentities();
@@ -21,13 +22,13 @@ namespace BelofteCheck.Controllers
         }
 
         // GET: Partijen/Details/5
-        public ActionResult Details(string id)
+        public ActionResult Details(string PartijID)
         {
-            if (id == null)
+            if (PartijID == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Partijen partijen = db.Partijen.Find(id);
+            Partijen partijen = db.Partijen.Find(PartijID);
             if (partijen == null)
             {
                 return HttpNotFound();
@@ -59,13 +60,13 @@ namespace BelofteCheck.Controllers
         }
 
         // GET: Partijen/Edit/5
-        public ActionResult Edit(string id)
+        public ActionResult Edit(string PartijID)
         {
-            if (id == null)
+            if (PartijID == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Partijen partijen = db.Partijen.Find(id);
+            Partijen partijen = db.Partijen.Find(PartijID);
             if (partijen == null)
             {
                 return HttpNotFound();
@@ -90,13 +91,13 @@ namespace BelofteCheck.Controllers
         }
 
         // GET: Partijen/Delete/5
-        public ActionResult Delete(string id)
+        public ActionResult Delete(string PartijID)
         {
-            if (id == null)
+            if (PartijID == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Partijen partijen = db.Partijen.Find(id);
+            Partijen partijen = db.Partijen.Find(PartijID);
             if (partijen == null)
             {
                 return HttpNotFound();
@@ -107,9 +108,9 @@ namespace BelofteCheck.Controllers
         // POST: Partijen/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id)
+        public ActionResult DeleteConfirmed(string PartijID)
         {
-            Partijen partijen = db.Partijen.Find(id);
+            Partijen partijen = db.Partijen.Find(PartijID);
             db.Partijen.Remove(partijen);
             db.SaveChanges();
             return RedirectToAction("Index");

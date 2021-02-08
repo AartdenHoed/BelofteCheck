@@ -52,11 +52,12 @@
 }
 .bc-ullink {
     width: 80%;
-
+    list-style-type: none;
 }
 .bc-uc {
-    max-width: 100%;
+    width: 100%
 }
+
 .bc-title {
     text-align: center;
     font-size: 30px;

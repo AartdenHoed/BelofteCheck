@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="d1d46fcd81be43bcb110e1ff17682169" Name="Diagram1">
+        <EntityTypeShape EntityType="BelofteCheckModel.Onderwerpen" Width="1.5" PointX="1.75" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="BelofteCheckModel.Partijen" Width="1.5" PointX="12.75" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="BelofteCheckModel.Stemmingen" Width="1.5" PointX="10.25" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="BelofteCheckModel.WetScope" Width="1.5" PointX="4.625" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="BelofteCheckModel.Wetten" Width="1.5" PointX="7.375" PointY="2" IsExpanded="true" />
+        <AssociationConnector Association="BelofteCheckModel.FK_WetScope_Onderwerpen" ManuallyRouted="false" />
+        <AssociationConnector Association="BelofteCheckModel.FK_Stemmingen_Partijen" ManuallyRouted="false" />
+        <AssociationConnector Association="BelofteCheckModel.FK_Stemmingen_Wetten" ManuallyRouted="false" />
+        <AssociationConnector Association="BelofteCheckModel.FK_WetScope_Wetten" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

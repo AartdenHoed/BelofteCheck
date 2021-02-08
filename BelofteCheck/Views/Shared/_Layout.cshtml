@@ -7,9 +7,9 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-
 </head>
 <body>
+
     <div class="bc-wrapper">
         <div class="bc-top">
             <div class="bc-title">
@@ -20,6 +20,7 @@
 
         <div class="bc-mid">
             <div class="bc-left">
+
                 <ul class="bc-ullink">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("Over ons", "About", "Home")</li>
@@ -40,8 +41,8 @@
                             <li>&nbsp;</li>
                             <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
                             <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-                            <li>@Html.ActionLink("Update Partijen", "Index", "Partijen")</li>
-                            <li>@Html.ActionLink("Update Onderwerpen", "Index", "Onderwerpen")</li>
+                            <li>@Html.ActionLink("Partijen", "Index", "Partijen")</li>
+                            <li>@Html.ActionLink("Onderwerpen", "Index", "Onderwerpen")</li>
 
                         }
                     }

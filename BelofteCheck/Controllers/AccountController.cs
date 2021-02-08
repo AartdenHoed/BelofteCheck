@@ -136,7 +136,7 @@ namespace BelofteCheck.Controllers
 
         //
         // GET: /Account/Register
-        [AllowAnonymous]
+       
         public ActionResult Register()
         {
             return View();
@@ -145,7 +145,7 @@ namespace BelofteCheck.Controllers
         //
         // POST: /Account/Register
         [HttpPost]
-        [AllowAnonymous]
+        
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
