@@ -189,6 +189,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\OnderwerpenController.cs" />
     <Compile Include="Controllers\PartijenController.cs" />
+    <Compile Include="Controllers\WettenController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -298,6 +299,11 @@
     <Content Include="Views\Onderwerpen\Details.cshtml" />
     <Content Include="Views\Onderwerpen\Edit.cshtml" />
     <Content Include="Views\Onderwerpen\Index.cshtml" />
+    <Content Include="Views\Wetten\Create.cshtml" />
+    <Content Include="Views\Wetten\Delete.cshtml" />
+    <Content Include="Views\Wetten\Details.cshtml" />
+    <Content Include="Views\Wetten\Edit.cshtml" />
+    <Content Include="Views\Wetten\Index.cshtml" />
     <None Include="Web.Live.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

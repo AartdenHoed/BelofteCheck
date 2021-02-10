@@ -1,0 +1,42 @@
+﻿@model BelofteCheck.Wetten
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Wetten</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.WetNaam)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.WetNaam)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.WetOmschrijving)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.WetOmschrijving)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.WetLink)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.WetLink)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { WetID = Model.WetID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

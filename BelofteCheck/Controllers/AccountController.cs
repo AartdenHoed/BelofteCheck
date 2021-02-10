@@ -58,7 +58,7 @@ namespace BelofteCheck.Controllers
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
-            return View();
+            return View(new LoginViewModel());
         }
 
         //
@@ -139,7 +139,7 @@ namespace BelofteCheck.Controllers
        
         public ActionResult Register()
         {
-            return View();
+            return View(new RegisterViewModel());
         }
 
         //
@@ -190,7 +190,7 @@ namespace BelofteCheck.Controllers
         [AllowAnonymous]
         public ActionResult ForgotPassword()
         {
-            return View();
+            return View(new ForgotPasswordViewModel());
         }
 
         //
