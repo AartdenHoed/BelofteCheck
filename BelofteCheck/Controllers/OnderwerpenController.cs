@@ -39,7 +39,7 @@ namespace BelofteCheck.Controllers
         // GET: Onderwerpen/Create
         public ActionResult Create()
         {
-            return View();
+            return View(new Onderwerpen());
         }
 
         // POST: Onderwerpen/Create

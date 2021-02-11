@@ -64,3 +64,31 @@
     font-family: BATAVIA;
 
 }
+.bc-table {
+    width: 100%;
+    margin: 0;
+    text-align: left;
+}
+
+.bc-table tr:nth-child(even) {
+    background-color: yellow;
+}
+
+.bc-table tr:nth-child(odd) {
+    background-color: yellow;
+}
+
+.bc-table th {
+    background-color: lightblue;
+    text-align: left;    
+}
+
+.bc-table td {  
+    text-align: left;
+}
+.bc-16 {
+    width: 16%;
+}
+.bc-40 {
+    width: 40%;
+}

@@ -39,7 +39,7 @@ namespace BelofteCheck.Controllers
         // GET: Partijen/Create
         public ActionResult Create()
         {
-            return View();
+            return View(new Partijen());
         }
 
         // POST: Partijen/Create

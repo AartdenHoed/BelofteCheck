@@ -1,4 +1,4 @@
-﻿@model BelofteCheck.Wetten
+﻿@model BelofteCheck.ViewModels.WettenVM
 
 @{
     ViewBag.Title = "Details";
@@ -35,7 +35,47 @@
         </dd>
 
     </dl>
+    <h4>Gerelateerde onderwerpen</h4>
+    <table class="bc-table">
+        @if (Model.OnderwerpenLijst != null)
+        {
+            var i = 0;
+            foreach (var item1 in Model.OnderwerpenLijst) { 
+                if (i == 0)  {
+                    <tr>
+                        <th class="bc-16">
+                            @Html.DisplayNameFor(Item1 => Item1.OnderwerpenLijst[i].OnderwerpID)
+                        </th>
+                        <th class="bc-40">
+                            @Html.DisplayNameFor(Item1 => Item1.OnderwerpenLijst[i].Omschrijving)
+                        </th>
+                        <th class="bc-40">
+                            @Html.DisplayNameFor(Item1 => Item1.OnderwerpenLijst[i].Toelichting)
+                        </th>
+                    </tr>
+
+                }
+                <tr>
+
+                    <td class="bc-16">
+                        @Html.DisplayFor(Item1 => Item1.OnderwerpenLijst[i].OnderwerpID)
+
+                    </td>
+                    <td class="bc-40">
+                        @Html.DisplayFor(Item1 => Item1.OnderwerpenLijst[i].Omschrijving)
+
+                    </td>
+                    <td class="bc-40">
+                        @Html.DisplayFor(Item1 => Item1.OnderwerpenLijst[i].Toelichting)
+                    </td>
+                </tr>
+                i = i + 1;
+            }
+        }
+
+    </table>
 </div>
+<p>&nbsp;</p>
 <p>
     @Html.ActionLink("Edit", "Edit", new { WetID = Model.WetID }) |
     @Html.ActionLink("Back to List", "Index")

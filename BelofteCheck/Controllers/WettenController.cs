@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using BelofteCheck;
+using BelofteCheck.ViewModels;
 
 namespace BelofteCheck.Controllers
 {
@@ -27,12 +28,31 @@ namespace BelofteCheck.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Wetten wetten = db.Wetten.Find(WetID);
-            if (wetten == null)
+            var query = from w in db.Wetten
+                        join s in db.WetScope on w.WetID equals s.WetID
+                        join o in db.Onderwerpen on s.OnderwerpID equals o.OnderwerpID
+                        select new WetObject
+                        {
+                            WetID = w.WetID,
+                            WetNaam = w.WetNaam,
+                            WetOmschrijving = w.WetOmschrijving,
+                            WetLink = w.WetLink,
+                            OnderwerpID = o.OnderwerpID,
+                            Omschrijving = o.Omschrijving,
+                            Toelichting = s.Toelichting
+                        };
+
+            List<WetObject> q = query.ToList();
+
+            if (q.Count == 0)
             {
                 return HttpNotFound();
             }
-            return View(wetten);
+           
+            WettenVM wettenvm = new WettenVM();
+            wettenvm.Fill(q);
+            
+            return View(wettenvm);
         }
 
         // GET: Wetten/Create
@@ -96,12 +116,30 @@ namespace BelofteCheck.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Wetten wetten = db.Wetten.Find(WetID);
-            if (wetten == null)
+            var query = from w in db.Wetten
+                        join s in db.WetScope on w.WetID equals s.WetID
+                        join o in db.Onderwerpen on s.OnderwerpID equals o.OnderwerpID
+                        select new WetObject
+                        {
+                            WetID = w.WetID,
+                            WetNaam = w.WetNaam,
+                            WetOmschrijving = w.WetOmschrijving,
+                            WetLink = w.WetLink,
+                            OnderwerpID = o.OnderwerpID,
+                            Omschrijving = o.Omschrijving,
+                            Toelichting = s.Toelichting
+                        };
+
+            List<WetObject> q = query.ToList();
+
+            if (q.Count == 0)
             {
                 return HttpNotFound();
             }
-            return View(wetten);
+            WettenVM wettenvm = new WettenVM();
+            wettenvm.Fill(q);
+
+            return View(wettenvm);
         }
 
         // POST: Wetten/Delete/5
