@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -18,41 +19,90 @@ namespace BelofteCheck.Controllers
         // GET: Wetten
         public ActionResult Index()
         {
-            return View(db.Wetten.ToList());
+            WettenListVM wettenListVM = new WettenListVM();
+
+            string msg = "Selecteer een bewerking op een wet of voeg een wet toe";
+            string level = wettenListVM.MessageSection.Info;
+            string title = "Overzicht";
+            var q = db.Wetten.ToList();
+            if (q.Count == 0)
+            {
+                level = wettenListVM.MessageSection.Warning;
+                msg = "Geen wetten gevonden";
+            }
+            else
+            {
+                foreach (var entry in q)
+                {
+                    WetObject wo = new WetObject();
+                    wo.WetOmschrijving = entry.WetOmschrijving;
+                    wo.WetID = entry.WetID;
+                    wo.WetLink = entry.WetLink;
+                    wo.WetNaam = entry.WetNaam;
+                    wettenListVM.WettenLijst.Add(wo);
+                }
+                wettenListVM.MessageSection.SetMessage(title, level, msg);
+            }
+            if (TempData.ContainsKey("BCmessage"))
+            {
+                msg = TempData["BCmessage"].ToString();
+            }
+            if (TempData.ContainsKey("BCerrorlevel"))
+            {
+                level = TempData["BCerrorlevel"].ToString();
+
+            }
+            wettenListVM.MessageSection.SetMessage(title, level, msg);
+            return View(wettenListVM);
         }
 
         // GET: Wetten/Details/5
         public ActionResult Details(string WetID)
         {
-            if (WetID == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            WettenVM wettenVM = new WettenVM();
+            string title = "Details";
+            string level = wettenVM.MessageSection.Info;
+            string msg = "Wetgegevens en gekoppelde onderwerpen";
+
+            if (WetID == null) {
+                TempData["BCmessage"] = "Specificeer een geldige Wet ID!";
+                TempData["BCerrorlevel"] = wettenVM.MessageSection.Warning;
+                
+                return RedirectToAction("Error");
             }
+            // Perform outer join form Wetten, Wetsccope, Onderwerpen
+    
             var query = from w in db.Wetten
-                        join s in db.WetScope on w.WetID equals s.WetID
-                        join o in db.Onderwerpen on s.OnderwerpID equals o.OnderwerpID
+                        where w.WetID == WetID
+                        join s in db.WetScope on w.WetID equals s.WetID into ljoin1
+                        from lj1 in ljoin1.DefaultIfEmpty()
+                        join o in db.Onderwerpen on lj1.OnderwerpID equals o.OnderwerpID into ljoin2
+                        from lj2 in ljoin2.DefaultIfEmpty() 
                         select new WetObject
                         {
                             WetID = w.WetID,
                             WetNaam = w.WetNaam,
                             WetOmschrijving = w.WetOmschrijving,
                             WetLink = w.WetLink,
-                            OnderwerpID = o.OnderwerpID,
-                            Omschrijving = o.Omschrijving,
-                            Toelichting = s.Toelichting
-                        };
+                            OnderwerpID = lj1 == null ? "<geen>" : lj1.OnderwerpID,
+                            Toelichting = lj1 == null ? "nvt" : lj1.Toelichting,
+                            Omschrijving = lj2 == null ? "nvt" : lj2.Omschrijving
+                        } 
+                        ;
 
             List<WetObject> q = query.ToList();
 
-            if (q.Count == 0)
-            {
-                return HttpNotFound();
+
+            if (q[0].OnderwerpID == "<geen>")
+            {                  
+                msg = "Deze wet heeft geen gekoppelde onderwerpen. Gebruik BEWERK om minstens één onderwerp te koppelen";
+                level = "W"; 
             }
            
-            WettenVM wettenvm = new WettenVM();
-            wettenvm.Fill(q);
-            
-            return View(wettenvm);
+            wettenVM.Fill(q);
+            wettenVM.MessageSection.SetMessage(title, level, msg);
+
+            return View(wettenVM);
         }
 
         // GET: Wetten/Create
@@ -76,6 +126,7 @@ namespace BelofteCheck.Controllers
             }
 
             return View(wetten);
+            
         }
 
         // GET: Wetten/Edit/5
@@ -112,34 +163,51 @@ namespace BelofteCheck.Controllers
         // GET: Wetten/Delete/5
         public ActionResult Delete(string WetID)
         {
+            WettenVM wettenVM = new WettenVM();
+            string title = "Verwijder";
+            string level = wettenVM.MessageSection.Info;
+            string msg = "Selecteer VERWIJDEREN om deze wet te verwijderen";
+
             if (WetID == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                TempData["BCmessage"] = "Specificeer een geldige Wet ID!";
+                TempData["BCerrorlevel"] = wettenVM.MessageSection.Warning;
+
+                return RedirectToAction("Error");
             }
+            // Perform outer join form Wetten, Wetsccope, Onderwerpen
+
             var query = from w in db.Wetten
-                        join s in db.WetScope on w.WetID equals s.WetID
-                        join o in db.Onderwerpen on s.OnderwerpID equals o.OnderwerpID
+                        where w.WetID == WetID
+                        join s in db.WetScope on w.WetID equals s.WetID into ljoin1
+                        from lj1 in ljoin1.DefaultIfEmpty()
+                        join o in db.Onderwerpen on lj1.OnderwerpID equals o.OnderwerpID into ljoin2
+                        from lj2 in ljoin2.DefaultIfEmpty()
                         select new WetObject
                         {
                             WetID = w.WetID,
                             WetNaam = w.WetNaam,
                             WetOmschrijving = w.WetOmschrijving,
                             WetLink = w.WetLink,
-                            OnderwerpID = o.OnderwerpID,
-                            Omschrijving = o.Omschrijving,
-                            Toelichting = s.Toelichting
-                        };
+                            OnderwerpID = lj1 == null ? "<geen>" : lj1.OnderwerpID,
+                            Toelichting = lj1 == null ? "nvt" : lj1.Toelichting,
+                            Omschrijving = lj2 == null ? "nvt" : lj2.Omschrijving
+                        }
+                        ;
 
             List<WetObject> q = query.ToList();
 
-            if (q.Count == 0)
-            {
-                return HttpNotFound();
-            }
-            WettenVM wettenvm = new WettenVM();
-            wettenvm.Fill(q);
 
-            return View(wettenvm);
+            if (q[0].OnderwerpID == "<geen>")
+            {
+                msg = "Deze wet heeft geen gekoppelde onderwerpen. Gebruik BEWERK om minstens één onderwerp te koppelen";
+                level = "W";
+            }
+
+            wettenVM.Fill(q);
+            wettenVM.MessageSection.SetMessage(title, level, msg);
+
+            return View(wettenVM);
         }
 
         // POST: Wetten/Delete/5
@@ -147,10 +215,47 @@ namespace BelofteCheck.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string WetID)
         {
+            WettenVM wettenVM = new WettenVM();
+            if (WetID == null)
+            {
+                TempData["BCmessage"] = "Specificeer een geldige Wet ID!";
+                TempData["BCerrorlevel"] = wettenVM.MessageSection.Warning;
+
+                return RedirectToAction("Error");
+            }
+            
             Wetten wetten = db.Wetten.Find(WetID);
             db.Wetten.Remove(wetten);
             db.SaveChanges();
+
+            TempData["BCmessage"] = "Wet '" + wetten.WetNaam.Trim() + "' is succesvol verwijderd";
+            TempData["BCerrorlevel"] = wettenVM.MessageSection.Info;
             return RedirectToAction("Index");
+        }
+        public ActionResult Error()
+        {
+            WettenVM wettenVM = new WettenVM();
+            string title = "ERROR!";
+            string msg = "";
+            string level = "";
+            if (TempData.ContainsKey("BCmessage"))
+            {
+                msg = TempData["BCmessage"].ToString();
+            }
+            else
+            {
+                msg = "Unknown error"; 
+            }
+            if (TempData.ContainsKey("BCerrorlevel"))
+            {
+                level = TempData["BCerrorlevel"].ToString();
+            }
+            else
+            {
+                level = wettenVM.MessageSection.Error;
+            }
+            wettenVM.MessageSection.SetMessage(title, level, msg);
+            return View(wettenVM);
         }
 
         protected override void Dispose(bool disposing)

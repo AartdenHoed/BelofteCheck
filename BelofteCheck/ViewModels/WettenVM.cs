@@ -7,6 +7,7 @@ namespace BelofteCheck.ViewModels
 {
     public class WettenVM
     {
+        public BCmessage MessageSection = new BCmessage();
         public string WetID { get; set; }
         public string WetNaam { get; set; }
         public string WetOmschrijving { get; set; }

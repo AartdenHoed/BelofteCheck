@@ -1,13 +1,11 @@
 ﻿@model BelofteCheck.ViewModels.WettenVM
 
-@{
-    ViewBag.Title = "Details";
-}
+<h2>@Html.DisplayFor(model => model.MessageSection.Title)</h2>
 
-<h2>Details</h2>
+<h3>@Html.DisplayFor(model => model.MessageSection.Message)</h3>
 
 <div>
-    <h4>Wetten</h4>
+    
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -40,8 +38,10 @@
         @if (Model.OnderwerpenLijst != null)
         {
             var i = 0;
-            foreach (var item1 in Model.OnderwerpenLijst) { 
-                if (i == 0)  {
+            foreach (var item1 in Model.OnderwerpenLijst)
+            {
+                if (i == 0)
+                {
                     <tr>
                         <th class="bc-16">
                             @Html.DisplayNameFor(Item1 => Item1.OnderwerpenLijst[i].OnderwerpID)

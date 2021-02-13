@@ -207,8 +207,10 @@
     <Compile Include="Stemmingen.cs">
       <DependentUpon>BCmodel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\BCmessage.cs" />
     <Compile Include="ViewModels\OnderwerpenVM.cs" />
     <Compile Include="ViewModels\WetObject.cs" />
+    <Compile Include="ViewModels\WettenListVM.cs" />
     <Compile Include="ViewModels\WettenVM.cs" />
     <Compile Include="WetScope.cs">
       <DependentUpon>BCmodel.tt</DependentUpon>
@@ -307,6 +309,7 @@
     <Content Include="Views\Wetten\Details.cshtml" />
     <Content Include="Views\Wetten\Edit.cshtml" />
     <Content Include="Views\Wetten\Index.cshtml" />
+    <Content Include="Views\Wetten\Error.cshtml" />
     <None Include="Web.Live.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
