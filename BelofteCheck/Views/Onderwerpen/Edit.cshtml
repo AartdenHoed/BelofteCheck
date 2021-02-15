@@ -1,18 +1,15 @@
-﻿@model BelofteCheck.Onderwerpen
+﻿@model BelofteCheck.ViewModels.OnderwerpenVM
 
-@{
-    ViewBag.Title = "Edit";
-}
+<h2>@Html.DisplayFor(model => model.MessageSection.Title)</h2>
 
-<h2>Edit</h2>
-
+<h3>@Html.DisplayFor(model => model.MessageSection.Message)</h3>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
-        <h4>Onderwerpen</h4>
+       
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.OnderwerpID)
@@ -27,14 +24,14 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Opslaan" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Naar Overzicht", "Index")
 </div>
 
 @section Scripts {

@@ -1,13 +1,12 @@
-﻿@model BelofteCheck.Onderwerpen
+﻿@model BelofteCheck.ViewModels.OnderwerpenVM
 
-@{
-    ViewBag.Title = "Details";
-}
+<h2>@Html.DisplayFor(model => model.MessageSection.Title)</h2>
 
+<h3>@Html.DisplayFor(model => model.MessageSection.Message)</h3>
 <h2>Details</h2>
 
 <div>
-    <h4>Onderwerpen</h4>
+  
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -21,6 +20,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.OnderwerpID }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Bewerk", "Edit", new { OnderwerpID = Model.OnderwerpID }) |
+    @Html.ActionLink("Naar Overzicht", "Index")
 </p>

@@ -40,7 +40,9 @@
                             <li>    @Html.ActionLink(User.Identity.GetUserName(), "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })</li>
                             <li>&nbsp;</li>
                             <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
-                            <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+
+                            <li>&nbsp;</li>
+                            <li>@Html.ActionLink("Nieuwe Gebruiker", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
                             <li>@Html.ActionLink("Partijen", "Index", "Partijen")</li>
                             <li>@Html.ActionLink("Onderwerpen", "Index", "Onderwerpen")</li>
                             <li>@Html.ActionLink("Wetten", "Index", "Wetten")</li>

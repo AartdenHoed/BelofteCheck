@@ -54,6 +54,7 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
@@ -210,6 +211,8 @@
     <Compile Include="ViewModels\BCmessage.cs" />
     <Compile Include="ViewModels\OnderwerpenVM.cs" />
     <Compile Include="ViewModels\WetObject.cs" />
+    <Compile Include="ViewModels\Wetten.cs" />
+    <Compile Include="ViewModels\OnderwerpenListVM.cs" />
     <Compile Include="ViewModels\WettenListVM.cs" />
     <Compile Include="ViewModels\WettenVM.cs" />
     <Compile Include="WetScope.cs">
