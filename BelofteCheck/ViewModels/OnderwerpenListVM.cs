@@ -6,7 +6,7 @@ namespace BelofteCheck.ViewModels
 
     {
         public BCmessage MessageSection = new BCmessage();
-        public List<OnderwerpenVM> OnderwerpenLijst = new List<OnderwerpenVM>();
+        public List<Onderwerp> OnderwerpenLijst = new List<Onderwerp>();
 
 
     }

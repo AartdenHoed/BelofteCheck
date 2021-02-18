@@ -5,6 +5,7 @@ using System.Web.Mvc;
 using BelofteCheck.ViewModels;
 using System.Data.SqlClient;
 using System;
+using System.Collections.Generic;
 
 namespace BelofteCheck.Controllers
 {
@@ -32,7 +33,7 @@ namespace BelofteCheck.Controllers
             {
                 foreach (var entry in q)
                 {
-                    OnderwerpenVM ond = new OnderwerpenVM();
+                    Onderwerp ond = new Onderwerp();
                     ond.Omschrijving = entry.Omschrijving;
                     ond.OnderwerpID = entry.OnderwerpID;
                    
@@ -62,7 +63,7 @@ namespace BelofteCheck.Controllers
             OnderwerpenVM onderwerpenVM = new OnderwerpenVM();
             string title = "Details";
             string level = onderwerpenVM.MessageSection.Info;
-            string msg = "Politiek onderwerp";
+            string msg = "Politiek onderwerp met gerelateerde wetten";
 
             if (OnderwerpID == null)
             {
@@ -72,18 +73,44 @@ namespace BelofteCheck.Controllers
                 return RedirectToAction("Error");
             }
 
-            Onderwerpen onderwerpen = db.Onderwerpen.Find(OnderwerpID);
+            // Perform outer join from Onderwerpen via Wetscope to Wetten
 
-            if (onderwerpen == null)
+            var query = from o in db.Onderwerpen
+                        where o.OnderwerpID == OnderwerpID
+                        join s in db.WetScope on o.OnderwerpID equals s.OnderwerpID into ljoin1
+                        from lj1 in ljoin1.DefaultIfEmpty()
+                        join w in db.Wetten on lj1.WetID equals w.WetID into ljoin2
+                        from lj2 in ljoin2.DefaultIfEmpty()
+                        select new WetObject
+                        {
+                            OnderwerpID = o.OnderwerpID,
+                            Omschrijving = o.Omschrijving,
+                            Toelichting = lj1 == null ? "<geen>" : lj1.Toelichting,
+                            WetID = lj1 == null ? "<geen>" : lj1.WetID,
+                            WetNaam = lj2 == null ? "nvt" : lj2.WetNaam,
+                            WetOmschrijving = lj2 == null ? "nvt" : lj2.WetOmschrijving,
+                            WetLink = lj2 == null ? "nvt" : lj2.WetLink
+                        }
+
+                        ;
+
+            List<WetObject> q = query.ToList();
+
+            if (q == null)
             {
                 TempData["BCmessage"] = "Ondewerp ID " + OnderwerpID.Trim() + " is niet gevonden";
                 TempData["BCerrorlevel"] = onderwerpenVM.MessageSection.Warning;
 
                 return RedirectToAction("Error");
             }
+            if (q[0].WetID == "<geen>")
+            {
+                msg = "Dit onderwerp heeft geen gekoppelde wetten en is dus ongebruikt. In gebruik name doe je via het bewerken van wetten";
+                level = "W";
+            }
 
-            onderwerpenVM.Omschrijving = onderwerpen.Omschrijving;
-            onderwerpenVM.OnderwerpID = onderwerpen.OnderwerpID;
+            onderwerpenVM.Fill(q);
+            
             onderwerpenVM.MessageSection.SetMessage(title, level, msg);
 
             return View(onderwerpenVM);
@@ -107,7 +134,7 @@ namespace BelofteCheck.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
        
-        public ActionResult Create([Bind(Include = "OnderwerpID,Omschrijving")]OnderwerpenVM onderwerpenVM)
+        public ActionResult Create(OnderwerpenVM onderwerpenVM)
         {
             string title = "Nieuw";
            
@@ -115,29 +142,29 @@ namespace BelofteCheck.Controllers
             if (ModelState.IsValid)
             {
                 Onderwerpen onderwerpen = new Onderwerpen();
-                onderwerpen.OnderwerpID = onderwerpenVM.OnderwerpID;
-                onderwerpen.Omschrijving = onderwerpenVM.Omschrijving;
+                onderwerpen.OnderwerpID = onderwerpenVM.onderwerp.OnderwerpID;
+                onderwerpen.Omschrijving = onderwerpenVM.onderwerp.Omschrijving;
                 try {
                     db.Onderwerpen.Add(onderwerpen);
                     db.SaveChanges();
                 }
                 catch (Exception ex)
                 {
-                    // string exnum = ex.Message;
+                    string exnum = ex.Message;
                     
-                    string emsg = "Onderwerp '" + onderwerpenVM.OnderwerpID.Trim() + "' bestaat al";
+                    string emsg = "Onderwerp '" + onderwerpenVM.onderwerp.OnderwerpID.Trim() + "' bestaat al";
                     string elevel = onderwerpenVM.MessageSection.Error;
                     onderwerpenVM.MessageSection.SetMessage(title, elevel, emsg );
                     return View(onderwerpenVM);
                 }
-                TempData["BCmessage"] = "Onderwerp " +onderwerpenVM.OnderwerpID.Trim() + " is nu aangemaakt";
+                TempData["BCmessage"] = "Onderwerp " +onderwerpenVM.onderwerp.OnderwerpID.Trim() + " is nu aangemaakt";
                 TempData["BCerrorlevel"] = onderwerpenVM.MessageSection.Info;
 
                 return RedirectToAction("Index");
             }
 
             string level =onderwerpenVM.MessageSection.Error;
-            string msg = "ERROR - Wet " + onderwerpenVM.OnderwerpID.Trim() + " is NIET aangemaakt";
+            string msg = "ERROR - Wet " + onderwerpenVM.onderwerp.OnderwerpID.Trim() + " is NIET aangemaakt";
             onderwerpenVM.MessageSection.SetMessage(title, level, msg);
             return View(onderwerpenVM);
 
@@ -161,18 +188,43 @@ namespace BelofteCheck.Controllers
                 return RedirectToAction("Error");
             }
 
-            Onderwerpen onderwerpen = db.Onderwerpen.Find(OnderwerpID);
+            // Perform outer join from Onderwerpen via Wetscope to Wetten
 
-            if (onderwerpen == null)
+            var query = from o in db.Onderwerpen
+                        where o.OnderwerpID == OnderwerpID
+                        join s in db.WetScope on o.OnderwerpID equals s.OnderwerpID into ljoin1
+                        from lj1 in ljoin1.DefaultIfEmpty()
+                        join w in db.Wetten on lj1.WetID equals w.WetID into ljoin2
+                        from lj2 in ljoin2.DefaultIfEmpty()
+                        select new WetObject
+                        {
+                            OnderwerpID = o.OnderwerpID,
+                            Omschrijving = o.Omschrijving,
+                            Toelichting = lj1 == null ? "<geen>" : lj1.Toelichting,
+                            WetID = lj1 == null ? "<geen>" : lj1.WetID,
+                            WetNaam = lj2 == null ? "nvt" : lj2.WetNaam,
+                            WetOmschrijving = lj2 == null ? "nvt" : lj2.WetOmschrijving,
+                            WetLink = lj2 == null ? "nvt" : lj2.WetLink
+                        }
+
+                        ;
+
+            List<WetObject> q = query.ToList();
+
+            if (q == null)
             {
                 TempData["BCmessage"] = "Ondewerp ID " + OnderwerpID.Trim() + " is niet gevonden";
                 TempData["BCerrorlevel"] = onderwerpenVM.MessageSection.Warning;
 
                 return RedirectToAction("Error");
             }
+            if (q[0].WetID == "<geen>")
+            {
+                msg = "Dit onderwerp heeft geen gekoppelde wetten en is dus ongebruikt. In gebruik name doe je via het bewerken van wetten";
+                level = "W";
+            }
 
-            onderwerpenVM.Omschrijving = onderwerpen.Omschrijving;
-            onderwerpenVM.OnderwerpID = onderwerpen.OnderwerpID;
+            onderwerpenVM.Fill(q);
             onderwerpenVM.MessageSection.SetMessage(title, level, msg);
 
             return View(onderwerpenVM);
@@ -184,25 +236,25 @@ namespace BelofteCheck.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "OnderwerpID,Omschrijving")] OnderwerpenVM onderwerpenVM)
+        public ActionResult Edit(OnderwerpenVM onderwerpenVM)
         {
             string title = "Bewerken";
 
             if (ModelState.IsValid)
             {
                 Onderwerpen onderwerpen = new Onderwerpen();
-                onderwerpen.OnderwerpID = onderwerpenVM.OnderwerpID;
-                onderwerpen.Omschrijving = onderwerpenVM.Omschrijving;
+                onderwerpen.OnderwerpID = onderwerpenVM.onderwerp.OnderwerpID;
+                onderwerpen.Omschrijving = onderwerpenVM.onderwerp.Omschrijving;
                 db.Entry(onderwerpen).State = EntityState.Modified;
                 db.SaveChanges();
-                TempData["BCmessage"] = "Onderwerp " + onderwerpenVM.OnderwerpID.Trim() + " is gewijzigd";
+                TempData["BCmessage"] = "Onderwerp " + onderwerpenVM.onderwerp.OnderwerpID.Trim() + " is gewijzigd";
                 TempData["BCerrorlevel"] = onderwerpenVM.MessageSection.Info;
 
                 return RedirectToAction("Index");
             }
 
             string level = onderwerpenVM.MessageSection.Error;
-            string msg = "ERROR - Onderwerp " + onderwerpenVM.OnderwerpID.Trim() + " is NIET gewijzigd";
+            string msg = "ERROR - Onderwerp " + onderwerpenVM.onderwerp.OnderwerpID.Trim() + " is NIET gewijzigd";
             onderwerpenVM.MessageSection.SetMessage(title, level, msg);
             return View(onderwerpenVM);
         }
@@ -223,18 +275,51 @@ namespace BelofteCheck.Controllers
                 return RedirectToAction("Error");
             }
 
-            Onderwerpen onderwerpen = db.Onderwerpen.Find(OnderwerpID);
+            // Perform outer join from Onderwerpen via Wetscope to Wetten
 
-            if (onderwerpen == null)
+            var query = from o in db.Onderwerpen
+                        where o.OnderwerpID == OnderwerpID
+                        join s in db.WetScope on o.OnderwerpID equals s.OnderwerpID into ljoin1
+                        from lj1 in ljoin1.DefaultIfEmpty()
+                        join w in db.Wetten on lj1.WetID equals w.WetID into ljoin2
+                        from lj2 in ljoin2.DefaultIfEmpty()
+                        select new WetObject
+                        {
+                            OnderwerpID = o.OnderwerpID,
+                            Omschrijving = o.Omschrijving,
+                            Toelichting = lj1 == null ? "<geen>" : lj1.Toelichting,
+                            WetID = lj1 == null ? "<geen>" : lj1.WetID,
+                            WetNaam = lj2 == null ? "nvt" : lj2.WetNaam,
+                            WetOmschrijving = lj2 == null ? "nvt" : lj2.WetOmschrijving,
+                            WetLink = lj2 == null ? "nvt" : lj2.WetLink
+                        }
+
+                        ;
+
+            List<WetObject> q = query.ToList();
+
+            if (q == null)
             {
                 TempData["BCmessage"] = "Ondewerp ID " + OnderwerpID.Trim() + " is niet gevonden";
                 TempData["BCerrorlevel"] = onderwerpenVM.MessageSection.Warning;
 
                 return RedirectToAction("Error");
             }
+            if (q[0].WetID == "<geen>")
+            {
+                msg = "Dit onderwerp heeft geen gekoppelde wetten en kan dus worden gedelete";
+                level = onderwerpenVM.MessageSection.Warning; ;
+                onderwerpenVM.DeleteAllowed = true;
+            }
+            else
+            {
+                msg = "Er zijn nog wetten met dit onderwerp. Onderwerp kan niet verwijderd worden";
+                level = onderwerpenVM.MessageSection.Warning;
+                onderwerpenVM.DeleteAllowed = false;
+            }
 
-            onderwerpenVM.Omschrijving = onderwerpen.Omschrijving;
-            onderwerpenVM.OnderwerpID = onderwerpen.OnderwerpID;
+            onderwerpenVM.Fill(q);
+
             onderwerpenVM.MessageSection.SetMessage(title, level, msg);
 
             return View(onderwerpenVM);
@@ -246,6 +331,8 @@ namespace BelofteCheck.Controllers
         public ActionResult DeleteConfirmed(string OnderwerpID)
         {
             OnderwerpenVM onderwerpenVM = new OnderwerpenVM();
+            string title = "Verwijderen";
+
             if (OnderwerpID == null)
             {
                 TempData["BCmessage"] = "Specificeer een geldige Wet ID!";
@@ -254,16 +341,44 @@ namespace BelofteCheck.Controllers
                 return RedirectToAction("Error");
             }
 
-            Onderwerpen onderwerpen = db.Onderwerpen.Find(OnderwerpID);
+            // Check for related wetten
+            var query = from o in db.Onderwerpen
+                        where o.OnderwerpID == OnderwerpID
+                        join s in db.WetScope on o.OnderwerpID equals s.OnderwerpID into ljoin1
+                        from lj1 in ljoin1.DefaultIfEmpty()
+                        join w in db.Wetten on lj1.WetID equals w.WetID into ljoin2
+                        from lj2 in ljoin2.DefaultIfEmpty()
+                        select new WetObject
+                        {
+                            OnderwerpID = o.OnderwerpID,
+                            Omschrijving = o.Omschrijving,
+                            Toelichting = lj1 == null ? "<geen>" : lj1.Toelichting,
+                            WetID = lj1 == null ? "<geen>" : lj1.WetID,
+                            WetNaam = lj2 == null ? "nvt" : lj2.WetNaam,
+                            WetOmschrijving = lj2 == null ? "nvt" : lj2.WetOmschrijving,
+                            WetLink = lj2 == null ? "nvt" : lj2.WetLink
+                        }
 
-            if (onderwerpen == null)
+                    ;
+
+            List<WetObject> q = query.ToList();
+            onderwerpenVM.Fill(q);
+            if (q == null)
             {
-                TempData["BCmessage"] = "Onderwerp ID " + OnderwerpID.Trim() + " is niet gevonden";
+                TempData["BCmessage"] = "Ondewerp ID " + OnderwerpID.Trim() + " is niet gevonden";
                 TempData["BCerrorlevel"] = onderwerpenVM.MessageSection.Warning;
 
                 return RedirectToAction("Error");
             }
+            if (q[0].WetID != "<geen>")
+            {
+                string msg = "Er zijn nog wetten met dit onderwerp. Onderwerp kan niet verwijderd worden";
+                string level = onderwerpenVM.MessageSection.Warning;
+                onderwerpenVM.MessageSection.SetMessage(title, level, msg);
+                return View(onderwerpenVM);
+            }
 
+            Onderwerpen onderwerpen = db.Onderwerpen.Find(OnderwerpID);
             db.Onderwerpen.Remove(onderwerpen);
             db.SaveChanges();
 

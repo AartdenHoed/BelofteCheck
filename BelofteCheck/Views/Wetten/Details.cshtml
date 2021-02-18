@@ -5,34 +5,40 @@
 <h3>@Html.DisplayFor(model => model.MessageSection.Message)</h3>
 
 <div>
-    
+
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.WetNaam)
+            @Html.DisplayNameFor(model => model.wet.WetNaam)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.WetNaam)
+            @Html.DisplayFor(model => model.wet.WetNaam)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.WetOmschrijving)
+            @Html.DisplayNameFor(model => model.wet.WetOmschrijving)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.WetOmschrijving)
+            @Html.DisplayFor(model => model.wet.WetOmschrijving)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.WetLink)
+            @Html.DisplayNameFor(model => model.wet.WetLink)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.WetLink)
+            @Html.DisplayFor(model => model.wet.WetLink)
         </dd>
 
     </dl>
+
+    <p>
+        @Html.ActionLink("Bewerk", "Edit", new { WetID = Model.wet.WetID }) |
+        @Html.ActionLink("Naar Overzicht", "Index")
+    </p>
+    <p>&nbsp;</p>
     <h4>Gerelateerde onderwerpen</h4>
     <table class="bc-table">
         @if (Model.OnderwerpenLijst != null)
@@ -75,8 +81,3 @@
 
     </table>
 </div>
-<p>&nbsp;</p>
-<p>
-    @Html.ActionLink("Bewerk", "Edit", new { WetID = Model.WetID }) |
-    @Html.ActionLink("Naar Overzicht", "Index")
-</p>

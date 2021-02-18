@@ -17,10 +17,10 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>09/10/2013 17:29:20</publishTime>
     </File>
     <File Include="bin/BelofteCheck.dll">
-      <publishTime>02/08/2021 21:44:21</publishTime>
+      <publishTime>02/17/2021 11:58:31</publishTime>
     </File>
     <File Include="bin/BelofteCheck.pdb">
-      <publishTime>02/08/2021 21:44:21</publishTime>
+      <publishTime>02/17/2021 11:58:31</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>03/02/2015 09:32:26</publishTime>
@@ -272,7 +272,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>01/28/2021 10:34:15</publishTime>
     </File>
     <File Include="Content/Site.css">
-      <publishTime>02/08/2021 14:57:20</publishTime>
+      <publishTime>02/16/2021 14:38:30</publishTime>
     </File>
     <File Include="favicon.ico">
       <publishTime>01/28/2021 10:34:11</publishTime>
@@ -338,7 +338,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>01/28/2021 10:34:22</publishTime>
     </File>
     <File Include="Scripts/SIte.js">
-      <publishTime>02/08/2021 15:27:49</publishTime>
+      <publishTime>02/16/2021 16:58:01</publishTime>
     </File>
     <File Include="Views/Account/ConfirmEmail.cshtml">
       <publishTime>01/28/2021 10:34:24</publishTime>
@@ -356,7 +356,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>01/28/2021 10:34:24</publishTime>
     </File>
     <File Include="Views/Account/Login.cshtml">
-      <publishTime>02/04/2021 11:11:36</publishTime>
+      <publishTime>02/09/2021 10:34:26</publishTime>
     </File>
     <File Include="Views/Account/Register.cshtml">
       <publishTime>01/28/2021 10:34:24</publishTime>
@@ -404,19 +404,19 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>01/28/2021 10:34:24</publishTime>
     </File>
     <File Include="Views/Onderwerpen/Create.cshtml">
-      <publishTime>02/02/2021 21:15:25</publishTime>
+      <publishTime>02/15/2021 22:31:42</publishTime>
     </File>
     <File Include="Views/Onderwerpen/Delete.cshtml">
-      <publishTime>02/02/2021 21:15:25</publishTime>
+      <publishTime>02/16/2021 16:57:42</publishTime>
     </File>
     <File Include="Views/Onderwerpen/Details.cshtml">
-      <publishTime>02/02/2021 21:15:26</publishTime>
+      <publishTime>02/16/2021 13:13:40</publishTime>
     </File>
     <File Include="Views/Onderwerpen/Edit.cshtml">
-      <publishTime>02/02/2021 21:15:27</publishTime>
+      <publishTime>02/16/2021 15:38:05</publishTime>
     </File>
     <File Include="Views/Onderwerpen/Index.cshtml">
-      <publishTime>02/08/2021 14:04:36</publishTime>
+      <publishTime>02/13/2021 23:46:23</publishTime>
     </File>
     <File Include="Views/Partijen/Create.cshtml">
       <publishTime>02/08/2021 15:29:06</publishTime>
@@ -440,19 +440,37 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>01/28/2021 10:34:24</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>02/08/2021 15:35:43</publishTime>
+      <publishTime>02/13/2021 22:00:30</publishTime>
     </File>
     <File Include="Views/Shared/_LoginPartial.cshtml">
-      <publishTime>01/28/2021 10:34:24</publishTime>
+      <publishTime>02/12/2021 17:54:23</publishTime>
     </File>
     <File Include="Views/Web.config">
       <publishTime>01/28/2021 10:34:11</publishTime>
+    </File>
+    <File Include="Views/Wetten/Create.cshtml">
+      <publishTime>02/16/2021 10:20:12</publishTime>
+    </File>
+    <File Include="Views/Wetten/Delete.cshtml">
+      <publishTime>02/16/2021 10:20:12</publishTime>
+    </File>
+    <File Include="Views/Wetten/Details.cshtml">
+      <publishTime>02/16/2021 10:22:52</publishTime>
+    </File>
+    <File Include="Views/Wetten/Edit.cshtml">
+      <publishTime>02/16/2021 10:20:12</publishTime>
+    </File>
+    <File Include="Views/Wetten/Error.cshtml">
+      <publishTime>02/13/2021 21:55:02</publishTime>
+    </File>
+    <File Include="Views/Wetten/Index.cshtml">
+      <publishTime>02/12/2021 17:49:11</publishTime>
     </File>
     <File Include="Views/_ViewStart.cshtml">
       <publishTime>01/28/2021 10:34:11</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>02/08/2021 21:46:46</publishTime>
+      <publishTime>02/17/2021 12:06:43</publishTime>
     </File>
   </ItemGroup>
 </Project>

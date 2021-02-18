@@ -1,32 +1,75 @@
-﻿@model BelofteCheck.Onderwerpen
+﻿@model BelofteCheck.ViewModels.OnderwerpenVM
 
-@{
-    ViewBag.Title = "Delete";
-}
 
-<h2>Delete</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+<h2>@Html.DisplayFor(model => model.MessageSection.Title) &nbsp; 
+    @Html.EditorFor(model => model.DeleteAllowed, new { htmlAttributes = new { @class = "bc-dacheck", @disabled = "disabled" } })</h2>
+
+<h3>@Html.DisplayFor(model => model.MessageSection.Message)</h3>
+
 <div>
-    <h4>Onderwerpen</h4>
+
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Omschrijving)
+            @Html.DisplayNameFor(model => model.onderwerp.Omschrijving)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Omschrijving)
+            @Html.DisplayFor(model => model.onderwerp.Omschrijving)
         </dd>
 
     </dl>
 
-    @using (Html.BeginForm()) {
+
+    <h4>Gerelateerde wetten</h4>
+    <table class="bc-table">
+        @if (Model.WettenLijst != null)
+        {
+            var i = 0;
+            foreach (var item1 in Model.WettenLijst)
+            {
+                if (i == 0)
+                {
+                    <tr>
+                        <th class="bc-16">
+                            @Html.DisplayNameFor(Item1 => Item1.WettenLijst[i].WetID)
+                        </th>
+                        <th class="bc-40">
+                            @Html.DisplayNameFor(Item1 => Item1.WettenLijst[i].WetNaam)
+                        </th>
+                        <th class="bc-40">
+                            @Html.DisplayNameFor(Item1 => Item1.WettenLijst[i].Toelichting)
+                        </th>
+                    </tr>
+
+                }
+                <tr>
+
+                    <td class="bc-16">
+                        @Html.DisplayFor(Item1 => Item1.WettenLijst[i].WetID)
+
+                    </td>
+                    <td class="bc-40">
+                        @Html.DisplayFor(Item1 => Item1.WettenLijst[i].WetNaam)
+
+                    </td>
+                    <td class="bc-40">
+                        @Html.DisplayFor(Item1 => Item1.WettenLijst[i].Toelichting)
+                    </td>
+                </tr>
+                i = i + 1;
+            }
+        }
+    </table>
+    <p>&nbsp;</p>
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            <input type="submit" value="Verwijderen" class="btn btn-default bc-active" /> |
+            @Html.ActionLink("Naar Overzicht", "Index")
         </div>
     }
 </div>

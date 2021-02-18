@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
@@ -19,33 +20,43 @@ namespace BelofteCheck.Controllers
             string msg = "Selecteer een bewerking op een wet of voeg een wet toe";
             string level = wettenListVM.MessageSection.Info;
             string title = "Overzicht";
-            var q = db.Wetten.ToList();
-            if (q.Count == 0)
-            {
-                level = wettenListVM.MessageSection.Warning;
-                msg = "Geen wetten gevonden";
-            }
-            else
-            {
-                foreach (var entry in q)
-                {
-                    WetObject wo = new WetObject();
-                    wo.WetOmschrijving = entry.WetOmschrijving;
-                    wo.WetID = entry.WetID;
-                    wo.WetLink = entry.WetLink;
-                    wo.WetNaam = entry.WetNaam;
-                    wettenListVM.WettenLijst.Add(wo);
-                }
-                wettenListVM.MessageSection.SetMessage(title, level, msg);
-            }
-            if (TempData.ContainsKey("BCmessage"))
-            {
-                msg = TempData["BCmessage"].ToString();
-            }
-            if (TempData.ContainsKey("BCerrorlevel"))
-            {
-                level = TempData["BCerrorlevel"].ToString();
 
+            try
+            {
+                var q = db.Wetten.ToList();
+            
+                if (q.Count == 0)
+                {
+                    level = wettenListVM.MessageSection.Warning;
+                    msg = "Geen wetten gevonden";
+                }
+                else
+                {
+                    foreach (var entry in q)
+                    {
+                        WetObject wo = new WetObject();
+                        wo.WetOmschrijving = entry.WetOmschrijving;
+                        wo.WetID = entry.WetID;
+                        wo.WetLink = entry.WetLink;
+                        wo.WetNaam = entry.WetNaam;
+                        wettenListVM.WettenLijst.Add(wo);
+                    }
+                    wettenListVM.MessageSection.SetMessage(title, level, msg);
+                }
+                if (TempData.ContainsKey("BCmessage"))
+                {
+                    msg = TempData["BCmessage"].ToString();
+                }
+                if (TempData.ContainsKey("BCerrorlevel"))
+                {
+                    level = TempData["BCerrorlevel"].ToString();
+
+                }
+            }
+            catch (Exception ex)
+            {
+                msg = ex.ToString();
+                
             }
             wettenListVM.MessageSection.SetMessage(title, level, msg);
             return View(wettenListVM);
@@ -115,6 +126,17 @@ namespace BelofteCheck.Controllers
             string title = "Nieuw";
             string level = wettenVM.MessageSection.Info;
             string msg = "Vul de gegevens voor de nieuwe wet in en selecteer AANMAKEN";
+            var q = db.Onderwerpen.ToList();
+            foreach (var entry in q)
+            {
+                Onderwerp o = new Onderwerp();
+                o.Geselecteerd = false;
+                o.Omschrijving = entry.Omschrijving;
+                o.OnderwerpID = entry.OnderwerpID;
+                o.Toelichting = "";
+                wettenVM.OnderwerpenLijst.Add(o);
+            }
+
             wettenVM.MessageSection.SetMessage(title, level, msg);
             return View(wettenVM);
         }
@@ -124,7 +146,7 @@ namespace BelofteCheck.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "WetID,WetNaam,WetOmschrijving,WetLink")] WettenVM wettenVM)
+        public ActionResult Create(WettenVM wettenVM)
         {
             string title = "Nieuw";
 
@@ -134,14 +156,28 @@ namespace BelofteCheck.Controllers
                 wetten.Fill(wettenVM); 
                 db.Wetten.Add(wetten);
                 db.SaveChanges();
-                TempData["BCmessage"] = "Wet " + wettenVM.WetNaam.Trim() + " is nu aangemaakt";
+                try
+                {
+                    db.Wetten.Add(wetten);
+                    db.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    string exnum = ex.Message;
+
+                    string emsg = "Wet '" + wettenVM.wet.WetID.Trim() + "' bestaat al";
+                    string elevel = wettenVM.MessageSection.Error;
+                    wettenVM.MessageSection.SetMessage(title, elevel, emsg);
+                    return View(wettenVM);
+                }
+                TempData["BCmessage"] = "Wet " + wettenVM.wet.WetNaam.Trim() + " is nu aangemaakt";
                 TempData["BCerrorlevel"] = wettenVM.MessageSection.Info;
                 
                 return RedirectToAction("Index");
             }
 
             string level = wettenVM.MessageSection.Error;
-            string msg = "ERROR - Wet " + wettenVM.WetNaam.Trim() + " is NIET aangemaakt";
+            string msg = "ERROR - Wet " + wettenVM.wet.WetNaam.Trim() + " is NIET aangemaakt";
             wettenVM.MessageSection.SetMessage(title, level, msg);
             return View(wettenVM);
             
@@ -211,7 +247,7 @@ namespace BelofteCheck.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "WetID,WetNaam,WetOmschrijving,WetLink")] WettenVM wettenVM)
+        public ActionResult Edit(WettenVM wettenVM)
         {
             string title = "Bewerken";
 
@@ -221,14 +257,14 @@ namespace BelofteCheck.Controllers
                 wetten.Fill(wettenVM);
                 db.Entry(wetten).State = EntityState.Modified;
                 db.SaveChanges();
-                TempData["BCmessage"] = "Wet " + wettenVM.WetNaam.Trim() + " is gewijzigd";
+                TempData["BCmessage"] = "Wet " + wettenVM.wet.WetNaam.Trim() + " is gewijzigd";
                 TempData["BCerrorlevel"] = wettenVM.MessageSection.Info;
 
                 return RedirectToAction("Index");
             }
 
             string level = wettenVM.MessageSection.Error;
-            string msg = "ERROR - Wet " + wettenVM.WetNaam.Trim() + " is NIET gewijzigd";
+            string msg = "ERROR - Wet " + wettenVM.wet.WetNaam.Trim() + " is NIET gewijzigd";
             wettenVM.MessageSection.SetMessage(title, level, msg);
             return View(wettenVM);
             

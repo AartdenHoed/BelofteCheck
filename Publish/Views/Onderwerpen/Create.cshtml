@@ -1,39 +1,37 @@
-﻿@model BelofteCheck.Onderwerpen
+﻿@model BelofteCheck.ViewModels.OnderwerpenVM
 
-@{
-    ViewBag.Title = "Create";
-}
+<h2>@Html.DisplayFor(model => model.MessageSection.Title)</h2>
 
-<h2>Create</h2>
+<h3>@Html.DisplayFor(model => model.MessageSection.Message)</h3>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
-        <h4>Onderwerpen</h4>
+   
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            @Html.LabelFor(model => model.OnderwerpID, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.onderwerp.OnderwerpID, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.OnderwerpID, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.OnderwerpID, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.onderwerp.OnderwerpID, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.onderwerp.OnderwerpID, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Omschrijving, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.onderwerp.Omschrijving, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Omschrijving, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Omschrijving, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.onderwerp.Omschrijving, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.onderwerp.Omschrijving, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Aanmaken" class="btn btn-default" />
             </div>
         </div>
     </div>

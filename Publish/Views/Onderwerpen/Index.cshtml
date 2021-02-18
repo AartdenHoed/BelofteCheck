@@ -1,33 +1,33 @@
-﻿@model IEnumerable<BelofteCheck.Onderwerpen>
+﻿@model BelofteCheck.ViewModels.OnderwerpenListVM
 
-@{
-    ViewBag.Title = "Index";
-}
 
-<h2>Index</h2>
+<h2>@Html.DisplayFor(model => model.MessageSection.Title)</h2>
+
+<h3>@Html.DisplayFor(model => model.MessageSection.Message)</h3>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Nieuw", "Create")
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Omschrijving)
+            @Html.DisplayNameFor(model => model.OnderwerpenLijst[0].Omschrijving)
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Omschrijving)
-        </td>
-        <td>
-            @Html.ActionLink("Bewerk", "Edit", new { OnderwerpID=item.OnderwerpID }) |
-            @Html.ActionLink("Bekijk", "Details", new { OnderwerpID=item.OnderwerpID }) |
-            @Html.ActionLink("Verwijder", "Delete", new { OnderwerpID=item.OnderwerpID })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model.OnderwerpenLijst)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Omschrijving)
+            </td>
+            <td>
+                @Html.ActionLink("Bewerk", "Edit", new { OnderwerpID = item.OnderwerpID }) |
+                @Html.ActionLink("Bekijk", "Details", new { OnderwerpID = item.OnderwerpID }) |
+                @Html.ActionLink("Verwijder", "Delete", new { OnderwerpID = item.OnderwerpID })
+            </td>
+        </tr>
+    }
 
 </table>

@@ -5,34 +5,46 @@
 
 <h3>@Html.DisplayFor(model => model.MessageSection.Message)</h3>
 <div>
-    
+
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.WetNaam)
+            @Html.DisplayNameFor(model => model.wet.WetNaam)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.WetNaam)
+            @Html.DisplayFor(model => model.wet.WetNaam)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.WetOmschrijving)
+            @Html.DisplayNameFor(model => model.wet.WetOmschrijving)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.WetOmschrijving)
+            @Html.DisplayFor(model => model.wet.WetOmschrijving)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.WetLink)
+            @Html.DisplayNameFor(model => model.wet.WetLink)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.WetLink)
+            @Html.DisplayFor(model => model.wet.WetLink)
         </dd>
 
     </dl>
+
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Verwijderen" class="btn btn-default" /> &nbsp;
+            @Html.ActionLink("Naar Overzicht", "Index")
+        </div>
+    }
+    <p>&nbsp;</p>
     <h4>Gerelateerde onderwerpen</h4>
     <table class="bc-table">
         @if (Model.OnderwerpenLijst != null)
@@ -74,15 +86,5 @@
         }
 
     </table>
-    <p>&nbsp;</p>
 
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Verwijderen" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
-        </div>
-    }
 </div>
