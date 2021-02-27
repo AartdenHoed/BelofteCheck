@@ -12,6 +12,13 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
+            @Html.DisplayNameFor(model => model.onderwerp.OnderwerpID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.onderwerp.OnderwerpID)
+        </dd>
+        <dt>
             @Html.DisplayNameFor(model => model.onderwerp.Omschrijving)
         </dt>
 
@@ -20,6 +27,17 @@
         </dd>
 
     </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+    <div class="form-actions no-color">
+        <input type="submit" value="Verwijderen" class="btn btn-default bc-active" />  &nbsp;
+        @Html.ActionLink("Naar Overzicht", "Index")
+    </div>
+    }
+    <p>&nbsp;</p>
 
 
     <h4>Gerelateerde wetten</h4>
@@ -62,14 +80,5 @@
             }
         }
     </table>
-    <p>&nbsp;</p>
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
 
-        <div class="form-actions no-color">
-            <input type="submit" value="Verwijderen" class="btn btn-default bc-active" /> |
-            @Html.ActionLink("Naar Overzicht", "Index")
-        </div>
-    }
 </div>

@@ -213,6 +213,7 @@
     <Compile Include="ViewModels\Onderwerp.cs" />
     <Compile Include="ViewModels\OnderwerpenVM.cs" />
     <Compile Include="ViewModels\WetObject.cs" />
+    <Compile Include="ViewModels\WetScope.cs" />
     <Compile Include="ViewModels\Wetten.cs" />
     <Compile Include="ViewModels\OnderwerpenListVM.cs" />
     <Compile Include="ViewModels\WettenListVM.cs" />
@@ -253,6 +254,8 @@
       <DependentUpon>BCmodel.edmx</DependentUpon>
       <LastGenOutput>BCmodel.cs</LastGenOutput>
     </Content>
+    <Content Include="Connection-debug.config" />
+    <Content Include="Connection-live.config" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

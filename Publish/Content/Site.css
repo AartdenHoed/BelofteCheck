@@ -67,7 +67,7 @@
 }
 .bc-table {
     width: 100%;
-    margin: 0;
+    margin: 1;
     text-align: left;
 }
 
@@ -81,18 +81,39 @@
 
 .bc-table th {
     background-color: lightblue;
-    text-align: left;    
+    text-align: left;
+    margin: 0;
+    padding: 1%;
 }
 
-.bc-table td {  
+.bc-table td {
     text-align: left;
+    margin: 0; 
+    padding: 1%;
+}
+.bc-08 {
+    width: 8%;
+
 }
 .bc-16 {
     width: 16%;
+ 
+}
+.bc-36 {
+    width: 36%;
+ 
 }
 .bc-40 {
     width: 40%;
+
 }
+.bc-area textarea {
+    width: 90%; 
+    max-width: 90%;
+    margin: 1%;
+   
+}
+
 
     
 

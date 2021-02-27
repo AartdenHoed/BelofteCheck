@@ -17,3 +17,21 @@ $(".bc-active").change (function ()  {
     }
 }) 
 $(".bc-active").trigger("change");
+
+
+function setreq(me) {
+    x = $(me).is(":checked");
+    alert(x);
+    if ($(me).is(":checked")) {
+        alert("checked");
+        $(me).next().attr('required', '');
+        $(me).next().removeattr('readonly', false);
+    }
+    else {
+        alert("not checked");
+        $(me).next().removeAttr('required');
+        $(me).next().attr('readonly', true);
+    }
+}
+$(".bc-area").trigger("change");
+

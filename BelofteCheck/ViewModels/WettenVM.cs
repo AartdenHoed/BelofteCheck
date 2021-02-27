@@ -32,6 +32,14 @@ namespace BelofteCheck.ViewModels
                 v.Omschrijving = wo.Omschrijving;
                 v.OnderwerpID = wo.OnderwerpID;
                 v.Toelichting = wo.Toelichting;
+                if (string.IsNullOrEmpty(v.Toelichting))
+                {
+                    v.Geselecteerd = false;
+                }
+                else
+                {
+                    v.Geselecteerd = true;
+                }
                 this.OnderwerpenLijst.Add(v);
             }
 

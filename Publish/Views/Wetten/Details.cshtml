@@ -5,7 +5,7 @@
 <h3>@Html.DisplayFor(model => model.MessageSection.Message)</h3>
 
 <div>
-    
+
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -33,6 +33,12 @@
         </dd>
 
     </dl>
+
+    <p>
+        @Html.ActionLink("Bewerk", "Edit", new { WetID = Model.wet.WetID }) |
+        @Html.ActionLink("Naar Overzicht", "Index")
+    </p>
+    <p>&nbsp;</p>
     <h4>Gerelateerde onderwerpen</h4>
     <table class="bc-table">
         @if (Model.OnderwerpenLijst != null)
@@ -75,8 +81,3 @@
 
     </table>
 </div>
-<p>&nbsp;</p>
-<p>
-    @Html.ActionLink("Bewerk", "Edit", new { WetID = Model.wet.WetID }) |
-    @Html.ActionLink("Naar Overzicht", "Index")
-</p>

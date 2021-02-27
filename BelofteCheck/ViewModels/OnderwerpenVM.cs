@@ -15,8 +15,8 @@ namespace BelofteCheck.ViewModels
         private Onderwerp _onderwerp = new Onderwerp();
         public Onderwerp onderwerp { get { return _onderwerp; } set { _onderwerp = value; } }
 
-        private List<Wet> _WettenLijst = new List<Wet>();
-        public List<Wet> WettenLijst { get { return _WettenLijst; } set { _WettenLijst = value; } }
+        private List<WetObject> _WettenLijst = new List<WetObject>();
+        public List<WetObject> WettenLijst { get { return _WettenLijst; } set { _WettenLijst = value; } }
 
         public void Fill(List<WetObject> wl)
         // Fill view model from DB query list
@@ -27,12 +27,15 @@ namespace BelofteCheck.ViewModels
 
             foreach (WetObject wo in wl)
             {
-                Wet w = new Wet();
+                WetObject w = new WetObject();
                 w.WetOmschrijving = wo.WetOmschrijving;
                 w.WetID = wo.WetID;
                 w.WetNaam = wo.WetNaam;
                 w.WetLink = wo.WetLink;
                 w.Toelichting = wo.Toelichting;
+                w.OnderwerpID = wo.OnderwerpID;
+                w.Omschrijving = wo.Omschrijving;
+               
                 this.WettenLijst.Add(w);
             }
 

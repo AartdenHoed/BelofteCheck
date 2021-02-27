@@ -10,6 +10,13 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
+            @Html.DisplayNameFor(model => model.onderwerp.OnderwerpID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.onderwerp.OnderwerpID)
+        </dd>
+        <dt>
             @Html.DisplayNameFor(model => model.onderwerp.Omschrijving)
         </dt>
 
@@ -18,6 +25,12 @@
         </dd>
 
     </dl>
+
+    <p>
+        @Html.ActionLink("Bewerk", "Edit", new { OnderwerpID = Model.onderwerp.OnderwerpID })  &nbsp;
+        @Html.ActionLink("Naar Overzicht", "Index")
+    </p>
+    <p>&nbsp;</p>
     <h4>Gerelateerde wetten</h4>
     <table class="bc-table">
         @if (Model.WettenLijst != null)
@@ -59,8 +72,4 @@
         }
     </table>
 </div>
-<p>&nbsp;</p>
-<p>
-    @Html.ActionLink("Bewerk", "Edit", new { OnderwerpID = Model.onderwerp.OnderwerpID }) |
-    @Html.ActionLink("Naar Overzicht", "Index")
-</p>
+

@@ -5,7 +5,7 @@
 
 <h3>@Html.DisplayFor(model => model.MessageSection.Message)</h3>
 <div>
-    
+
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -33,6 +33,18 @@
         </dd>
 
     </dl>
+
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Verwijderen" class="btn btn-default" /> &nbsp;
+            @Html.ActionLink("Naar Overzicht", "Index")
+        </div>
+    }
+    <p>&nbsp;</p>
     <h4>Gerelateerde onderwerpen</h4>
     <table class="bc-table">
         @if (Model.OnderwerpenLijst != null)
@@ -74,15 +86,5 @@
         }
 
     </table>
-    <p>&nbsp;</p>
 
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Verwijderen" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
-        </div>
-    }
 </div>

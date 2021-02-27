@@ -46,58 +46,71 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Aanmaken" class="btn btn-default" />
+                <input type="submit" value="Aanmaken" class="btn btn-default" /> &nbsp;               
+                @Html.ActionLink("Naar Overzicht", "Index")
+                
             </div>
         </div>
     </div>
+    <p>&nbsp;</p>
     <h4>Gerelateerde onderwerpen</h4>
     <table class="bc-table">
         @if (Model.OnderwerpenLijst != null)
-        {
-            var i = 0;
-            foreach (var item1 in Model.OnderwerpenLijst)
-            {
-                if (i == 0)
                 {
-                    <tr>
-                        <th class="bc-16">
-                            @Html.DisplayNameFor(Item1 => Item1.OnderwerpenLijst[i].OnderwerpID)
-                        </th>
-                        <th class="bc-40">
-                            @Html.DisplayNameFor(Item1 => Item1.OnderwerpenLijst[i].Omschrijving)
-                        </th>
-                        <th class="bc-40">
-                            @Html.DisplayNameFor(Item1 => Item1.OnderwerpenLijst[i].Toelichting)
-                        </th>
-                    </tr>
+                    var i = 0;
+                    var mc = "";
+                    foreach (var item1 in Model.OnderwerpenLijst)
+                    {
+                       
+                        if (i == 0)
 
-                }
+                        {
+            <tr>
+                <th class="bc-08">
+                    @Html.DisplayNameFor(Item1 => Item1.OnderwerpenLijst[i].Geselecteerd)
+                </th>
+                <th class="bc-36">
+
+                    @Html.DisplayNameFor(Item1 => Item1.OnderwerpenLijst[i].Toelichting)
+                </th>
+                <th class="bc-16">
+                            
+                    @Html.DisplayNameFor(Item1 => Item1.OnderwerpenLijst[i].OnderwerpID)
+                </th>
+                <th class="bc-36">
+                           
+                    @Html.DisplayNameFor(Item1 => Item1.OnderwerpenLijst[i].Omschrijving)
+                </th>
+
+            </tr>
+
+        }
                 <tr>
 
+                    <td class="bc-08">
+                        @Html.CheckBoxFor(Item1 => Item1.OnderwerpenLijst[i].Geselecteerd, new { @class = "form-control", @onclick = "setreq(this)" } )
+                    </td>
+                    <td class="bc-36">
+                        @Html.TextAreaFor(Item1 => Item1.OnderwerpenLijst[i].Toelichting, new { @class = "bc-area form-control" })
+                    </td>
                     <td class="bc-16">
-                        @Html.DisplayFor(Item1 => Item1.OnderwerpenLijst[i].OnderwerpID)
+                        @Html.EditorFor(Item1 => Item1.OnderwerpenLijst[i].OnderwerpID, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
 
                     </td>
-                    <td class="bc-40">
-                        @Html.DisplayFor(Item1 => Item1.OnderwerpenLijst[i].Omschrijving)
+                    <td class="bc-36">
+                        @Html.EditorFor(Item1 => Item1.OnderwerpenLijst[i].Omschrijving, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
 
                     </td>
-                    <td class="bc-40">
-                        @Html.DisplayFor(Item1 => Item1.OnderwerpenLijst[i].Toelichting)
-                    </td>
+
                 </tr>
                 i = i + 1;
             }
         }
 
     </table>
-    <p>&nbsp;</p>
 }
 
-<div>
-    @Html.ActionLink("Naar Overzicht", "Index")
-</div>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }

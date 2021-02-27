@@ -17,3 +17,32 @@ $(".bc-active").change (function ()  {
     }
 }) 
 $(".bc-active").trigger("change");
+
+function setreq(me) {
+    $(me).parent().parent().find('.bc-area').first().removeAttr('cols');
+    //x = $(me).is(":checked");
+    // alert(x);
+    if ($(me).is(":checked")) {
+        // alert("checked");        
+        x = $(me).parent().parent().find('.bc-area').first().val(); 
+        if (x == "(Niet gekoppeld aan deze wet)") {
+            $(me).parent().parent().find('.bc-area').first().val("");
+            $(me).parent().parent().find('.bc-area').first().next().text('Toelichting is verplicht indien aangevinkt'); 
+        }
+        $(me).parent().parent().find('.bc-area').first().attr('required', true);
+        $(me).parent().parent().find('.bc-area').first().attr('readonly', false);       
+       
+    }
+    else {
+        // alert("not checked");
+        $(me).parent().parent().find('.bc-area').first().val("(Niet gekoppeld aan deze wet)"); 
+        $(me).parent().parent().find('.bc-area').first().attr('required', false);
+        $(me).parent().parent().find('.bc-area').first().attr('readonly', true);
+        $(me).parent().parent().find('.bc-area').first().next().text(''); 
+        
+        
+    }
+}
+
+$(".bc-areatrigger").trigger("change");
+
