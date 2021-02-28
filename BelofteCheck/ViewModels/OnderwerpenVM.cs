@@ -36,7 +36,7 @@ namespace BelofteCheck.ViewModels
                 w.OnderwerpID = wo.OnderwerpID;
                 w.Omschrijving = wo.Omschrijving;
                
-                this.WettenLijst.Add(w);
+                this._WettenLijst.Add(w);
             }
 
 

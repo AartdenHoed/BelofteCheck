@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="BelofteCheckModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="BCmodel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Onderwerpen">
           <Key>
             <PropertyRef Name="OnderwerpID" />
@@ -24,10 +24,10 @@
         </EntityType>
         <EntityType Name="Stemmingen">
           <Key>
-            <PropertyRef Name="Wetid" />
+            <PropertyRef Name="WetID" />
             <PropertyRef Name="PartijID" />
           </Key>
-          <Property Name="Wetid" Type="char" MaxLength="32" Nullable="false" />
+          <Property Name="WetID" Type="char" MaxLength="32" Nullable="false" />
           <Property Name="PartijID" Type="char" MaxLength="8" Nullable="false" />
           <Property Name="Voor" Type="int" Nullable="false" />
           <Property Name="Tegen" Type="int" Nullable="false" />
@@ -73,7 +73,7 @@
               <PropertyRef Name="WetID" />
             </Principal>
             <Dependent Role="Stemmingen">
-              <PropertyRef Name="Wetid" />
+              <PropertyRef Name="WetID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -105,7 +105,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="BelofteCheckModelStoreContainer">
+        <EntityContainer Name="BCmodelStoreContainer">
           <EntitySet Name="Onderwerpen" EntityType="Self.Onderwerpen" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Partijen" EntityType="Self.Partijen" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Stemmingen" EntityType="Self.Stemmingen" Schema="dbo" store:Type="Tables" />
@@ -132,7 +132,7 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="BelofteCheckModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="BCmodel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Onderwerpen">
           <Key>
             <PropertyRef Name="OnderwerpID" />
@@ -154,10 +154,10 @@
         </EntityType>
         <EntityType Name="Stemmingen">
           <Key>
-            <PropertyRef Name="Wetid" />
+            <PropertyRef Name="WetID" />
             <PropertyRef Name="PartijID" />
           </Key>
-          <Property Name="Wetid" Type="String" MaxLength="32" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="WetID" Type="String" MaxLength="32" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="PartijID" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="Voor" Type="Int32" Nullable="false" />
           <Property Name="Tegen" Type="Int32" Nullable="false" />
@@ -223,7 +223,7 @@
               <PropertyRef Name="WetID" />
             </Principal>
             <Dependent Role="Stemmingen">
-              <PropertyRef Name="Wetid" />
+              <PropertyRef Name="WetID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -269,9 +269,9 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="BelofteCheckModelStoreContainer" CdmEntityContainer="BCentities">
+        <EntityContainerMapping StorageEntityContainer="BCmodelStoreContainer" CdmEntityContainer="BCentities">
           <EntitySetMapping Name="Onderwerpen">
-            <EntityTypeMapping TypeName="BelofteCheckModel.Onderwerpen">
+            <EntityTypeMapping TypeName="BCmodel.Onderwerpen">
               <MappingFragment StoreEntitySet="Onderwerpen">
                 <ScalarProperty Name="OnderwerpID" ColumnName="OnderwerpID" />
                 <ScalarProperty Name="Omschrijving" ColumnName="Omschrijving" />
@@ -279,7 +279,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Partijen">
-            <EntityTypeMapping TypeName="BelofteCheckModel.Partijen">
+            <EntityTypeMapping TypeName="BCmodel.Partijen">
               <MappingFragment StoreEntitySet="Partijen">
                 <ScalarProperty Name="PartijID" ColumnName="PartijID" />
                 <ScalarProperty Name="PartijNaam" ColumnName="PartijNaam" />
@@ -290,9 +290,9 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Stemmingen">
-            <EntityTypeMapping TypeName="BelofteCheckModel.Stemmingen">
+            <EntityTypeMapping TypeName="BCmodel.Stemmingen">
               <MappingFragment StoreEntitySet="Stemmingen">
-                <ScalarProperty Name="Wetid" ColumnName="Wetid" />
+                <ScalarProperty Name="WetID" ColumnName="WetID" />
                 <ScalarProperty Name="PartijID" ColumnName="PartijID" />
                 <ScalarProperty Name="Voor" ColumnName="Voor" />
                 <ScalarProperty Name="Tegen" ColumnName="Tegen" />
@@ -301,7 +301,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="WetScope">
-            <EntityTypeMapping TypeName="BelofteCheckModel.WetScope">
+            <EntityTypeMapping TypeName="BCmodel.WetScope">
               <MappingFragment StoreEntitySet="WetScope">
                 <ScalarProperty Name="WetID" ColumnName="WetID" />
                 <ScalarProperty Name="OnderwerpID" ColumnName="OnderwerpID" />
@@ -310,7 +310,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Wetten">
-            <EntityTypeMapping TypeName="BelofteCheckModel.Wetten">
+            <EntityTypeMapping TypeName="BCmodel.Wetten">
               <MappingFragment StoreEntitySet="Wetten">
                 <ScalarProperty Name="WetID" ColumnName="WetID" />
                 <ScalarProperty Name="WetNaam" ColumnName="WetNaam" />

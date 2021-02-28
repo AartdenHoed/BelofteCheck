@@ -209,11 +209,16 @@
       <DependentUpon>BCmodel.tt</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\BCmessage.cs" />
+    <Compile Include="ViewModels\PartijenVM.cs" />
+    <Compile Include="ViewModels\PartijenListVM.cs" />
+    <Compile Include="ViewModels\Partij.cs" />
     <Compile Include="ViewModels\Wet.cs" />
     <Compile Include="ViewModels\Onderwerp.cs" />
     <Compile Include="ViewModels\OnderwerpenVM.cs" />
+    <Compile Include="ViewModels\StemObject.cs" />
     <Compile Include="ViewModels\WetObject.cs" />
     <Compile Include="ViewModels\WetScope.cs" />
+    <Compile Include="ViewModels\Partijen.cs" />
     <Compile Include="ViewModels\Wetten.cs" />
     <Compile Include="ViewModels\OnderwerpenListVM.cs" />
     <Compile Include="ViewModels\WettenListVM.cs" />
@@ -237,6 +242,8 @@
     <Content Include="Pictures\Under Construction.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Connection-debug.config" />
+    <Content Include="Connection-live.config" />
     <EntityDeploy Include="BCmodel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>BCmodel.Designer.cs</LastGenOutput>
@@ -254,8 +261,6 @@
       <DependentUpon>BCmodel.edmx</DependentUpon>
       <LastGenOutput>BCmodel.cs</LastGenOutput>
     </Content>
-    <Content Include="Connection-debug.config" />
-    <Content Include="Connection-live.config" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -318,6 +323,8 @@
     <Content Include="Views\Wetten\Edit.cshtml" />
     <Content Include="Views\Wetten\Index.cshtml" />
     <Content Include="Views\Wetten\Error.cshtml" />
+    <Content Include="Views\Partijen\Error.cshtml" />
+    <Content Include="Views\Onderwerpen\Error.cshtml" />
     <None Include="Web.Live.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

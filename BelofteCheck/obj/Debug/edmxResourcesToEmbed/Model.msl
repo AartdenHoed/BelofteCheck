@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="BCmodelStoreContainer" CdmEntityContainer="BCentities">
+  <EntityContainerMapping StorageEntityContainer="BelofteCheckStoreContainer" CdmEntityContainer="BCEntities">
     <EntitySetMapping Name="Onderwerpen">
-      <EntityTypeMapping TypeName="BCmodel.Onderwerpen">
+      <EntityTypeMapping TypeName="BelofteCheck.Onderwerpen">
         <MappingFragment StoreEntitySet="Onderwerpen">
           <ScalarProperty Name="OnderwerpID" ColumnName="OnderwerpID" />
           <ScalarProperty Name="Omschrijving" ColumnName="Omschrijving" />
@@ -10,7 +10,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Partijen">
-      <EntityTypeMapping TypeName="BCmodel.Partijen">
+      <EntityTypeMapping TypeName="BelofteCheck.Partijen">
         <MappingFragment StoreEntitySet="Partijen">
           <ScalarProperty Name="PartijID" ColumnName="PartijID" />
           <ScalarProperty Name="PartijNaam" ColumnName="PartijNaam" />
@@ -21,7 +21,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Stemmingen">
-      <EntityTypeMapping TypeName="BCmodel.Stemmingen">
+      <EntityTypeMapping TypeName="BelofteCheck.Stemmingen">
         <MappingFragment StoreEntitySet="Stemmingen">
           <ScalarProperty Name="WetID" ColumnName="WetID" />
           <ScalarProperty Name="PartijID" ColumnName="PartijID" />
@@ -32,7 +32,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="WetScope">
-      <EntityTypeMapping TypeName="BCmodel.WetScope">
+      <EntityTypeMapping TypeName="BelofteCheck.WetScope">
         <MappingFragment StoreEntitySet="WetScope">
           <ScalarProperty Name="WetID" ColumnName="WetID" />
           <ScalarProperty Name="OnderwerpID" ColumnName="OnderwerpID" />
@@ -41,7 +41,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Wetten">
-      <EntityTypeMapping TypeName="BCmodel.Wetten">
+      <EntityTypeMapping TypeName="BelofteCheck.Wetten">
         <MappingFragment StoreEntitySet="Wetten">
           <ScalarProperty Name="WetID" ColumnName="WetID" />
           <ScalarProperty Name="WetNaam" ColumnName="WetNaam" />

@@ -13,7 +13,7 @@ namespace BelofteCheck.ViewModels
         [Required]
         [DisplayName("Unieke onderwerp ID")]
         [MaxLength(32)]
-        [DataType(DataType.MultilineText)]
+        
         public string OnderwerpID { get; set; }
 
         [Required]

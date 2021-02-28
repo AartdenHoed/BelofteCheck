@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Linq;
-using System.Net;
-using System.Web;
+using System.Data.Linq;
 using System.Web.Mvc;
-using BelofteCheck;
+using BelofteCheck.ViewModels;
+using System.Data.SqlClient;
+using System;
+using System.Collections.Generic;
 
 namespace BelofteCheck.Controllers
 {
@@ -18,28 +17,123 @@ namespace BelofteCheck.Controllers
         // GET: Partijen
         public ActionResult Index()
         {
-            return View(db.Partijen.ToList());
+
+           PartijenListVM partijenListVM = new PartijenListVM();
+
+            string msg = "Selecteer een bewerking op een partij of voeg een partij toe";
+            string level = partijenListVM.MessageSection.Info;
+            string title = "Overzicht";
+            var q = db.Partijen.ToList();
+            if (q.Count == 0)
+            {
+                level = partijenListVM.MessageSection.Warning;
+                msg = "Geen partijen gevonden";
+            }
+            else
+            {
+                foreach (var entry in q)
+                {
+                    Partij part = new Partij();
+                    part.PartijID = entry.PartijID;
+                    part.PartijNaam = entry.PartijNaam;
+                    part.AantalZetels = entry.AantalZetels;
+                    part.VanDatum = entry.VanDatum;
+                    part.TotDatum = entry.TotDatum;
+
+                    partijenListVM.PartijenLijst.Add(part);
+                }
+                partijenListVM.MessageSection.SetMessage(title, level, msg);
+            }
+            if (TempData.ContainsKey("BCmessage"))
+            {
+                msg = TempData["BCmessage"].ToString();
+            }
+            if (TempData.ContainsKey("BCerrorlevel"))
+            {
+                level = TempData["BCerrorlevel"].ToString();
+
+            }
+            partijenListVM.MessageSection.SetMessage(title, level, msg);
+            return View(partijenListVM);
+
+
         }
 
         // GET: Partijen/Details/5
         public ActionResult Details(string PartijID)
         {
+
+            PartijenVM partijenVM = new PartijenVM();
+            string title = "Details";
+            string level = partijenVM.MessageSection.Info;
+            string msg = "Politieke partij met gerelateerde stemmingen";
+
             if (PartijID == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                TempData["BCmessage"] = "Specificeer een geldige Partij ID!";
+                TempData["BCerrorlevel"] = partijenVM.MessageSection.Warning;
+
+                return RedirectToAction("Error");
             }
-            Partijen partijen = db.Partijen.Find(PartijID);
-            if (partijen == null)
+
+            // Perform outer join from Partijen via Wetscope to Wetten
+
+            var query = from p in db.Partijen
+                        where p.PartijID == PartijID
+                        join s in db.Stemmingen on p.PartijID equals s.PartijID into ljoin1
+                        from lj1 in ljoin1.DefaultIfEmpty()
+                        join w in db.Wetten on lj1.WetID equals w.WetID into ljoin2
+                        from lj2 in ljoin2.DefaultIfEmpty() 
+                        select new StemObject
+                        {
+                            PartijID = p.PartijID,
+                            PartijNaam = p.PartijNaam,
+                            AantalZetels = p.AantalZetels,
+                            VanDatum = p.VanDatum,
+                            TotDatum = p.TotDatum,
+                            Voor = lj1 == null ? 0 : lj1.Voor,
+                            Tegen = lj1 == null ? 0 : lj1.Tegen,
+                            Blanco = lj1 == null ? 0 : lj1.Blanco,                           
+                            WetID = lj1 == null ? "<geen>" : lj1.WetID,
+                            WetNaam = lj2 == null ? "nvt" : lj2.WetNaam,
+                            WetOmschrijving = lj2 == null ? "nvt" : lj2.WetOmschrijving,
+                            WetLink = lj2 == null ? "nvt" : lj2.WetLink
+                        }
+
+                        ;
+
+            List<StemObject> q = query.ToList();
+
+            if (q == null)
             {
-                return HttpNotFound();
+                TempData["BCmessage"] = "Partij ID " + PartijID.Trim() + " is niet gevonden";
+                TempData["BCerrorlevel"] = partijenVM.MessageSection.Warning;
+
+                return RedirectToAction("Error");
             }
-            return View(partijen);
+            if (q[0].WetID == "<geen>")
+            {
+                msg = "Deze partij heeft geen gekoppelde stemmingen en is dus niet actief. Koppel één of meer stemmingen aan deze partij";
+                level = "W";
+            }
+
+            partijenVM.Fill(q);
+
+            partijenVM.MessageSection.SetMessage(title, level, msg);
+
+            return View(partijenVM);
+
         }
 
         // GET: Partijen/Create
         public ActionResult Create()
         {
-            return View(new Partijen());
+            PartijenVM partijenVM = new PartijenVM();
+            string title = "Nieuw";
+            string level = partijenVM.MessageSection.Info;
+            string msg = "Vul de gegevens voor deze nieuwe partij in en selecteer AANMAKEN";
+            partijenVM.MessageSection.SetMessage(title, level, msg);
+            return View(partijenVM);
         }
 
         // POST: Partijen/Create
@@ -47,31 +141,105 @@ namespace BelofteCheck.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "PartijID,PartijNaam,AantalZetels,VanDatum,TotDatum")] Partijen partijen)
+
+        public ActionResult Create(PartijenVM partijenVM)
         {
+            string title = "Nieuw";
+
+
             if (ModelState.IsValid)
             {
-                db.Partijen.Add(partijen);
-                db.SaveChanges();
+                Partijen partijen = new Partijen();
+                partijen.Fill(partijenVM);
+                try
+                {
+                    db.Partijen.Add(partijen);
+                    db.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    string exnum = ex.Message;
+
+                    string emsg = "Partij '" + partijenVM.partij.PartijID.Trim() + "' bestaat al? (" + exnum + ")" ;
+                    string elevel = partijenVM.MessageSection.Error;
+                    partijenVM.MessageSection.SetMessage(title, elevel, emsg);
+                    return View(partijenVM);
+                }
+                TempData["BCmessage"] = "Partij " + partijenVM.partij.PartijID.Trim() + " is nu aangemaakt";
+                TempData["BCerrorlevel"] = partijenVM.MessageSection.Info;
+
                 return RedirectToAction("Index");
             }
 
-            return View(partijen);
+            string level = partijenVM.MessageSection.Error;
+            string msg = "ERROR - Partij " + partijenVM.partij.PartijID.Trim() + " is NIET aangemaakt";
+            partijenVM.MessageSection.SetMessage(title, level, msg);
+            return View(partijenVM);
+
         }
 
         // GET: Partijen/Edit/5
         public ActionResult Edit(string PartijID)
         {
+            PartijenVM partijenVM = new PartijenVM();
+            string title = "Bewerken";
+            string level = partijenVM.MessageSection.Info;
+            string msg = "Bewerk deze partij en selecteer OPSLAAN";
+
             if (PartijID == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                TempData["BCmessage"] = "Specificeer een geldige Onderwerp ID!";
+                TempData["BCerrorlevel"] = partijenVM.MessageSection.Warning;
+
+                return RedirectToAction("Error");
             }
-            Partijen partijen = db.Partijen.Find(PartijID);
-            if (partijen == null)
+
+            // Perform outer join from Partijen via Stemmingen to Wetten
+
+            var query = from p in db.Partijen
+                        where p.PartijID == PartijID
+                        join s in db.Stemmingen on p.PartijID equals s.PartijID into ljoin1
+                        from lj1 in ljoin1.DefaultIfEmpty()
+                        join w in db.Wetten on lj1.WetID equals w.WetID into ljoin2
+                        from lj2 in ljoin2.DefaultIfEmpty()                        
+                        select new StemObject
+                        {
+                            PartijID = p.PartijID,
+                            PartijNaam = p.PartijNaam,
+                            AantalZetels = p.AantalZetels,
+                            VanDatum = p.VanDatum,
+                            TotDatum = p.TotDatum,
+                            Voor = lj1 == null ? 0 : lj1.Voor,
+                            Tegen = lj1 == null ? 0 : lj1.Tegen,
+                            Blanco = lj1 == null ? 0 : lj1.Blanco,
+                            WetID = lj1 == null ? "<geen>" : lj1.WetID,
+                            WetNaam = lj2 == null ? "nvt" : lj2.WetNaam,
+                            WetOmschrijving = lj2 == null ? "nvt" : lj2.WetOmschrijving,
+                            WetLink = lj2 == null ? "nvt" : lj2.WetLink
+                        }
+
+                        ;
+
+            List<StemObject> q = query.ToList();
+
+            if (q == null)
             {
-                return HttpNotFound();
+                TempData["BCmessage"] = "Partij ID " + PartijID.Trim() + " is niet gevonden";
+                TempData["BCerrorlevel"] = partijenVM.MessageSection.Warning;
+
+                return RedirectToAction("Error");
             }
-            return View(partijen);
+            if (q[0].WetID == "<geen>")
+            {
+                msg = "Deze partij heeft geen gekoppelde stemmingen en is dus inactief. Voeg stemmingen toe via 'Stemmingen'";
+                level = "W";
+            }
+
+            partijenVM.Fill(q);
+            partijenVM.MessageSection.SetMessage(title, level, msg);
+
+            return View(partijenVM);
+
         }
 
         // POST: Partijen/Edit/5
@@ -79,30 +247,99 @@ namespace BelofteCheck.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "PartijID,PartijNaam,AantalZetels,VanDatum,TotDatum")] Partijen partijen)
+        public ActionResult Edit(PartijenVM partijenVM)
         {
+            string title = "Bewerken";
+
             if (ModelState.IsValid)
             {
+                Partijen partijen = new Partijen();
+                partijen.Fill(partijenVM);
                 db.Entry(partijen).State = EntityState.Modified;
                 db.SaveChanges();
+                TempData["BCmessage"] = "Partij " + partijenVM.partij.PartijID.Trim() + " is gewijzigd";
+                TempData["BCerrorlevel"] = partijenVM.MessageSection.Info;
+
                 return RedirectToAction("Index");
             }
-            return View(partijen);
+
+            string level = partijenVM.MessageSection.Error;
+            string msg = "ERROR - Partij " + partijenVM.partij.PartijID.Trim() + " is NIET gewijzigd";
+            partijenVM.MessageSection.SetMessage(title, level, msg);
+            return View(partijenVM);
         }
 
         // GET: Partijen/Delete/5
         public ActionResult Delete(string PartijID)
         {
+            PartijenVM partijenVM = new PartijenVM();
+            string title = "Verwijderen";
+            string level = partijenVM.MessageSection.Info;
+            string msg = "Selecteer VERWIJDEREN om dezr partij te verwijderen";
+
             if (PartijID == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                TempData["BCmessage"] = "Specificeer een geldige Partij ID!";
+                TempData["BCerrorlevel"] = partijenVM.MessageSection.Warning;
+
+                return RedirectToAction("Error");
             }
-            Partijen partijen = db.Partijen.Find(PartijID);
-            if (partijen == null)
+
+            // Perform outer join from Partijen via Wetscope to Wetten
+
+            // Perform outer join from Partijen via Stemmingen to Wetten
+
+            var query = from p in db.Partijen
+                        where p.PartijID == PartijID
+                        join s in db.Stemmingen on p.PartijID equals s.PartijID into ljoin1
+                        from lj1 in ljoin1.DefaultIfEmpty()
+                        join w in db.Wetten on lj1.WetID equals w.WetID into ljoin2
+                        from lj2 in ljoin2.DefaultIfEmpty()
+                        select new StemObject
+                        {
+                            PartijID = p.PartijID,
+                            PartijNaam = p.PartijNaam,
+                            AantalZetels = p.AantalZetels,
+                            VanDatum = p.VanDatum,
+                            TotDatum = p.TotDatum,
+                            Voor = lj1 == null ? 0 : lj1.Voor,
+                            Tegen = lj1 == null ? 0 : lj1.Tegen,
+                            Blanco = lj1 == null ? 0 : lj1.Blanco,
+                            WetID = lj1 == null ? "<geen>" : lj1.WetID,
+                            WetNaam = lj2 == null ? "nvt" : lj2.WetNaam,
+                            WetOmschrijving = lj2 == null ? "nvt" : lj2.WetOmschrijving,
+                            WetLink = lj2 == null ? "nvt" : lj2.WetLink
+                        }
+
+                        ;
+
+            List<StemObject> q = query.ToList();
+
+            if (q == null)
             {
-                return HttpNotFound();
+                TempData["BCmessage"] = "Partij ID " + PartijID.Trim() + " is niet gevonden";
+                TempData["BCerrorlevel"] = partijenVM.MessageSection.Warning;
+
+                return RedirectToAction("Error");
             }
-            return View(partijen);
+            if (q[0].WetID == "<geen>")
+            {
+                msg = "Deze partij heeft geen gekoppelde stemmingen en kan dus worden gedelete";
+                level = partijenVM.MessageSection.Warning; ;
+                partijenVM.DeleteAllowed = true;
+            }
+            else
+            {
+                msg = "Er zijn nog stemmingen van deze partij. Partij kan niet verwijderd worden";
+                level = partijenVM.MessageSection.Warning;
+                partijenVM.DeleteAllowed = false;
+            }
+
+            partijenVM.Fill(q);
+
+            partijenVM.MessageSection.SetMessage(title, level, msg);
+
+            return View(partijenVM);
         }
 
         // POST: Partijen/Delete/5
@@ -110,10 +347,94 @@ namespace BelofteCheck.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string PartijID)
         {
+            PartijenVM partijenVM = new PartijenVM();
+            string title = "Verwijderen";
+
+            if (PartijID == null)
+            {
+                TempData["BCmessage"] = "Specificeer een geldige Partij ID!";
+                TempData["BCerrorlevel"] = partijenVM.MessageSection.Warning;
+
+                return RedirectToAction("Error");
+            }
+
+            // Check for related wetten
+            var query = from p in db.Partijen
+                        where p.PartijID == PartijID
+                        join s in db.Stemmingen on p.PartijID equals s.PartijID into ljoin1
+                        from lj1 in ljoin1.DefaultIfEmpty()
+                        join w in db.Wetten on lj1.WetID equals w.WetID into ljoin2
+                        from lj2 in ljoin2.DefaultIfEmpty()
+                        select new StemObject
+                        {
+                            PartijID = p.PartijID,
+                            PartijNaam = p.PartijNaam,
+                            AantalZetels = p.AantalZetels,
+                            VanDatum = p.VanDatum,
+                            TotDatum = p.TotDatum,
+                            Voor = lj1 == null ? 0 : lj1.Voor,
+                            Tegen = lj1 == null ? 0 : lj1.Tegen,
+                            Blanco = lj1 == null ? 0 : lj1.Blanco,
+                            WetID = lj1 == null ? "<geen>" : lj1.WetID,
+                            WetNaam = lj2 == null ? "nvt" : lj2.WetNaam,
+                            WetOmschrijving = lj2 == null ? "nvt" : lj2.WetOmschrijving,
+                            WetLink = lj2 == null ? "nvt" : lj2.WetLink
+                        }
+
+                        ;
+
+            List<StemObject> q = query.ToList();
+           
+            if (q == null)
+            {
+                TempData["BCmessage"] = "Partij ID " + PartijID.Trim() + " is niet gevonden";
+                TempData["BCerrorlevel"] = partijenVM.MessageSection.Warning;
+
+                return RedirectToAction("Error");
+            }
+
+            partijenVM.Fill(q);
+
+            if (q[0].WetID != "<geen>")
+            {
+                string msg = "Er zijn nog stemmingen van deze parij. Partij kan niet verwijderd worden";
+                string level = partijenVM.MessageSection.Warning;
+                partijenVM.MessageSection.SetMessage(title, level, msg);
+                return View(partijenVM);
+            }
+
             Partijen partijen = db.Partijen.Find(PartijID);
             db.Partijen.Remove(partijen);
             db.SaveChanges();
+
+            TempData["BCmessage"] = "Partij '" + partijen.PartijID.Trim() + "' is succesvol verwijderd";
+            TempData["BCerrorlevel"] = partijenVM.MessageSection.Info;
             return RedirectToAction("Index");
+        }
+        public ActionResult Error()
+        {
+            PartijenVM partijenVM = new PartijenVM();
+            string title = "ERROR!";
+            string msg = "";
+            string level = "";
+            if (TempData.ContainsKey("BCmessage"))
+            {
+                msg = TempData["BCmessage"].ToString();
+            }
+            else
+            {
+                msg = "Unknown error";
+            }
+            if (TempData.ContainsKey("BCerrorlevel"))
+            {
+                level = TempData["BCerrorlevel"].ToString();
+            }
+            else
+            {
+                level = partijenVM.MessageSection.Error;
+            }
+            partijenVM.MessageSection.SetMessage(title, level, msg);
+            return View(partijenVM);
         }
 
         protected override void Dispose(bool disposing)

@@ -164,7 +164,7 @@ namespace BelofteCheck.Controllers
             }
 
             string level =onderwerpenVM.MessageSection.Error;
-            string msg = "ERROR - Wet " + onderwerpenVM.onderwerp.OnderwerpID.Trim() + " is NIET aangemaakt";
+            string msg = "ERROR - Onderwerp " + onderwerpenVM.onderwerp.OnderwerpID.Trim() + " is NIET aangemaakt";
             onderwerpenVM.MessageSection.SetMessage(title, level, msg);
             return View(onderwerpenVM);
 
@@ -335,7 +335,7 @@ namespace BelofteCheck.Controllers
 
             if (OnderwerpID == null)
             {
-                TempData["BCmessage"] = "Specificeer een geldige Wet ID!";
+                TempData["BCmessage"] = "Specificeer een geldige Onderwerp ID!";
                 TempData["BCerrorlevel"] = onderwerpenVM.MessageSection.Warning;
 
                 return RedirectToAction("Error");
@@ -362,7 +362,7 @@ namespace BelofteCheck.Controllers
                     ;
 
             List<WetObject> q = query.ToList();
-            onderwerpenVM.Fill(q);
+            
             if (q == null)
             {
                 TempData["BCmessage"] = "Ondewerp ID " + OnderwerpID.Trim() + " is niet gevonden";
@@ -370,6 +370,9 @@ namespace BelofteCheck.Controllers
 
                 return RedirectToAction("Error");
             }
+
+            onderwerpenVM.Fill(q);
+
             if (q[0].WetID != "<geen>")
             {
                 string msg = "Er zijn nog wetten met dit onderwerp. Onderwerp kan niet verwijderd worden";

@@ -4,16 +4,16 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="d1d46fcd81be43bcb110e1ff17682169" Name="Diagram1">
-        <EntityTypeShape EntityType="BelofteCheckModel.Onderwerpen" Width="1.5" PointX="1.75" PointY="2.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="BelofteCheckModel.Partijen" Width="1.5" PointX="12.75" PointY="2" IsExpanded="true" />
-        <EntityTypeShape EntityType="BelofteCheckModel.Stemmingen" Width="1.5" PointX="10.25" PointY="2" IsExpanded="true" />
-        <EntityTypeShape EntityType="BelofteCheckModel.WetScope" Width="1.5" PointX="4.625" PointY="2" IsExpanded="true" />
-        <EntityTypeShape EntityType="BelofteCheckModel.Wetten" Width="1.5" PointX="7.375" PointY="2" IsExpanded="true" />
-        <AssociationConnector Association="BelofteCheckModel.FK_WetScope_Onderwerpen" ManuallyRouted="false" />
-        <AssociationConnector Association="BelofteCheckModel.FK_Stemmingen_Partijen" ManuallyRouted="false" />
-        <AssociationConnector Association="BelofteCheckModel.FK_Stemmingen_Wetten" ManuallyRouted="false" />
-        <AssociationConnector Association="BelofteCheckModel.FK_WetScope_Wetten" ManuallyRouted="false" />
+      <Diagram DiagramId="55d05e5bae5f4fdf86a86e3dd5fd3d79" Name="Diagram1">
+        <EntityTypeShape EntityType="BCmodel.Onderwerpen" Width="1.5" PointX="0.75" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="BCmodel.Partijen" Width="1.5" PointX="0.75" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="BCmodel.Stemmingen" Width="1.5" PointX="3" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BCmodel.WetScope" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BCmodel.Wetten" Width="1.5" PointX="0.75" PointY="3.625" IsExpanded="true" />
+        <AssociationConnector Association="BCmodel.FK_WetScope_Onderwerpen" ManuallyRouted="false" />
+        <AssociationConnector Association="BCmodel.FK_Stemmingen_Partijen" ManuallyRouted="false" />
+        <AssociationConnector Association="BCmodel.FK_Stemmingen_Wetten" ManuallyRouted="false" />
+        <AssociationConnector Association="BCmodel.FK_WetScope_Wetten" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

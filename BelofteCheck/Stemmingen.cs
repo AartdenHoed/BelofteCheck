@@ -14,7 +14,7 @@ namespace BelofteCheck
     
     public partial class Stemmingen
     {
-        public string Wetid { get; set; }
+        public string WetID { get; set; }
         public string PartijID { get; set; }
         public int Voor { get; set; }
         public int Tegen { get; set; }
