@@ -5,104 +5,146 @@
 <h3>@Html.DisplayFor(model => model.MessageSection.Message)</h3>
 
 <div>
-    
+
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.partij.PartijID)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.partij.PartijID)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.partij.PartijNaam)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.partij.PartijNaam)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.partij.AantalZetels)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.partij.AantalZetels)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.partij.VanDatum)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.partij.VanDatum)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.partij.TotDatum)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.partij.TotDatum)
-        </dd>
-
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Bewerk", "Edit", new { PartijID = Model.partij.PartijID })  &nbsp;
-    @Html.ActionLink("Naar Overzicht", "Index")
-</p>
-<p>&nbsp;</p>
-<h4>Stemgedrag</h4>
-<table class="bc-table">
-    @if (Model.StemmingenLijst != null)
-    {
-        var i = 0;
-        foreach (var item1 in Model.StemmingenLijst)
+    <table class="bc-table2">
+        @if (Model.ZetelLijst != null)
         {
-            if (i == 0)
+            var i = 0;
+            foreach (var item1 in Model.ZetelLijst)
             {
-    <tr>
-        <th class="bc-16">
-            @Html.DisplayNameFor(Item1 => Item1.StemmingenLijst[i].WetID)
-        </th>
-        <th class="bc-40">
-            @Html.DisplayNameFor(Item1 => Item1.StemmingenLijst[i].WetNaam)
-        </th>
-        <th class="bc-10">
-            @Html.DisplayNameFor(Item1 => Item1.StemmingenLijst[i].Voor)
-        </th>
-        <th class="bc-10">
-            @Html.DisplayNameFor(Item1 => Item1.StemmingenLijst[i].Tegen)
-        </th>
-        <th class="bc-10">
-            @Html.DisplayNameFor(Item1 => Item1.StemmingenLijst[i].Blanco)
-        </th>
-    </tr>
+                if (i == 0)
+                {
+                    <tr>
 
+                        <th class="bc-08">
+                            @Html.DisplayNameFor(model => model.partij.PartijID)
+                        </th>
+
+                        <th class="bc-16">
+                            @Html.DisplayFor(model => model.partij.PartijNaam)
+                        </th>
+                        <th class="bc-08">
+                            @Html.DisplayNameFor(model => model.ZetelLijst[i].VanDatum)
+                        </th>
+                        <th class="bc-08">
+                            @Html.DisplayNameFor(model => model.ZetelLijst[i].TotDatum)
+                        </th>
+                        <th class="bc-08">
+                            @Html.DisplayNameFor(model => model.ZetelLijst[i].AantalZetels)
+                        </th>
+
+
+                    </tr>
+                    <tr>
+
+                        <td class="bc-08">
+                            @Html.DisplayFor(model => model.partij.PartijID)
+                        </td>
+
+                        <td class="bc-16">
+                            @Html.DisplayFor(model => model.partij.PartijNaam)
+                        </td>
+                        <td class="bc-08">
+                            @Html.DisplayFor(model => model.ZetelLijst[i].VanDatum)
+                        </td>
+                        <td class="bc-08">
+                            @Html.DisplayFor(model => model.ZetelLijst[i].TotDatum)
+                        </td>
+                        <td class="bc-08">
+                            @Html.DisplayFor(model => model.ZetelLijst[i].AantalZetels)
+                        </td>
+
+
+                    </tr>
+                }
+                else
+                {
+                <tr>
+
+                    <td class="bc-08">
+                        &nbsp;
+                    </td>
+
+                    <td class="bc-16">
+                        &nbsp;
+                    </td>
+                    <td class="bc-08">
+                        @Html.DisplayFor(model => model.ZetelLijst[i].VanDatum)
+                    </td>
+                    <td class="bc-08">
+                        @Html.DisplayFor(model => model.ZetelLijst[i].TotDatum)
+                    </td>
+                    <td class="bc-08">
+                        @Html.DisplayFor(model => model.ZetelLijst[i].AantalZetels)
+                    </td>
+
+
+                </tr>
+                }
+
+
+                i = i + 1;
             }
-<tr>
-
-    <td class="bc-16">
-        @Html.DisplayFor(Item1 => Item1.StemmingenLijst[i].WetID)
-
-    </td>
-    <td class="bc-40">
-        @Html.DisplayFor(Item1 => Item1.StemmingenLijst[i].WetNaam)
-
-    </td>
-    <td class="bc-10">
-        @Html.DisplayFor(Item1 => Item1.StemmingenLijst[i].Voor)
-    </td>
-    <td class="bc-10">
-        @Html.DisplayFor(Item1 => Item1.StemmingenLijst[i].Tegen)
-    </td>
-    <td class="bc-10">
-        @Html.DisplayFor(Item1 => Item1.StemmingenLijst[i].Blanco)
-    </td>
-</tr>
-            i = i + 1;
         }
-    }
-</table>
+    </table>
+
+
+    <p>
+        @Html.ActionLink("Bewerk", "Edit", new { PartijID = Model.partij.PartijID })  &nbsp;
+        @Html.ActionLink("Naar Overzicht", "Index")
+    </p>
+    <p>&nbsp;</p>
+    <h4>Stemgedrag</h4>
+    <table class="bc-table">
+        @if (Model.StemmingenLijst != null)
+        {
+            var i = 0;
+            foreach (var item1 in Model.StemmingenLijst)
+            {
+                if (i == 0)
+                {
+                    <tr>
+                        <th class="bc-16">
+                            @Html.DisplayNameFor(Item1 => Item1.StemmingenLijst[i].WetID)
+                        </th>
+                        <th class="bc-40">
+                            @Html.DisplayNameFor(Item1 => Item1.StemmingenLijst[i].WetNaam)
+                        </th>
+                        <th class="bc-10">
+                            @Html.DisplayNameFor(Item1 => Item1.StemmingenLijst[i].Voor)
+                        </th>
+                        <th class="bc-10">
+                            @Html.DisplayNameFor(Item1 => Item1.StemmingenLijst[i].Tegen)
+                        </th>
+                        <th class="bc-10">
+                            @Html.DisplayNameFor(Item1 => Item1.StemmingenLijst[i].Blanco)
+                        </th>
+                    </tr>
+
+                }
+                <tr>
+
+                    <td class="bc-16">
+                        @Html.DisplayFor(Item1 => Item1.StemmingenLijst[i].WetID)
+
+                    </td>
+                    <td class="bc-40">
+                        @Html.DisplayFor(Item1 => Item1.StemmingenLijst[i].WetNaam)
+
+                    </td>
+                    <td class="bc-10">
+                        @Html.DisplayFor(Item1 => Item1.StemmingenLijst[i].Voor)
+                    </td>
+                    <td class="bc-10">
+                        @Html.DisplayFor(Item1 => Item1.StemmingenLijst[i].Tegen)
+                    </td>
+                    <td class="bc-10">
+                        @Html.DisplayFor(Item1 => Item1.StemmingenLijst[i].Blanco)
+                    </td>
+                </tr>
+                i = i + 1;
+            }
+        }
+    </table>
+</div>

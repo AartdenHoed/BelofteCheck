@@ -15,36 +15,45 @@ namespace BelofteCheck.ViewModels
         private Partij _partij = new Partij();
         public Partij partij { get { return _partij; } set { _partij = value; } }
 
+        private List<ZetelObject> _ZetelLijst = new List<ZetelObject>();
+        public List<ZetelObject> ZetelLijst { get { return _ZetelLijst; } set { _ZetelLijst = value; } }
+
         private List<StemObject> _StemmingenLijst = new List<StemObject>();
         public List<StemObject> StemmingenLijst { get { return _StemmingenLijst; } set { _StemmingenLijst = value; } }
 
-        public void Fill(List<StemObject> sl)
+        public void Fill(Partijen p, List<StemObject> sl, List<ZetelObject> zl)
         // Fill view model from DB query list
         {
-            this.partij.PartijID = sl[0].PartijID;
-            this.partij.PartijNaam = sl[0].PartijNaam;
-            this.partij.AantalZetels = sl[0].AantalZetels;
-            this.partij.VanDatum = sl[0].VanDatum;
-            this.partij.TotDatum = sl[0].TotDatum;
-
-
+            this.partij.PartijID = p.PartijID;
+            this.partij.PartijNaam = p.PartijNaam;
+           
             foreach (StemObject so in sl)
             {
-                StemObject s = new StemObject();
-                s.WetOmschrijving = so.WetOmschrijving;
-                s.WetID = so.WetID;
-                s.WetNaam = so.WetNaam;
-                s.WetLink = so.WetLink;
-                s.PartijID = so.PartijID;
-                s.PartijNaam = so.PartijNaam;
-                s.AantalZetels = so.AantalZetels;
-                s.VanDatum = so.VanDatum;
-                s.TotDatum = so.TotDatum;
-                s.Voor = so.Voor;
-                s.Tegen = so.Tegen;
-                s.Blanco = so.Blanco;
+                StemObject s = new StemObject
+                {
+                    WetOmschrijving = so.WetOmschrijving,
+                    WetID = so.WetID,
+                    WetNaam = so.WetNaam,
+                    WetLink = so.WetLink,
+                    PartijID = so.PartijID,
+                    Voor = so.Voor,
+                    Tegen = so.Tegen,
+                    Blanco = so.Blanco
+                };
 
                 this._StemmingenLijst.Add(s);
+            }
+            foreach (ZetelObject zo in zl)
+            {
+                ZetelObject z = new ZetelObject
+                {
+                    AantalZetels = zo.AantalZetels,
+                    VanDatum = zo.VanDatum,
+                    TotDatum = zo.TotDatum,
+                    PartijID = zo.PartijID
+                };
+
+                this._ZetelLijst.Add(z);
             }
 
 

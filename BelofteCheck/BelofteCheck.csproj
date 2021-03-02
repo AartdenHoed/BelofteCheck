@@ -203,15 +203,20 @@
     <Compile Include="Partijen.cs">
       <DependentUpon>BCmodel.tt</DependentUpon>
     </Compile>
+    <Compile Include="PartijZetels.cs">
+      <DependentUpon>BCmodel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Stemmingen.cs">
       <DependentUpon>BCmodel.tt</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\BCmessage.cs" />
+    <Compile Include="ViewModels\PartijZetels.cs" />
     <Compile Include="ViewModels\PartijenVM.cs" />
     <Compile Include="ViewModels\PartijenListVM.cs" />
     <Compile Include="ViewModels\Partij.cs" />
+    <Compile Include="ViewModels\ZetelObject.cs" />
     <Compile Include="ViewModels\Wet.cs" />
     <Compile Include="ViewModels\Onderwerp.cs" />
     <Compile Include="ViewModels\OnderwerpenVM.cs" />

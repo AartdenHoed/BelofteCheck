@@ -14,9 +14,16 @@
         <MappingFragment StoreEntitySet="Partijen">
           <ScalarProperty Name="PartijID" ColumnName="PartijID" />
           <ScalarProperty Name="PartijNaam" ColumnName="PartijNaam" />
-          <ScalarProperty Name="AantalZetels" ColumnName="AantalZetels" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PartijZetels">
+      <EntityTypeMapping TypeName="BCmodel.PartijZetels">
+        <MappingFragment StoreEntitySet="PartijZetels">
+          <ScalarProperty Name="PartijID" ColumnName="PartijID" />
           <ScalarProperty Name="VanDatum" ColumnName="VanDatum" />
           <ScalarProperty Name="TotDatum" ColumnName="TotDatum" />
+          <ScalarProperty Name="AantalZetels" ColumnName="AantalZetels" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -28,6 +35,7 @@
           <ScalarProperty Name="Voor" ColumnName="Voor" />
           <ScalarProperty Name="Tegen" ColumnName="Tegen" />
           <ScalarProperty Name="Blanco" ColumnName="Blanco" />
+          <ScalarProperty Name="StemDatum" ColumnName="StemDatum" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -47,6 +55,7 @@
           <ScalarProperty Name="WetNaam" ColumnName="WetNaam" />
           <ScalarProperty Name="WetOmschrijving" ColumnName="WetOmschrijving" />
           <ScalarProperty Name="WetLink" ColumnName="WetLink" />
+          <ScalarProperty Name="WetType" ColumnName="WetType" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

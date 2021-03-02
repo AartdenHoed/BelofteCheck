@@ -17,15 +17,15 @@ namespace BelofteCheck
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Partijen()
         {
+            this.PartijZetels = new HashSet<PartijZetels>();
             this.Stemmingen = new HashSet<Stemmingen>();
         }
     
         public string PartijID { get; set; }
         public string PartijNaam { get; set; }
-        public int AantalZetels { get; set; }
-        public System.DateTime VanDatum { get; set; }
-        public System.DateTime TotDatum { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PartijZetels> PartijZetels { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Stemmingen> Stemmingen { get; set; }
     }

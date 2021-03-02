@@ -12,16 +12,13 @@ namespace BelofteCheck
     using System;
     using System.Collections.Generic;
     
-    public partial class Stemmingen
+    public partial class PartijZetels
     {
-        public string WetID { get; set; }
         public string PartijID { get; set; }
-        public int Voor { get; set; }
-        public int Tegen { get; set; }
-        public int Blanco { get; set; }
-        public System.DateTime StemDatum { get; set; }
+        public System.DateTime VanDatum { get; set; }
+        public System.DateTime TotDatum { get; set; }
+        public int AantalZetels { get; set; }
     
         public virtual Partijen Partijen { get; set; }
-        public virtual Wetten Wetten { get; set; }
     }
 }

@@ -1,11 +1,9 @@
-﻿using System.Data.Entity;
-using System.Linq;
-using System.Data.Linq;
-using System.Web.Mvc;
-using BelofteCheck.ViewModels;
-using System.Data.SqlClient;
+﻿using BelofteCheck.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
+using System.Web.Mvc;
 
 namespace BelofteCheck.Controllers
 {
@@ -23,7 +21,9 @@ namespace BelofteCheck.Controllers
             string msg = "Selecteer een bewerking op een partij of voeg een partij toe";
             string level = partijenListVM.MessageSection.Info;
             string title = "Overzicht";
+           
             var q = db.Partijen.ToList();
+            
             if (q.Count == 0)
             {
                 level = partijenListVM.MessageSection.Warning;
@@ -36,10 +36,7 @@ namespace BelofteCheck.Controllers
                     Partij part = new Partij();
                     part.PartijID = entry.PartijID;
                     part.PartijNaam = entry.PartijNaam;
-                    part.AantalZetels = entry.AantalZetels;
-                    part.VanDatum = entry.VanDatum;
-                    part.TotDatum = entry.TotDatum;
-
+                    
                     partijenListVM.PartijenLijst.Add(part);
                 }
                 partijenListVM.MessageSection.SetMessage(title, level, msg);
@@ -76,9 +73,17 @@ namespace BelofteCheck.Controllers
                 return RedirectToAction("Error");
             }
 
-            // Perform outer join from Partijen via Wetscope to Wetten
+            // Fill the View Model
 
-            var query = from p in db.Partijen
+            Partijen partij = db.Partijen.Find(PartijID);
+            if (partij == null)
+            {
+                TempData["BCmessage"] = "Partij ID " + PartijID.Trim() + " is niet gevonden";
+                TempData["BCerrorlevel"] = partijenVM.MessageSection.Warning;
+
+                return RedirectToAction("Error");
+            }
+            var query1 = from p in db.Partijen
                         where p.PartijID == PartijID
                         join s in db.Stemmingen on p.PartijID equals s.PartijID into ljoin1
                         from lj1 in ljoin1.DefaultIfEmpty()
@@ -87,10 +92,6 @@ namespace BelofteCheck.Controllers
                         select new StemObject
                         {
                             PartijID = p.PartijID,
-                            PartijNaam = p.PartijNaam,
-                            AantalZetels = p.AantalZetels,
-                            VanDatum = p.VanDatum,
-                            TotDatum = p.TotDatum,
                             Voor = lj1 == null ? 0 : lj1.Voor,
                             Tegen = lj1 == null ? 0 : lj1.Tegen,
                             Blanco = lj1 == null ? 0 : lj1.Blanco,                           
@@ -102,22 +103,41 @@ namespace BelofteCheck.Controllers
 
                         ;
 
-            List<StemObject> q = query.ToList();
-
-            if (q == null)
-            {
-                TempData["BCmessage"] = "Partij ID " + PartijID.Trim() + " is niet gevonden";
-                TempData["BCerrorlevel"] = partijenVM.MessageSection.Warning;
-
-                return RedirectToAction("Error");
-            }
-            if (q[0].WetID == "<geen>")
+            List<StemObject> stemlijst = query1.ToList();
+                        
+            if (stemlijst[0].WetID == "<geen>")
             {
                 msg = "Deze partij heeft geen gekoppelde stemmingen en is dus niet actief. Koppel één of meer stemmingen aan deze partij";
                 level = "W";
             }
 
-            partijenVM.Fill(q);
+            var query2 = from p in db.Partijen
+                         where p.PartijID == PartijID
+                         join z in db.PartijZetels on p.PartijID equals z.PartijID into ljoin1
+                         from lj1 in ljoin1.DefaultIfEmpty()
+                         
+                         select new ZetelObject
+                         {
+                             PartijID = p.PartijID,
+                             AantalZetels = lj1 == null ? 0 : lj1.AantalZetels,
+                             VanDatum  = lj1 == null ? DateTime.MinValue : lj1.VanDatum,
+                             TotDatum = lj1 == null ? DateTime.MinValue : lj1.TotDatum
+                         }
+
+                        ;
+
+            List<ZetelObject> zetellijst = query2.ToList();
+
+            partijenVM.Fill(partij, stemlijst, zetellijst);
+            if (TempData.ContainsKey("BCmessage"))
+            {
+                msg = TempData["BCmessage"].ToString();
+            }
+            if (TempData.ContainsKey("BCerrorlevel"))
+            {
+                level = TempData["BCerrorlevel"].ToString();
+
+            }
 
             partijenVM.MessageSection.SetMessage(title, level, msg);
 
@@ -194,48 +214,59 @@ namespace BelofteCheck.Controllers
                 return RedirectToAction("Error");
             }
 
-            // Perform outer join from Partijen via Stemmingen to Wetten
-
-            var query = from p in db.Partijen
-                        where p.PartijID == PartijID
-                        join s in db.Stemmingen on p.PartijID equals s.PartijID into ljoin1
-                        from lj1 in ljoin1.DefaultIfEmpty()
-                        join w in db.Wetten on lj1.WetID equals w.WetID into ljoin2
-                        from lj2 in ljoin2.DefaultIfEmpty()                        
-                        select new StemObject
-                        {
-                            PartijID = p.PartijID,
-                            PartijNaam = p.PartijNaam,
-                            AantalZetels = p.AantalZetels,
-                            VanDatum = p.VanDatum,
-                            TotDatum = p.TotDatum,
-                            Voor = lj1 == null ? 0 : lj1.Voor,
-                            Tegen = lj1 == null ? 0 : lj1.Tegen,
-                            Blanco = lj1 == null ? 0 : lj1.Blanco,
-                            WetID = lj1 == null ? "<geen>" : lj1.WetID,
-                            WetNaam = lj2 == null ? "nvt" : lj2.WetNaam,
-                            WetOmschrijving = lj2 == null ? "nvt" : lj2.WetOmschrijving,
-                            WetLink = lj2 == null ? "nvt" : lj2.WetLink
-                        }
-
-                        ;
-
-            List<StemObject> q = query.ToList();
-
-            if (q == null)
+            Partijen partij = db.Partijen.Find(PartijID);
+            if (partij == null)
             {
                 TempData["BCmessage"] = "Partij ID " + PartijID.Trim() + " is niet gevonden";
                 TempData["BCerrorlevel"] = partijenVM.MessageSection.Warning;
 
                 return RedirectToAction("Error");
             }
-            if (q[0].WetID == "<geen>")
-            {
-                msg = "Deze partij heeft geen gekoppelde stemmingen en is dus inactief. Voeg stemmingen toe via 'Stemmingen'";
-                level = "W";
+            var query1 = from p in db.Partijen
+                         where p.PartijID == PartijID
+                         join s in db.Stemmingen on p.PartijID equals s.PartijID into ljoin1
+                         from lj1 in ljoin1.DefaultIfEmpty()
+                         join w in db.Wetten on lj1.WetID equals w.WetID into ljoin2
+                         from lj2 in ljoin2.DefaultIfEmpty()
+                         select new StemObject
+                         {
+                             PartijID = p.PartijID,
+                             Voor = lj1 == null ? 0 : lj1.Voor,
+                             Tegen = lj1 == null ? 0 : lj1.Tegen,
+                             Blanco = lj1 == null ? 0 : lj1.Blanco,
+                             WetID = lj1 == null ? "<geen>" : lj1.WetID,
+                             WetNaam = lj2 == null ? "nvt" : lj2.WetNaam,
+                             WetOmschrijving = lj2 == null ? "nvt" : lj2.WetOmschrijving,
+                             WetLink = lj2 == null ? "nvt" : lj2.WetLink
+                         }
+
+                        ;
+
+            List<StemObject> stemlijst = query1.ToList();
+            
+            var query2 = from p in db.Partijen
+                         where p.PartijID == PartijID
+                         join z in db.PartijZetels on p.PartijID equals z.PartijID into ljoin1
+                         from lj1 in ljoin1.DefaultIfEmpty()                         
+                         select new ZetelObject
+                         {
+                             PartijID = p.PartijID,
+                             AantalZetels = lj1 == null ? 0 : lj1.AantalZetels,
+                             VanDatum = lj1 == null ? DateTime.MinValue : lj1.VanDatum,
+                             TotDatum = lj1 == null ? DateTime.MinValue : lj1.TotDatum
+                         }
+
+                        ;
+            
+            List<ZetelObject> zetellijst = query2.ToList();
+            if (!((zetellijst[0].VanDatum == DateTime.MinValue) && (zetellijst[0].TotDatum == DateTime.MinValue))) {
+                // add null entry
+                ZetelObject extra = new ZetelObject { AantalZetels = 0, VanDatum = DateTime.MinValue, TotDatum = DateTime.MinValue };
+                zetellijst.Add(extra); 
             }
 
-            partijenVM.Fill(q);
+            partijenVM.Fill(partij, stemlijst, zetellijst);
+
             partijenVM.MessageSection.SetMessage(title, level, msg);
 
             return View(partijenVM);
@@ -257,10 +288,27 @@ namespace BelofteCheck.Controllers
                 partijen.Fill(partijenVM);
                 db.Entry(partijen).State = EntityState.Modified;
                 db.SaveChanges();
+                var zetels = from o in db.PartijZetels
+                             where o.PartijID == partijenVM.partij.PartijID
+                             select o;
+                foreach (var zd in zetels)
+                {
+                    db.PartijZetels.Remove(zd);
+                }
+                db.SaveChanges();
+                
+                foreach (ZetelObject zo in partijenVM.ZetelLijst)
+                {
+                    PartijZetels pz = new PartijZetels();
+                    pz.Fill(partijenVM.partij.PartijID, zo);
+                    db.PartijZetels.Add(pz);                 
+                }
+                db.SaveChanges();
+
                 TempData["BCmessage"] = "Partij " + partijenVM.partij.PartijID.Trim() + " is gewijzigd";
                 TempData["BCerrorlevel"] = partijenVM.MessageSection.Info;
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", new { PartijID = partijenVM.partij.PartijID });
             }
 
             string level = partijenVM.MessageSection.Error;
@@ -285,44 +333,39 @@ namespace BelofteCheck.Controllers
                 return RedirectToAction("Error");
             }
 
-            // Perform outer join from Partijen via Wetscope to Wetten
+            // Fill the View Model
 
-            // Perform outer join from Partijen via Stemmingen to Wetten
-
-            var query = from p in db.Partijen
-                        where p.PartijID == PartijID
-                        join s in db.Stemmingen on p.PartijID equals s.PartijID into ljoin1
-                        from lj1 in ljoin1.DefaultIfEmpty()
-                        join w in db.Wetten on lj1.WetID equals w.WetID into ljoin2
-                        from lj2 in ljoin2.DefaultIfEmpty()
-                        select new StemObject
-                        {
-                            PartijID = p.PartijID,
-                            PartijNaam = p.PartijNaam,
-                            AantalZetels = p.AantalZetels,
-                            VanDatum = p.VanDatum,
-                            TotDatum = p.TotDatum,
-                            Voor = lj1 == null ? 0 : lj1.Voor,
-                            Tegen = lj1 == null ? 0 : lj1.Tegen,
-                            Blanco = lj1 == null ? 0 : lj1.Blanco,
-                            WetID = lj1 == null ? "<geen>" : lj1.WetID,
-                            WetNaam = lj2 == null ? "nvt" : lj2.WetNaam,
-                            WetOmschrijving = lj2 == null ? "nvt" : lj2.WetOmschrijving,
-                            WetLink = lj2 == null ? "nvt" : lj2.WetLink
-                        }
-
-                        ;
-
-            List<StemObject> q = query.ToList();
-
-            if (q == null)
+            Partijen partij = db.Partijen.Find(PartijID);
+            if (partij == null)
             {
                 TempData["BCmessage"] = "Partij ID " + PartijID.Trim() + " is niet gevonden";
                 TempData["BCerrorlevel"] = partijenVM.MessageSection.Warning;
 
                 return RedirectToAction("Error");
             }
-            if (q[0].WetID == "<geen>")
+            var query1 = from p in db.Partijen
+                         where p.PartijID == PartijID
+                         join s in db.Stemmingen on p.PartijID equals s.PartijID into ljoin1
+                         from lj1 in ljoin1.DefaultIfEmpty()
+                         join w in db.Wetten on lj1.WetID equals w.WetID into ljoin2
+                         from lj2 in ljoin2.DefaultIfEmpty()
+                         select new StemObject
+                         {
+                             PartijID = p.PartijID,
+                             Voor = lj1 == null ? 0 : lj1.Voor,
+                             Tegen = lj1 == null ? 0 : lj1.Tegen,
+                             Blanco = lj1 == null ? 0 : lj1.Blanco,
+                             WetID = lj1 == null ? "<geen>" : lj1.WetID,
+                             WetNaam = lj2 == null ? "nvt" : lj2.WetNaam,
+                             WetOmschrijving = lj2 == null ? "nvt" : lj2.WetOmschrijving,
+                             WetLink = lj2 == null ? "nvt" : lj2.WetLink
+                         }
+
+                        ;
+
+            List<StemObject> stemlijst = query1.ToList();
+                       
+            if (stemlijst[0].WetID == "<geen>")
             {
                 msg = "Deze partij heeft geen gekoppelde stemmingen en kan dus worden gedelete";
                 level = partijenVM.MessageSection.Warning; ;
@@ -335,7 +378,24 @@ namespace BelofteCheck.Controllers
                 partijenVM.DeleteAllowed = false;
             }
 
-            partijenVM.Fill(q);
+            var query2 = from p in db.Partijen
+                         where p.PartijID == PartijID
+                         join z in db.PartijZetels on p.PartijID equals z.PartijID into ljoin1
+                         from lj1 in ljoin1.DefaultIfEmpty()
+
+                         select new ZetelObject
+                         {
+                             PartijID = p.PartijID,
+                             AantalZetels = lj1 == null ? 0 : lj1.AantalZetels,
+                             VanDatum = lj1 == null ? DateTime.MinValue : lj1.VanDatum,
+                             TotDatum = lj1 == null ? DateTime.MinValue : lj1.TotDatum
+                         }
+
+                        ;
+
+            List<ZetelObject> zetellijst = query2.ToList();
+
+            partijenVM.Fill(partij, stemlijst, zetellijst);
 
             partijenVM.MessageSection.SetMessage(title, level, msg);
 
@@ -359,43 +419,60 @@ namespace BelofteCheck.Controllers
             }
 
             // Check for related wetten
-            var query = from p in db.Partijen
-                        where p.PartijID == PartijID
-                        join s in db.Stemmingen on p.PartijID equals s.PartijID into ljoin1
-                        from lj1 in ljoin1.DefaultIfEmpty()
-                        join w in db.Wetten on lj1.WetID equals w.WetID into ljoin2
-                        from lj2 in ljoin2.DefaultIfEmpty()
-                        select new StemObject
-                        {
-                            PartijID = p.PartijID,
-                            PartijNaam = p.PartijNaam,
-                            AantalZetels = p.AantalZetels,
-                            VanDatum = p.VanDatum,
-                            TotDatum = p.TotDatum,
-                            Voor = lj1 == null ? 0 : lj1.Voor,
-                            Tegen = lj1 == null ? 0 : lj1.Tegen,
-                            Blanco = lj1 == null ? 0 : lj1.Blanco,
-                            WetID = lj1 == null ? "<geen>" : lj1.WetID,
-                            WetNaam = lj2 == null ? "nvt" : lj2.WetNaam,
-                            WetOmschrijving = lj2 == null ? "nvt" : lj2.WetOmschrijving,
-                            WetLink = lj2 == null ? "nvt" : lj2.WetLink
-                        }
+            // Perform outer join from Partijen via Stemmingen to Wetten
 
-                        ;
+            // Fill the View Model
 
-            List<StemObject> q = query.ToList();
-           
-            if (q == null)
+            Partijen partij = db.Partijen.Find(PartijID);
+            if (partij == null)
             {
                 TempData["BCmessage"] = "Partij ID " + PartijID.Trim() + " is niet gevonden";
                 TempData["BCerrorlevel"] = partijenVM.MessageSection.Warning;
 
                 return RedirectToAction("Error");
             }
+            var query1 = from p in db.Partijen
+                         where p.PartijID == PartijID
+                         join s in db.Stemmingen on p.PartijID equals s.PartijID into ljoin1
+                         from lj1 in ljoin1.DefaultIfEmpty()
+                         join w in db.Wetten on lj1.WetID equals w.WetID into ljoin2
+                         from lj2 in ljoin2.DefaultIfEmpty()
+                         select new StemObject
+                         {
+                             PartijID = p.PartijID,
+                             Voor = lj1 == null ? 0 : lj1.Voor,
+                             Tegen = lj1 == null ? 0 : lj1.Tegen,
+                             Blanco = lj1 == null ? 0 : lj1.Blanco,
+                             WetID = lj1 == null ? "<geen>" : lj1.WetID,
+                             WetNaam = lj2 == null ? "nvt" : lj2.WetNaam,
+                             WetOmschrijving = lj2 == null ? "nvt" : lj2.WetOmschrijving,
+                             WetLink = lj2 == null ? "nvt" : lj2.WetLink
+                         }
 
-            partijenVM.Fill(q);
+                        ;
 
-            if (q[0].WetID != "<geen>")
+            List<StemObject> stemlijst = query1.ToList();
+
+            var query2 = from p in db.Partijen
+                         where p.PartijID == PartijID
+                         join z in db.PartijZetels on p.PartijID equals z.PartijID into ljoin1
+                         from lj1 in ljoin1.DefaultIfEmpty()
+
+                         select new ZetelObject
+                         {
+                             PartijID = p.PartijID,
+                             AantalZetels = lj1 == null ? 0 : lj1.AantalZetels,
+                             VanDatum = lj1 == null ? DateTime.MinValue : lj1.VanDatum,
+                             TotDatum = lj1 == null ? DateTime.MinValue : lj1.TotDatum
+                         }
+
+                        ;
+
+            List<ZetelObject> zetellijst = query2.ToList();
+
+            partijenVM.Fill(partij, stemlijst, zetellijst);
+
+            if (stemlijst[0].WetID != "<geen>")
             {
                 string msg = "Er zijn nog stemmingen van deze parij. Partij kan niet verwijderd worden";
                 string level = partijenVM.MessageSection.Warning;

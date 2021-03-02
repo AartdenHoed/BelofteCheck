@@ -91,9 +91,34 @@
     margin: 0; 
     padding: 1%;
 }
+.bc-table2 {
+    width: 98%;
+    margin: 1%;
+    text-align: left;
+}
+
+.bc-table2 tr:nth-child(even) {
+    background-color: lightgoldenrodyellow;
+}
+
+.bc-table2 tr:nth-child(odd) {
+    background-color: lightgray;
+}
+
+.bc-table2 th {
+    background-color: lightblue;
+    text-align: left;
+    margin: 0;
+    padding: 1%;
+}
+
+.bc-table2 td {
+    text-align: left;
+    margin: 0;
+    padding: 1%;
+}
 .bc-08 {
     width: 8%;
-
 }
 .bc-16 {
     width: 16%;

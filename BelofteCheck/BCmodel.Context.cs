@@ -27,6 +27,7 @@ namespace BelofteCheck
     
         public virtual DbSet<Onderwerpen> Onderwerpen { get; set; }
         public virtual DbSet<Partijen> Partijen { get; set; }
+        public virtual DbSet<PartijZetels> PartijZetels { get; set; }
         public virtual DbSet<Stemmingen> Stemmingen { get; set; }
         public virtual DbSet<WetScope> WetScope { get; set; }
         public virtual DbSet<Wetten> Wetten { get; set; }

@@ -25,6 +25,7 @@ namespace BelofteCheck
         public string WetNaam { get; set; }
         public string WetOmschrijving { get; set; }
         public string WetLink { get; set; }
+        public string WetType { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Stemmingen> Stemmingen { get; set; }

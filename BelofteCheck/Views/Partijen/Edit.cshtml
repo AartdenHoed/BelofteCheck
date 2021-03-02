@@ -7,65 +7,189 @@
 
 @using (Html.BeginForm())
 {
+    <hr />
     @Html.AntiForgeryToken()
 
-<div class="form-horizontal">
-
-    <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
     <div class="form-group">
-        @Html.LabelFor(model => model.partij.PartijID, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.partij.PartijID, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
-            @Html.ValidationMessageFor(model => model.partij.PartijID, "", new { @class = "text-danger" })
-        </div>
-    </div>
+        <table class="bc-table2">
+            @if (Model.ZetelLijst != null)
+            {
+                var i = 0;
+                foreach (var item1 in Model.ZetelLijst)
+                {
+                    if (i == 0)
+                    {
+                        <tr>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.partij.PartijNaam, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.partij.PartijNaam, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.partij.PartijNaam, "", new { @class = "text-danger" })
+                            <th class="bc-08">
+                                @Html.DisplayNameFor(model => model.partij.PartijID)
+                            </th>
+
+                            <th class="bc-16">
+                                @Html.DisplayNameFor(model => model.partij.PartijNaam)
+                            </th>
+                            <th class="bc-08">
+                                @Html.DisplayNameFor(model => model.ZetelLijst[i].VanDatum)
+                            </th>
+                            <th class="bc-08">
+                                @Html.DisplayNameFor(model => model.ZetelLijst[i].TotDatum)
+                            </th>
+                            <th class="bc-08">
+                                @Html.DisplayNameFor(model => model.ZetelLijst[i].AantalZetels)
+                            </th>
+
+
+                        </tr>
+                        <tr>
+
+                            <td class="bc-08">
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.partij.PartijID, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                    @Html.ValidationMessageFor(model => model.partij.PartijID, "", new { @class = "text-danger" })
+                                </div>
+                            </td>
+
+                            <td class="bc-16">
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.partij.PartijNaam, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.partij.PartijNaam, "", new { @class = "text-danger" })
+                                </div>
+                            </td>
+                            <td class="bc-08">
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.ZetelLijst[i].VanDatum, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.ZetelLijst[i].VanDatum, "", new { @class = "text-danger" })
+                                </div>
+
+                            </td>
+                            <td class="bc-08">
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.ZetelLijst[i].TotDatum, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.ZetelLijst[i].TotDatum, "", new { @class = "text-danger" })
+                                </div>
+                            </td>
+                            <td class="bc-08">
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.ZetelLijst[i].AantalZetels, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.ZetelLijst[i].AantalZetels, "", new { @class = "text-danger" })
+                                </div>
+                            </td>
+
+
+                        </tr>
+                    }
+                    else
+                    {
+                        <tr>
+
+                            <td class="bc-08">
+                                &nbsp;
+                            </td>
+
+                            <td class="bc-16">
+                                &nbsp;
+                            </td>
+                            <td class="bc-08">
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.ZetelLijst[i].VanDatum, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.ZetelLijst[i].VanDatum, "", new { @class = "text-danger" })
+                                </div>
+
+                            </td>
+                            <td class="bc-08">
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.ZetelLijst[i].TotDatum, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.ZetelLijst[i].TotDatum, "", new { @class = "text-danger" })
+                                </div>
+                            </td>
+                            <td class="bc-08">
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.ZetelLijst[i].AantalZetels, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.ZetelLijst[i].AantalZetels, "", new { @class = "text-danger" })
+                                </div>
+                            </td>
+
+
+                        </tr>
+                    }
+
+
+                    i = i + 1;
+                }
+            }
+        </table>
+        </div>
+
+        
+        <div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Opslaan" class="btn btn-default" /> &nbsp;
+                    @Html.ActionLink("Naar Overzicht", "Index")
+                </div>
             </div>
+
+            <p>&nbsp;</p>
+            <h4>Stemgedrag</h4>
+            <table class="bc-table">
+                @if (Model.StemmingenLijst != null)
+                {
+                    var i = 0;
+                    foreach (var item1 in Model.StemmingenLijst)
+                    {
+                        if (i == 0)
+                        {
+                            <tr>
+                                <th class="bc-16">
+                                    @Html.DisplayNameFor(Item1 => Item1.StemmingenLijst[i].WetID)
+                                </th>
+                                <th class="bc-40">
+                                    @Html.DisplayNameFor(Item1 => Item1.StemmingenLijst[i].WetNaam)
+                                </th>
+                                <th class="bc-10">
+                                    @Html.DisplayNameFor(Item1 => Item1.StemmingenLijst[i].Voor)
+                                </th>
+                                <th class="bc-10">
+                                    @Html.DisplayNameFor(Item1 => Item1.StemmingenLijst[i].Tegen)
+                                </th>
+                                <th class="bc-10">
+                                    @Html.DisplayNameFor(Item1 => Item1.StemmingenLijst[i].Blanco)
+                                </th>
+                            </tr>
+
+                        }
+                        <tr>
+
+                            <td class="bc-16">
+                                @Html.DisplayFor(Item1 => Item1.StemmingenLijst[i].WetID)
+
+                            </td>
+                            <td class="bc-40">
+                                @Html.DisplayFor(Item1 => Item1.StemmingenLijst[i].WetNaam)
+
+                            </td>
+                            <td class="bc-10">
+                                @Html.DisplayFor(Item1 => Item1.StemmingenLijst[i].Voor)
+                            </td>
+                            <td class="bc-10">
+                                @Html.DisplayFor(Item1 => Item1.StemmingenLijst[i].Tegen)
+                            </td>
+                            <td class="bc-10">
+                                @Html.DisplayFor(Item1 => Item1.StemmingenLijst[i].Blanco)
+                            </td>
+                        </tr>
+                        i = i + 1;
+                    }
+                }
+            </table>
         </div>
+        }
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.partij.AantalZetels, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.partij.AantalZetels, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.partij.AantalZetels, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.partij.VanDatum, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.partij.VanDatum, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.partij.VanDatum, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.partij.TotDatum, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.partij.TotDatum, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.partij.TotDatum, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Opslaan" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
-    }
 
-    <div>
-        @Html.ActionLink("Naar Overzicht", "Index")
-    </div>
-
-    @section Scripts {
-        @Scripts.Render("~/bundles/jqueryval")
-    }
+        @section Scripts {
+            @Scripts.Render("~/bundles/jqueryval")
+        }

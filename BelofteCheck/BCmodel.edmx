@@ -18,20 +18,29 @@
           </Key>
           <Property Name="PartijID" Type="char" MaxLength="8" Nullable="false" />
           <Property Name="PartijNaam" Type="char" MaxLength="32" Nullable="false" />
-          <Property Name="AantalZetels" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PartijZetels">
+          <Key>
+            <PropertyRef Name="PartijID" />
+            <PropertyRef Name="VanDatum" />
+          </Key>
+          <Property Name="PartijID" Type="char" MaxLength="8" Nullable="false" />
           <Property Name="VanDatum" Type="datetime" Nullable="false" />
           <Property Name="TotDatum" Type="datetime" Nullable="false" />
+          <Property Name="AantalZetels" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Stemmingen">
           <Key>
             <PropertyRef Name="WetID" />
             <PropertyRef Name="PartijID" />
+            <PropertyRef Name="StemDatum" />
           </Key>
           <Property Name="WetID" Type="char" MaxLength="32" Nullable="false" />
           <Property Name="PartijID" Type="char" MaxLength="8" Nullable="false" />
           <Property Name="Voor" Type="int" Nullable="false" />
           <Property Name="Tegen" Type="int" Nullable="false" />
           <Property Name="Blanco" Type="int" Nullable="false" />
+          <Property Name="StemDatum" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="WetScope">
           <Key>
@@ -50,7 +59,22 @@
           <Property Name="WetNaam" Type="char" MaxLength="120" Nullable="false" />
           <Property Name="WetOmschrijving" Type="varchar" MaxLength="512" Nullable="false" />
           <Property Name="WetLink" Type="char" MaxLength="120" />
+          <Property Name="WetType" Type="char" MaxLength="16" Nullable="false" />
         </EntityType>
+        <Association Name="FK_PartijZetels_Partijen">
+          <End Role="Partijen" Type="Self.Partijen" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PartijZetels" Type="Self.PartijZetels" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Partijen">
+              <PropertyRef Name="PartijID" />
+            </Principal>
+            <Dependent Role="PartijZetels">
+              <PropertyRef Name="PartijID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Stemmingen_Partijen">
           <End Role="Partijen" Type="Self.Partijen" Multiplicity="1" />
           <End Role="Stemmingen" Type="Self.Stemmingen" Multiplicity="*" />
@@ -108,9 +132,14 @@
         <EntityContainer Name="BCmodelStoreContainer">
           <EntitySet Name="Onderwerpen" EntityType="Self.Onderwerpen" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Partijen" EntityType="Self.Partijen" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PartijZetels" EntityType="Self.PartijZetels" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Stemmingen" EntityType="Self.Stemmingen" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WetScope" EntityType="Self.WetScope" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Wetten" EntityType="Self.Wetten" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_PartijZetels_Partijen" Association="Self.FK_PartijZetels_Partijen">
+            <End Role="Partijen" EntitySet="Partijen" />
+            <End Role="PartijZetels" EntitySet="PartijZetels" />
+          </AssociationSet>
           <AssociationSet Name="FK_Stemmingen_Partijen" Association="Self.FK_Stemmingen_Partijen">
             <End Role="Partijen" EntitySet="Partijen" />
             <End Role="Stemmingen" EntitySet="Stemmingen" />
@@ -147,21 +176,32 @@
           </Key>
           <Property Name="PartijID" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="PartijNaam" Type="String" MaxLength="32" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="AantalZetels" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="PartijZetels" Relationship="Self.FK_PartijZetels_Partijen" FromRole="Partijen" ToRole="PartijZetels" />
+          <NavigationProperty Name="Stemmingen" Relationship="Self.FK_Stemmingen_Partijen" FromRole="Partijen" ToRole="Stemmingen" />
+        </EntityType>
+        <EntityType Name="PartijZetels">
+          <Key>
+            <PropertyRef Name="PartijID" />
+            <PropertyRef Name="VanDatum" />
+          </Key>
+          <Property Name="PartijID" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="VanDatum" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="TotDatum" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Stemmingen" Relationship="Self.FK_Stemmingen_Partijen" FromRole="Partijen" ToRole="Stemmingen" />
+          <Property Name="AantalZetels" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Partijen" Relationship="Self.FK_PartijZetels_Partijen" FromRole="PartijZetels" ToRole="Partijen" />
         </EntityType>
         <EntityType Name="Stemmingen">
           <Key>
             <PropertyRef Name="WetID" />
             <PropertyRef Name="PartijID" />
+            <PropertyRef Name="StemDatum" />
           </Key>
           <Property Name="WetID" Type="String" MaxLength="32" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="PartijID" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="Voor" Type="Int32" Nullable="false" />
           <Property Name="Tegen" Type="Int32" Nullable="false" />
           <Property Name="Blanco" Type="Int32" Nullable="false" />
+          <Property Name="StemDatum" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Partijen" Relationship="Self.FK_Stemmingen_Partijen" FromRole="Stemmingen" ToRole="Partijen" />
           <NavigationProperty Name="Wetten" Relationship="Self.FK_Stemmingen_Wetten" FromRole="Stemmingen" ToRole="Wetten" />
         </EntityType>
@@ -184,6 +224,7 @@
           <Property Name="WetNaam" Type="String" MaxLength="120" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="WetOmschrijving" Type="String" MaxLength="512" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="WetLink" Type="String" MaxLength="120" FixedLength="true" Unicode="false" />
+          <Property Name="WetType" Type="String" MaxLength="16" FixedLength="true" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Stemmingen" Relationship="Self.FK_Stemmingen_Wetten" FromRole="Wetten" ToRole="Stemmingen" />
           <NavigationProperty Name="WetScope" Relationship="Self.FK_WetScope_Wetten" FromRole="Wetten" ToRole="WetScope" />
         </EntityType>
@@ -198,6 +239,20 @@
             </Principal>
             <Dependent Role="WetScope">
               <PropertyRef Name="OnderwerpID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PartijZetels_Partijen">
+          <End Role="Partijen" Type="Self.Partijen" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PartijZetels" Type="Self.PartijZetels" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Partijen">
+              <PropertyRef Name="PartijID" />
+            </Principal>
+            <Dependent Role="PartijZetels">
+              <PropertyRef Name="PartijID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -244,12 +299,17 @@
         <EntityContainer Name="BCentities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Onderwerpen" EntityType="Self.Onderwerpen" />
           <EntitySet Name="Partijen" EntityType="Self.Partijen" />
+          <EntitySet Name="PartijZetels" EntityType="Self.PartijZetels" />
           <EntitySet Name="Stemmingen" EntityType="Self.Stemmingen" />
           <EntitySet Name="WetScope" EntityType="Self.WetScope" />
           <EntitySet Name="Wetten" EntityType="Self.Wetten" />
           <AssociationSet Name="FK_WetScope_Onderwerpen" Association="Self.FK_WetScope_Onderwerpen">
             <End Role="Onderwerpen" EntitySet="Onderwerpen" />
             <End Role="WetScope" EntitySet="WetScope" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PartijZetels_Partijen" Association="Self.FK_PartijZetels_Partijen">
+            <End Role="Partijen" EntitySet="Partijen" />
+            <End Role="PartijZetels" EntitySet="PartijZetels" />
           </AssociationSet>
           <AssociationSet Name="FK_Stemmingen_Partijen" Association="Self.FK_Stemmingen_Partijen">
             <End Role="Partijen" EntitySet="Partijen" />
@@ -283,9 +343,16 @@
               <MappingFragment StoreEntitySet="Partijen">
                 <ScalarProperty Name="PartijID" ColumnName="PartijID" />
                 <ScalarProperty Name="PartijNaam" ColumnName="PartijNaam" />
-                <ScalarProperty Name="AantalZetels" ColumnName="AantalZetels" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PartijZetels">
+            <EntityTypeMapping TypeName="BCmodel.PartijZetels">
+              <MappingFragment StoreEntitySet="PartijZetels">
+                <ScalarProperty Name="PartijID" ColumnName="PartijID" />
                 <ScalarProperty Name="VanDatum" ColumnName="VanDatum" />
                 <ScalarProperty Name="TotDatum" ColumnName="TotDatum" />
+                <ScalarProperty Name="AantalZetels" ColumnName="AantalZetels" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -297,6 +364,7 @@
                 <ScalarProperty Name="Voor" ColumnName="Voor" />
                 <ScalarProperty Name="Tegen" ColumnName="Tegen" />
                 <ScalarProperty Name="Blanco" ColumnName="Blanco" />
+                <ScalarProperty Name="StemDatum" ColumnName="StemDatum" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -316,6 +384,7 @@
                 <ScalarProperty Name="WetNaam" ColumnName="WetNaam" />
                 <ScalarProperty Name="WetOmschrijving" ColumnName="WetOmschrijving" />
                 <ScalarProperty Name="WetLink" ColumnName="WetLink" />
+                <ScalarProperty Name="WetType" ColumnName="WetType" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

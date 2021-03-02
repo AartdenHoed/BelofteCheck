@@ -33,10 +33,12 @@ namespace BelofteCheck.Controllers
             {
                 foreach (var entry in q)
                 {
-                    Onderwerp ond = new Onderwerp();
-                    ond.Omschrijving = entry.Omschrijving;
-                    ond.OnderwerpID = entry.OnderwerpID;
-                   
+                    Onderwerp ond = new Onderwerp
+                    {
+                        Omschrijving = entry.Omschrijving,
+                        OnderwerpID = entry.OnderwerpID
+                    };
+
                     onderwerpenListVM.OnderwerpenLijst.Add(ond);
                 }
                 onderwerpenListVM.MessageSection.SetMessage(title, level, msg);
@@ -152,7 +154,7 @@ namespace BelofteCheck.Controllers
                 {
                     string exnum = ex.Message;
                     
-                    string emsg = "Onderwerp '" + onderwerpenVM.onderwerp.OnderwerpID.Trim() + "' bestaat al";
+                    string emsg = "Onderwerp '" + onderwerpenVM.onderwerp.OnderwerpID.Trim() + "' bestaat al? (" + exnum + ")";
                     string elevel = onderwerpenVM.MessageSection.Error;
                     onderwerpenVM.MessageSection.SetMessage(title, elevel, emsg );
                     return View(onderwerpenVM);
