@@ -43,6 +43,42 @@ function setreq(me) {
         
     }
 }
+function setmsg(me) {
+    
+    x = $(me).val();
+    //alert(x);
+    if (x == "fout") {
+        //alert("show");
+        $(me).parent().parent().find('.bc-emsg').show();
+        
+    }
+    else {
+        $(me).parent().parent().find('.bc-emsg').hide();
+
+    }
+}
+$(".bc-flag").trigger("change");
+
+function setreq2(me) { 
+    
+    if ($(me).is(":checked")) {
+        // alert("checked");        
+       
+        $(me).parent().parent().find('.bc-area').attr('required', true);
+        $(me).parent().parent().find('.bc-area').attr('readonly', false);
+
+    }
+    else {
+        // alert("not checked");
+       
+        $(me).parent().parent().find('.bc-area').attr('required', false);
+        $(me).parent().parent().find('.bc-area').attr('readonly', true);
+       
+
+
+    }
+}
 
 $(".bc-areatrigger").trigger("change");
+
 

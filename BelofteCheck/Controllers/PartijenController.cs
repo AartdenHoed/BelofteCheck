@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -33,10 +34,12 @@ namespace BelofteCheck.Controllers
             {
                 foreach (var entry in q)
                 {
-                    Partij part = new Partij();
-                    part.PartijID = entry.PartijID;
-                    part.PartijNaam = entry.PartijNaam;
-                    
+                    Partij part = new Partij
+                    {
+                        PartijID = entry.PartijID,
+                        PartijNaam = entry.PartijNaam
+                    };
+
                     partijenListVM.PartijenLijst.Add(part);
                 }
                 partijenListVM.MessageSection.SetMessage(title, level, msg);
@@ -238,22 +241,26 @@ namespace BelofteCheck.Controllers
                              WetNaam = lj2 == null ? "nvt" : lj2.WetNaam,
                              WetOmschrijving = lj2 == null ? "nvt" : lj2.WetOmschrijving,
                              WetLink = lj2 == null ? "nvt" : lj2.WetLink
+                              
                          }
 
                         ;
 
             List<StemObject> stemlijst = query1.ToList();
-            
+
             var query2 = from p in db.Partijen
                          where p.PartijID == PartijID
                          join z in db.PartijZetels on p.PartijID equals z.PartijID into ljoin1
-                         from lj1 in ljoin1.DefaultIfEmpty()                         
-                         select new ZetelObject
+                         from lj1 in ljoin1.DefaultIfEmpty()
+                         select new ZetelObject 
                          {
                              PartijID = p.PartijID,
                              AantalZetels = lj1 == null ? 0 : lj1.AantalZetels,
                              VanDatum = lj1 == null ? DateTime.MinValue : lj1.VanDatum,
-                             TotDatum = lj1 == null ? DateTime.MinValue : lj1.TotDatum
+                             TotDatum = lj1 == null ? DateTime.MinValue : lj1.TotDatum,
+                             IncludeIfSelected = lj1 == null ? false : true,
+                             InError = ZetelObject.Ok,
+                             ErrorMsg = " "
                          }
 
                         ;
@@ -261,7 +268,7 @@ namespace BelofteCheck.Controllers
             List<ZetelObject> zetellijst = query2.ToList();
             if (!((zetellijst[0].VanDatum == DateTime.MinValue) && (zetellijst[0].TotDatum == DateTime.MinValue))) {
                 // add null entry
-                ZetelObject extra = new ZetelObject { AantalZetels = 0, VanDatum = DateTime.MinValue, TotDatum = DateTime.MinValue };
+                ZetelObject extra = new ZetelObject { AantalZetels = 0, VanDatum = DateTime.MinValue, TotDatum = DateTime.MinValue, IncludeIfSelected = false };
                 zetellijst.Add(extra); 
             }
 
@@ -281,22 +288,47 @@ namespace BelofteCheck.Controllers
         public ActionResult Edit(PartijenVM partijenVM)
         {
             string title = "Bewerken";
+            string level = "";
+            string msg = "";
 
             if (ModelState.IsValid)
             {
+                partijenVM.CheckZetels();
+
+                if (partijenVM.ZetelError)
+                {
+                    level = partijenVM.MessageSection.Error;
+                    msg = "ERROR - periodes overlappen of periodes hebben einddatum die voor de begindatum ligt";
+                    partijenVM.MessageSection.SetMessage(title, level, msg);
+                    if (!((partijenVM.ZetelLijst[0].VanDatum == DateTime.MinValue) && (partijenVM.ZetelLijst[0].TotDatum == DateTime.MinValue)))
+                    {
+                        // add null entry
+                        ZetelObject extra = new ZetelObject { AantalZetels = 0, VanDatum = DateTime.MinValue, TotDatum = DateTime.MinValue, IncludeIfSelected = false };
+                        partijenVM.ZetelLijst.Add(extra);
+                    }
+                    ModelState.Clear();
+                    return View(partijenVM);
+                }
+               
+                //var zetels = from o in db.PartijZetels
+                //         where o.PartijID == partijenVM.partij.PartijID
+                //         select o;
+                //foreach (var zd in zetels)
+                //{                   
+                //    db.PartijZetels.Remove(zd);
+                //    db.SaveChanges();
+                //}
+                db.PartijZetels.RemoveRange(db.PartijZetels.Where(c => c.PartijID == partijenVM.partij.PartijID.Trim()));
+
+                db.SaveChanges();
+
                 Partijen partijen = new Partijen();
                 partijen.Fill(partijenVM);
+                db.Partijen.Attach(partijen);
                 db.Entry(partijen).State = EntityState.Modified;
                 db.SaveChanges();
-                var zetels = from o in db.PartijZetels
-                             where o.PartijID == partijenVM.partij.PartijID
-                             select o;
-                foreach (var zd in zetels)
-                {
-                    db.PartijZetels.Remove(zd);
-                }
-                db.SaveChanges();
-                
+                    
+
                 foreach (ZetelObject zo in partijenVM.ZetelLijst)
                 {
                     PartijZetels pz = new PartijZetels();
@@ -304,6 +336,7 @@ namespace BelofteCheck.Controllers
                     db.PartijZetels.Add(pz);                 
                 }
                 db.SaveChanges();
+                    
 
                 TempData["BCmessage"] = "Partij " + partijenVM.partij.PartijID.Trim() + " is gewijzigd";
                 TempData["BCerrorlevel"] = partijenVM.MessageSection.Info;
@@ -311,8 +344,8 @@ namespace BelofteCheck.Controllers
                 return RedirectToAction("Details", new { PartijID = partijenVM.partij.PartijID });
             }
 
-            string level = partijenVM.MessageSection.Error;
-            string msg = "ERROR - Partij " + partijenVM.partij.PartijID.Trim() + " is NIET gewijzigd";
+            level = partijenVM.MessageSection.Error;
+            msg = "ERROR - Partij " + partijenVM.partij.PartijID.Trim() + " is NIET gewijzigd";
             partijenVM.MessageSection.SetMessage(title, level, msg);
             return View(partijenVM);
         }
