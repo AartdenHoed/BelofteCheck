@@ -12,6 +12,9 @@ namespace BelofteCheck.ViewModels
         public string InError { get; set; }
         public static string Fout = "fout";
         public static string Ok = "ok";
+        public static string Na = "n/a";
+
+        [DisplayName("Opmerking")]
         public string ErrorMsg { get; set; }
         [DisplayName("Unieke partij ID")]
         public string PartijID { get; set; }
@@ -22,12 +25,12 @@ namespace BelofteCheck.ViewModels
 
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [DataType(DataType.Date)]
-        [DisplayName("Vanaf datum")]
+        [DisplayName("Vanaf (dd-mm-jjjj)")]
         public System.DateTime VanDatum { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [DataType(DataType.Date)]
-        [DisplayName("Tot en met datum")]
+        [DisplayName("Tot en met (dd-mm-jjjj)")]
         public System.DateTime TotDatum { get; set; }
         
     }

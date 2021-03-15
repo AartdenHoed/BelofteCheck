@@ -46,10 +46,11 @@
                             @Html.DisplayFor(model => model.partij.PartijNaam)
                         </td>
                         <td class="bc-08">
-                            @Html.DisplayFor(model => model.ZetelLijst[i].VanDatum)
+                            @Html.TextBoxFor(model => model.ZetelLijst[i].VanDatum, "{0:dd-MM-yyyy}", new { @readonly = "readonly" })
+
                         </td>
                         <td class="bc-08">
-                            @Html.DisplayFor(model => model.ZetelLijst[i].TotDatum)
+                            @Html.TextBoxFor(model => model.ZetelLijst[i].TotDatum, "{0:dd-MM-yyyy}", new { @readonly = "readonly" })
                         </td>
                         <td class="bc-08">
                             @Html.DisplayFor(model => model.ZetelLijst[i].AantalZetels)
@@ -60,27 +61,28 @@
                 }
                 else
                 {
-                <tr>
+    <tr>
 
-                    <td class="bc-08">
-                        &nbsp;
-                    </td>
+        <td class="bc-08">
+            &nbsp;
+        </td>
 
-                    <td class="bc-16">
-                        &nbsp;
-                    </td>
-                    <td class="bc-08">
-                        @Html.DisplayFor(model => model.ZetelLijst[i].VanDatum)
-                    </td>
-                    <td class="bc-08">
-                        @Html.DisplayFor(model => model.ZetelLijst[i].TotDatum)
-                    </td>
-                    <td class="bc-08">
-                        @Html.DisplayFor(model => model.ZetelLijst[i].AantalZetels)
-                    </td>
+        <td class="bc-16">
+            &nbsp;
+        </td>
+        <td class="bc-08">
+            @Html.TextBoxFor(model => model.ZetelLijst[i].VanDatum, "{0:dd-MM-yyyy}", new { @readonly = "readonly" })
+
+        </td>
+        <td class="bc-08">
+            @Html.TextBoxFor(model => model.ZetelLijst[i].TotDatum, "{0:dd-MM-yyyy}", new { @readonly = "readonly" })
+        </td>
+        <td class="bc-08">
+            @Html.DisplayFor(model => model.ZetelLijst[i].AantalZetels)
+        </td>
 
 
-                </tr>
+    </tr>
                 }
 
 

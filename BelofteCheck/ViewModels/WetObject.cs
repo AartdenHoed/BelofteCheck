@@ -21,6 +21,10 @@ namespace BelofteCheck.ViewModels
         [DisplayName("URL van deze wet")]
         [MaxLength(120)]
         public string WetLink { get; set; }
+        [DisplayName("Type wetsvoorstel")]
+        [Required]
+        [MaxLength(16)]
+        public string WetType { get; set; }
         [Required]
         [DisplayName("Unieke onderwerp ID")]
         [MaxLength(32)]

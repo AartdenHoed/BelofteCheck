@@ -1,0 +1,58 @@
+﻿@model BelofteCheck.Stemmingen
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Stemmingen</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Voor)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Voor)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tegen)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tegen)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Blanco)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Blanco)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Partijen.PartijNaam)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Partijen.PartijNaam)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Wetten.WetNaam)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Wetten.WetNaam)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

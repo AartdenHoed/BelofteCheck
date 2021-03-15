@@ -36,7 +36,7 @@ namespace BelofteCheck.Controllers
                 {
                     Partij part = new Partij
                     {
-                        PartijID = entry.PartijID,
+                        PartijID = entry.PartijID.ToUpper(),
                         PartijNaam = entry.PartijNaam
                     };
 
@@ -118,13 +118,16 @@ namespace BelofteCheck.Controllers
                          where p.PartijID == PartijID
                          join z in db.PartijZetels on p.PartijID equals z.PartijID into ljoin1
                          from lj1 in ljoin1.DefaultIfEmpty()
-                         
+
                          select new ZetelObject
                          {
                              PartijID = p.PartijID,
                              AantalZetels = lj1 == null ? 0 : lj1.AantalZetels,
-                             VanDatum  = lj1 == null ? DateTime.MinValue : lj1.VanDatum,
-                             TotDatum = lj1 == null ? DateTime.MinValue : lj1.TotDatum
+                             VanDatum = lj1 == null ? DateTime.MinValue : lj1.VanDatum,
+                             TotDatum = lj1 == null ? DateTime.MinValue : lj1.TotDatum,
+                             IncludeIfSelected = true,
+                             InError = " " ,
+                             ErrorMsg = " "
                          }
 
                         ;
@@ -258,9 +261,9 @@ namespace BelofteCheck.Controllers
                              AantalZetels = lj1 == null ? 0 : lj1.AantalZetels,
                              VanDatum = lj1 == null ? DateTime.MinValue : lj1.VanDatum,
                              TotDatum = lj1 == null ? DateTime.MinValue : lj1.TotDatum,
-                             IncludeIfSelected = lj1 == null ? false : true,
-                             InError = ZetelObject.Ok,
-                             ErrorMsg = " "
+                             IncludeIfSelected =  true,
+                             InError = lj1 == null ? ZetelObject.Na : " ",
+                             ErrorMsg = lj1 == null ? "Na aanvinken kan deze entry worden toegevoegd" : " "
                          }
 
                         ;
@@ -268,13 +271,16 @@ namespace BelofteCheck.Controllers
             List<ZetelObject> zetellijst = query2.ToList();
             if (!((zetellijst[0].VanDatum == DateTime.MinValue) && (zetellijst[0].TotDatum == DateTime.MinValue))) {
                 // add null entry
-                ZetelObject extra = new ZetelObject { AantalZetels = 0, VanDatum = DateTime.MinValue, TotDatum = DateTime.MinValue, IncludeIfSelected = false };
+                ZetelObject extra = new ZetelObject { AantalZetels = 0, VanDatum = DateTime.MinValue, TotDatum = DateTime.MinValue, IncludeIfSelected = true,
+                                                         ErrorMsg = "Na aanvinken kan deze entry worden toegevoegd", InError = ZetelObject.Na, PartijID = PartijID };
                 zetellijst.Add(extra); 
             }
 
             partijenVM.Fill(partij, stemlijst, zetellijst);
 
             partijenVM.MessageSection.SetMessage(title, level, msg);
+
+            ModelState.Clear();
 
             return View(partijenVM);
 
@@ -421,7 +427,11 @@ namespace BelofteCheck.Controllers
                              PartijID = p.PartijID,
                              AantalZetels = lj1 == null ? 0 : lj1.AantalZetels,
                              VanDatum = lj1 == null ? DateTime.MinValue : lj1.VanDatum,
-                             TotDatum = lj1 == null ? DateTime.MinValue : lj1.TotDatum
+                             TotDatum = lj1 == null ? DateTime.MinValue : lj1.TotDatum,
+                             IncludeIfSelected = true,
+                             InError = " ",
+                             ErrorMsg = " "
+
                          }
 
                         ;
@@ -496,7 +506,10 @@ namespace BelofteCheck.Controllers
                              PartijID = p.PartijID,
                              AantalZetels = lj1 == null ? 0 : lj1.AantalZetels,
                              VanDatum = lj1 == null ? DateTime.MinValue : lj1.VanDatum,
-                             TotDatum = lj1 == null ? DateTime.MinValue : lj1.TotDatum
+                             TotDatum = lj1 == null ? DateTime.MinValue : lj1.TotDatum,
+                             IncludeIfSelected = lj1 == null ? false : true,
+                             InError = lj1 == null ? " " : ZetelObject.Ok,
+                             ErrorMsg = lj1 == null ? "Na aanvinken kan deze entry worden toegevoegd" : " "
                          }
 
                         ;

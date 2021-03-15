@@ -7,7 +7,7 @@ namespace BelofteCheck
     {
         public void Fill(string partijid, ZetelObject zo)
         {
-            this.PartijID = partijid;
+            this.PartijID = partijid.Trim().ToUpper();
             this.AantalZetels = zo.AantalZetels;
             this.VanDatum = zo.VanDatum;
             this.TotDatum = zo.TotDatum;

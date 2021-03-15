@@ -36,7 +36,7 @@ namespace BelofteCheck.Controllers
                     Onderwerp ond = new Onderwerp
                     {
                         Omschrijving = entry.Omschrijving,
-                        OnderwerpID = entry.OnderwerpID
+                        OnderwerpID = entry.OnderwerpID.ToUpper()
                     };
 
                     onderwerpenListVM.OnderwerpenLijst.Add(ond);

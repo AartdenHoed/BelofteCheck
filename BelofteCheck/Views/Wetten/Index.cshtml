@@ -16,6 +16,9 @@
         <th class="'bc-16">
             @Html.DisplayNameFor(model => model.WettenLijst[0].WetNaam)
         </th>
+        <th class="'bc-08">
+            @Html.DisplayNameFor(model => model.WettenLijst[0].WetType)
+        </th>
         <th class="bc-36">
             @Html.DisplayNameFor(model => model.WettenLijst[0].WetOmschrijving)
         </th>
@@ -32,7 +35,10 @@
         @Html.DisplayFor(modelItem => item.WetID)
     </td>
     <td class="bc-16">
-    @Html.DisplayFor(modelItem => item.WetNaam)
+        @Html.DisplayFor(modelItem => item.WetNaam)
+    </td>
+    <td class="bc-08">
+        @Html.DisplayFor(modelItem => item.WetType)
     </td>
     <td class="bc-36">
         @Html.DisplayFor(modelItem => item.WetOmschrijving)

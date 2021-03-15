@@ -37,9 +37,10 @@ namespace BelofteCheck.Controllers
                     {
                         WetObject wo = new WetObject();
                         wo.WetOmschrijving = entry.WetOmschrijving;
-                        wo.WetID = entry.WetID;
+                        wo.WetID = entry.WetID.ToUpper();
                         wo.WetLink = entry.WetLink;
                         wo.WetNaam = entry.WetNaam;
+                        wo.WetType = entry.WetType.ToUpper();
                         wettenListVM.WettenLijst.Add(wo);
                     }
                     wettenListVM.MessageSection.SetMessage(title, level, msg);
@@ -91,6 +92,7 @@ namespace BelofteCheck.Controllers
                             WetNaam = w.WetNaam,
                             WetOmschrijving = w.WetOmschrijving,
                             WetLink = w.WetLink,
+                            WetType = w.WetType,
                             OnderwerpID = lj1 == null ? "<geen>" : lj1.OnderwerpID,
                             Toelichting = lj1 == null ? "nvt" : lj1.Toelichting,
                             Omschrijving = lj2 == null ? "nvt" : lj2.Omschrijving
@@ -224,6 +226,7 @@ namespace BelofteCheck.Controllers
                             WetNaam = w.WetNaam,
                             WetOmschrijving = w.WetOmschrijving,
                             WetLink = w.WetLink,
+                            WetType = w.WetType,
                             OnderwerpID = lj2.OnderwerpID,
                             Toelichting = lj1 == null ? "" : lj1.Toelichting,
                             Omschrijving = lj2.Omschrijving
@@ -363,6 +366,7 @@ namespace BelofteCheck.Controllers
                             WetNaam = w.WetNaam,
                             WetOmschrijving = w.WetOmschrijving,
                             WetLink = w.WetLink,
+                            WetType = w.WetType,
                             OnderwerpID = lj1 == null ? "<geen>" : lj1.OnderwerpID,
                             Toelichting = lj1 == null ? "nvt" : lj1.Toelichting,
                             Omschrijving = lj2 == null ? "nvt" : lj2.Omschrijving

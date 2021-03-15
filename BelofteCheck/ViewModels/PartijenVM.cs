@@ -25,18 +25,18 @@ namespace BelofteCheck.ViewModels
         public void Fill(Partijen p, List<StemObject> sl, List<ZetelObject> zl)
         // Fill view model from DB query list
         {
-            this._partij.PartijID = p.PartijID;
-            this._partij.PartijNaam = p.PartijNaam;
+            this._partij.PartijID = p.PartijID.Trim().ToUpper();
+            this._partij.PartijNaam = p.PartijNaam.Trim();
            
             foreach (StemObject so in sl)
             {
                 StemObject s = new StemObject
                 {
-                    WetOmschrijving = so.WetOmschrijving,
-                    WetID = so.WetID,
-                    WetNaam = so.WetNaam,
-                    WetLink = so.WetLink,
-                    PartijID = so.PartijID,
+                    WetOmschrijving = so.WetOmschrijving.Trim(),
+                    WetID = so.WetID.Trim().ToUpper(),
+                    WetNaam = so.WetNaam.Trim(),
+                    WetLink = so.WetLink.Trim(),
+                    PartijID = so.PartijID.Trim().ToUpper(),
                     Voor = so.Voor,
                     Tegen = so.Tegen,
                     Blanco = so.Blanco
@@ -46,21 +46,27 @@ namespace BelofteCheck.ViewModels
             }
             foreach (ZetelObject zo in zl)
             {
-                ZetelObject z = new ZetelObject
+                if (zo.IncludeIfSelected)
                 {
-                    AantalZetels = zo.AantalZetels,
-                    VanDatum = zo.VanDatum,
-                    TotDatum = zo.TotDatum,
-                    PartijID = zo.PartijID,
-                    IncludeIfSelected = zo.IncludeIfSelected,
-                    InError = zo.InError,
-                    ErrorMsg = zo.ErrorMsg
 
-                };
+                    ZetelObject z = new ZetelObject
+                    {
+                        AantalZetels = zo.AantalZetels,
+                        VanDatum = zo.VanDatum,
+                        TotDatum = zo.TotDatum,
+                        PartijID = this._partij.PartijID,
+                        IncludeIfSelected = zo.IncludeIfSelected,
+                        InError = zo.InError,
+                        ErrorMsg = zo.ErrorMsg
 
-                this._ZetelLijst.Add(z);
+                    };
+                    if ((z.VanDatum == DateTime.MinValue) && (z.TotDatum == DateTime.MinValue))
+                    {
+                        z.IncludeIfSelected = false;
+                    }
+                    this._ZetelLijst.Add(z);
+                }                
             }
-
 
         }
 
@@ -70,16 +76,18 @@ namespace BelofteCheck.ViewModels
             List<ZetelObject> templist = new List<ZetelObject>();
             foreach (ZetelObject x in this._ZetelLijst)
             {
-                ZetelObject y = new ZetelObject
-                {
-                    AantalZetels = x.AantalZetels,
-                    IncludeIfSelected = x.IncludeIfSelected,
-                    InError = x.InError,
-                    PartijID = x.PartijID,
-                    TotDatum = x.TotDatum,
-                    VanDatum = x.VanDatum
-                };
-                templist.Add(y);
+                if (x.IncludeIfSelected) {
+                    ZetelObject y = new ZetelObject
+                    {
+                        AantalZetels = x.AantalZetels,
+                        IncludeIfSelected = x.IncludeIfSelected,
+                        InError = x.InError,
+                        PartijID = this._partij.PartijID,
+                        TotDatum = x.TotDatum,
+                        VanDatum = x.VanDatum
+                    };
+                    templist.Add(y);
+                }
             }
               
             this._ZetelLijst.Clear();

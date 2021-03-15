@@ -47,7 +47,7 @@ function setmsg(me) {
     
     x = $(me).val();
     //alert(x);
-    if (x == "fout") {
+    if ((x == "fout") || (x == "n/a")) {
         //alert("show");
         $(me).parent().parent().find('.bc-emsg').show();
         

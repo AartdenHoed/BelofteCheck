@@ -21,22 +21,22 @@ namespace BelofteCheck.ViewModels
         public void Fill(List<WetObject> wl)
         // Fill view model from DB query list
         {
-            this.onderwerp.OnderwerpID = wl[0].OnderwerpID;
-            this.onderwerp.Omschrijving = wl[0].Omschrijving;
+            this._onderwerp.OnderwerpID = wl[0].OnderwerpID;
+            this._onderwerp.Omschrijving = wl[0].Omschrijving;
             
 
             foreach (WetObject wo in wl)
             {
                 WetObject w = new WetObject();
-                w.WetOmschrijving = wo.WetOmschrijving;
-                w.WetID = wo.WetID;
-                w.WetNaam = wo.WetNaam;
-                w.WetLink = wo.WetLink;
-                w.Toelichting = wo.Toelichting;
-                w.OnderwerpID = wo.OnderwerpID;
-                w.Omschrijving = wo.Omschrijving;
+                w.WetOmschrijving = wo.WetOmschrijving.Trim();
+                w.WetID = wo.WetID.Trim().ToUpper();
+                w.WetNaam = wo.WetNaam.Trim();
+                w.WetLink = wo.WetLink.Trim();
+                w.Toelichting = wo.Toelichting.Trim();
+                w.OnderwerpID = wo.OnderwerpID.Trim().ToUpper();
+                w.Omschrijving = wo.Omschrijving.Trim();
                
-                this.WettenLijst.Add(w);
+                this._WettenLijst.Add(w);
             }
 
 

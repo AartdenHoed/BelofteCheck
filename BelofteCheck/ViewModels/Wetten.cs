@@ -7,10 +7,11 @@ namespace BelofteCheck
     {
         public void Fill(WettenVM vm)
         {
-            this.WetID = vm.wet.WetID;
-            this.WetLink = vm.wet.WetLink;
-            this.WetNaam = vm.wet.WetNaam;
-            this.WetOmschrijving = vm.wet.WetOmschrijving;
+            this.WetID = vm.wet.WetID.Trim().ToUpper();
+            this.WetLink = vm.wet.WetLink.Trim();
+            this.WetNaam = vm.wet.WetNaam.Trim();
+            this.WetOmschrijving = vm.wet.WetOmschrijving.Trim();
+            this.WetType = vm.wet.WetType.Trim().ToUpper();
             
         }
     }

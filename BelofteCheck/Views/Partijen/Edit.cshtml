@@ -74,14 +74,14 @@
 
                 <td class="bc-08">
 
-                    @Html.EditorFor(Item1 => Item1.ZetelLijst[i].VanDatum, new { htmlAttributes = new { @class = "bc-area bc-field" } })
+                    @Html.EditorFor(Item1 => Item1.ZetelLijst[i].VanDatum, "{0:yyyy-MM-dd}", new { htmlAttributes = new { @class = "bc-area bc-field" } })
                     @Html.ValidationMessageFor(Item1 => Item1.ZetelLijst[i].VanDatum, "", new { @class = "bc-error" })
 
 
                 </td>
                 <td class="bc-08">
 
-                    @Html.EditorFor(Item1 => Item1.ZetelLijst[i].TotDatum, new { htmlAttributes = new { @class = "bc-area bc-field" } })
+                    @Html.EditorFor(Item1 => Item1.ZetelLijst[i].TotDatum, "{0:yyyy-MM-dd}", new { htmlAttributes = new { @class = "bc-area bc-field" } })
                     @Html.ValidationMessageFor(Item1 => Item1.ZetelLijst[i].TotDatum, "", new { @class = "bc-error" })
 
                 </td>
@@ -115,7 +115,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Opslaan" class="btn btn-default" /> &nbsp;
+                <input type="submit" value="Opslaan" class="bc-button" /> &nbsp;
                 @Html.ActionLink("Naar Overzicht", "Index")
             </div>
         </div>

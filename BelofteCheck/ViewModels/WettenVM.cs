@@ -21,17 +21,20 @@ namespace BelofteCheck.ViewModels
         public void Fill(List<WetObject> wl)
         // Fill view model from DB query list
         {
-            this.wet.WetID = wl[0].WetID;
-            this.wet.WetNaam = wl[0].WetNaam;
-            this.wet.WetOmschrijving = wl[0].WetOmschrijving;
-            this.wet.WetLink = wl[0].WetLink;
+            this._wet.WetID = wl[0].WetID.Trim().ToUpper();
+            this._wet.WetNaam = wl[0].WetNaam.Trim();
+            this._wet.WetOmschrijving = wl[0].WetOmschrijving.Trim();
+            this._wet.WetLink = wl[0].WetLink.Trim();
+            this._wet.WetType = wl[0].WetType.Trim().ToUpper();
          
             foreach (WetObject wo in wl)
             {
-                Onderwerp v = new Onderwerp();
-                v.Omschrijving = wo.Omschrijving;
-                v.OnderwerpID = wo.OnderwerpID;
-                v.Toelichting = wo.Toelichting;
+                Onderwerp v = new Onderwerp
+                {
+                    Omschrijving = wo.Omschrijving.Trim(),
+                    OnderwerpID = wo.OnderwerpID.Trim().ToUpper(),
+                    Toelichting = wo.Toelichting.Trim()
+                };
                 if (string.IsNullOrEmpty(v.Toelichting))
                 {
                     v.Geselecteerd = false;
@@ -40,7 +43,7 @@ namespace BelofteCheck.ViewModels
                 {
                     v.Geselecteerd = true;
                 }
-                this.OnderwerpenLijst.Add(v);
+                this._OnderwerpenLijst.Add(v);
             }
 
 
