@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace BelofteCheck.ViewModels
 {
@@ -10,7 +8,7 @@ namespace BelofteCheck.ViewModels
         public bool DeleteAllowed { get; set; }
         public bool ZetelError { get; set; }
 
-        private BCmessage _MessageSection = new BCmessage();   
+        private BCmessage _MessageSection = new BCmessage();
         public BCmessage MessageSection { get { return _MessageSection; } set { _MessageSection = value; } }
 
         private Partij _partij = new Partij();
@@ -27,7 +25,7 @@ namespace BelofteCheck.ViewModels
         {
             this._partij.PartijID = p.PartijID.Trim().ToUpper();
             this._partij.PartijNaam = p.PartijNaam.Trim();
-           
+
             foreach (StemObject so in sl)
             {
                 StemObject s = new StemObject
@@ -65,7 +63,7 @@ namespace BelofteCheck.ViewModels
                         z.IncludeIfSelected = false;
                     }
                     this._ZetelLijst.Add(z);
-                }                
+                }
             }
 
         }
@@ -76,7 +74,8 @@ namespace BelofteCheck.ViewModels
             List<ZetelObject> templist = new List<ZetelObject>();
             foreach (ZetelObject x in this._ZetelLijst)
             {
-                if (x.IncludeIfSelected) {
+                if (x.IncludeIfSelected)
+                {
                     ZetelObject y = new ZetelObject
                     {
                         AantalZetels = x.AantalZetels,
@@ -89,7 +88,7 @@ namespace BelofteCheck.ViewModels
                     templist.Add(y);
                 }
             }
-              
+
             this._ZetelLijst.Clear();
             templist.Sort((x, y) => DateTime.Compare(x.VanDatum, y.VanDatum));
             DateTime lasttot = DateTime.MinValue;
@@ -116,7 +115,7 @@ namespace BelofteCheck.ViewModels
                 lasttot = zo.TotDatum;
             }
 
-            return ;
+            return;
         }
 
     }

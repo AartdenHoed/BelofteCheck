@@ -1,11 +1,9 @@
-﻿using System.Data.Entity;
-using System.Linq;
-using System.Data.Linq;
-using System.Web.Mvc;
-using BelofteCheck.ViewModels;
-using System.Data.SqlClient;
+﻿using BelofteCheck.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
+using System.Web.Mvc;
 
 namespace BelofteCheck.Controllers
 {
@@ -17,7 +15,7 @@ namespace BelofteCheck.Controllers
         // GET: Onderwerpen
         public ActionResult Index()
         {
-            
+
             OnderwerpenListVM onderwerpenListVM = new OnderwerpenListVM();
 
             string msg = "Selecteer een bewerking op een onderwerp of voeg een onderwerp toe";
@@ -55,13 +53,13 @@ namespace BelofteCheck.Controllers
             onderwerpenListVM.MessageSection.SetMessage(title, level, msg);
             return View(onderwerpenListVM);
 
-            
+
         }
 
         // GET: Onderwerpen/Details/5
         public ActionResult Details(string OnderwerpID)
         {
-           
+
             OnderwerpenVM onderwerpenVM = new OnderwerpenVM();
             string title = "Details";
             string level = onderwerpenVM.MessageSection.Info;
@@ -112,12 +110,12 @@ namespace BelofteCheck.Controllers
             }
 
             onderwerpenVM.Fill(q);
-            
+
             onderwerpenVM.MessageSection.SetMessage(title, level, msg);
 
             return View(onderwerpenVM);
-                
-         }
+
+        }
 
         // GET: Onderwerpen/Create
         public ActionResult Create()
@@ -135,43 +133,44 @@ namespace BelofteCheck.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-       
+
         public ActionResult Create(OnderwerpenVM onderwerpenVM)
         {
             string title = "Nieuw";
-           
+
 
             if (ModelState.IsValid)
             {
                 Onderwerpen onderwerpen = new Onderwerpen();
                 onderwerpen.OnderwerpID = onderwerpenVM.onderwerp.OnderwerpID;
                 onderwerpen.Omschrijving = onderwerpenVM.onderwerp.Omschrijving;
-                try {
+                try
+                {
                     db.Onderwerpen.Add(onderwerpen);
                     db.SaveChanges();
                 }
                 catch (Exception ex)
                 {
                     string exnum = ex.Message;
-                    
+
                     string emsg = "Onderwerp '" + onderwerpenVM.onderwerp.OnderwerpID.Trim() + "' bestaat al? (" + exnum + ")";
                     string elevel = onderwerpenVM.MessageSection.Error;
-                    onderwerpenVM.MessageSection.SetMessage(title, elevel, emsg );
+                    onderwerpenVM.MessageSection.SetMessage(title, elevel, emsg);
                     return View(onderwerpenVM);
                 }
-                TempData["BCmessage"] = "Onderwerp " +onderwerpenVM.onderwerp.OnderwerpID.Trim() + " is nu aangemaakt";
+                TempData["BCmessage"] = "Onderwerp " + onderwerpenVM.onderwerp.OnderwerpID.Trim() + " is nu aangemaakt";
                 TempData["BCerrorlevel"] = onderwerpenVM.MessageSection.Info;
 
                 return RedirectToAction("Index");
             }
 
-            string level =onderwerpenVM.MessageSection.Error;
+            string level = onderwerpenVM.MessageSection.Error;
             string msg = "ERROR - Onderwerp " + onderwerpenVM.onderwerp.OnderwerpID.Trim() + " is NIET aangemaakt";
             onderwerpenVM.MessageSection.SetMessage(title, level, msg);
             return View(onderwerpenVM);
 
-       
-        
+
+
         }
 
         // GET: Onderwerpen/Edit/5
@@ -364,7 +363,7 @@ namespace BelofteCheck.Controllers
                     ;
 
             List<WetObject> q = query.ToList();
-            
+
             if (q == null)
             {
                 TempData["BCmessage"] = "Ondewerp ID " + OnderwerpID.Trim() + " is niet gevonden";

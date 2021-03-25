@@ -222,6 +222,7 @@
       <DependentUpon>BCmodel.tt</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\BCmessage.cs" />
+    <Compile Include="ViewModels\StemmingenListVM.cs" />
     <Compile Include="ViewModels\PartijZetels.cs" />
     <Compile Include="ViewModels\PartijenVM.cs" />
     <Compile Include="ViewModels\PartijenListVM.cs" />
@@ -255,6 +256,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Pictures\2e Kamer.jpg" />
     <Content Include="Pictures\Under Construction.jpg" />
     <Content Include="Connection-debug.config" />
     <Content Include="Connection-live.config" />
@@ -445,11 +447,13 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
-    <Content Include="Views\Stemmingen\Create.cshtml" />
     <Content Include="Views\Stemmingen\Delete.cshtml" />
     <Content Include="Views\Stemmingen\Details.cshtml" />
     <Content Include="Views\Stemmingen\Edit.cshtml" />
     <Content Include="Views\Stemmingen\Index.cshtml" />
+    <Content Include="Views\Stemmingen\Create.cshtml" />
+    <Content Include="Views\Stemmingen\CreatEdit.cshtml" />
+    <Content Include="Views\Stemmingen\Error.cshtml" />
     <None Include="Web.Live.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

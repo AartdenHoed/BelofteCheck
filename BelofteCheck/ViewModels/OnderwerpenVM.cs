@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 
 namespace BelofteCheck.ViewModels
 {
     public class OnderwerpenVM
     {
         public bool DeleteAllowed { get; set; }
-              
-        private BCmessage _MessageSection = new BCmessage();   
+
+        private BCmessage _MessageSection = new BCmessage();
         public BCmessage MessageSection { get { return _MessageSection; } set { _MessageSection = value; } }
 
         private Onderwerp _onderwerp = new Onderwerp();
@@ -23,7 +20,7 @@ namespace BelofteCheck.ViewModels
         {
             this._onderwerp.OnderwerpID = wl[0].OnderwerpID;
             this._onderwerp.Omschrijving = wl[0].Omschrijving;
-            
+
 
             foreach (WetObject wo in wl)
             {
@@ -35,7 +32,7 @@ namespace BelofteCheck.ViewModels
                 w.Toelichting = wo.Toelichting.Trim();
                 w.OnderwerpID = wo.OnderwerpID.Trim().ToUpper();
                 w.Omschrijving = wo.Omschrijving.Trim();
-               
+
                 this._WettenLijst.Add(w);
             }
 

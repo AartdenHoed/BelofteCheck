@@ -1,48 +1,48 @@
 ﻿@model BelofteCheck.ViewModels.WettenVM
 
-<h2>@Html.DisplayFor(model => model.MessageSection.Title)</h2>
+<h2 class="bc-h">@Html.DisplayFor(model => model.MessageSection.Title)</h2>
 
-<h3>@Html.DisplayFor(model => model.MessageSection.Message)</h3>
+<h3 class="bc-h">@Html.DisplayFor(model => model.MessageSection.Message)</h3>
 
 <div>
 
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
+    <dl class="bc-dl">
+        <dt class="bc-dt">
             @Html.DisplayNameFor(model => model.wet.WetID)
         </dt>
 
-        <dd>
+        <dd class="bc-dd">
             @Html.DisplayFor(model => model.wet.WetID)
         </dd>
-        <dt>
+        <dt class="bc-dt">
             @Html.DisplayNameFor(model => model.wet.WetNaam)
         </dt>
 
-        <dd>
+        <dd class="bc-dd">
             @Html.DisplayFor(model => model.wet.WetNaam)
         </dd>
-        <dt>
+        <dt class="bc-dt">
             @Html.DisplayNameFor(model => model.wet.WetType)
         </dt>
 
-        <dd>
+        <dd class="bc-dd">
             @Html.DisplayFor(model => model.wet.WetType)
         </dd>
 
-        <dt>
+        <dt class="bc-dt">
             @Html.DisplayNameFor(model => model.wet.WetOmschrijving)
         </dt>
 
-        <dd>
+        <dd class="bc-dd">
             @Html.DisplayFor(model => model.wet.WetOmschrijving)
         </dd>
 
-        <dt>
+        <dt class="bc-dt">
             @Html.DisplayNameFor(model => model.wet.WetLink)
         </dt>
 
-        <dd>
+        <dd class="bc-dd">
             @Html.DisplayFor(model => model.wet.WetLink)
         </dd>
 
@@ -53,7 +53,7 @@
         @Html.ActionLink("Naar Overzicht", "Index")
     </p>
     <p>&nbsp;</p>
-    <h4>Gerelateerde onderwerpen</h4>
+    <h4 class="bc-h">Gerelateerde onderwerpen</h4>
     <table class="bc-table">
         @if (Model.OnderwerpenLijst != null)
         {

@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 
 namespace BelofteCheck.ViewModels
 {
     public class WettenVM
     {
         private BCmessage _MessageSection = new BCmessage();
-        
+
         public BCmessage MessageSection { get { return _MessageSection; } set { _MessageSection = value; } }
 
         private Wet _wet = new Wet();
@@ -26,7 +23,7 @@ namespace BelofteCheck.ViewModels
             this._wet.WetOmschrijving = wl[0].WetOmschrijving.Trim();
             this._wet.WetLink = wl[0].WetLink.Trim();
             this._wet.WetType = wl[0].WetType.Trim().ToUpper();
-         
+
             foreach (WetObject wo in wl)
             {
                 Onderwerp v = new Onderwerp

@@ -5,12 +5,13 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BelofteCheck.ViewModels
 {
-    public class Partij   {
-        
+    public class Partij
+    {
+
 
         [Required]
         [DisplayName("Unieke partij ID")]
-        [MaxLength(8)]        
+        [MaxLength(8)]
         public string PartijID { get; set; }
 
         [Required]
@@ -18,7 +19,7 @@ namespace BelofteCheck.ViewModels
         [MaxLength(32)]
         public string PartijNaam { get; set; }
 
-       
-               
+
+
     }
 }

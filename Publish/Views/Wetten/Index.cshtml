@@ -10,37 +10,43 @@
 </p>
 <table class="table">
     <tr>
-        <th>
+        <th class="bc-08">
             @Html.DisplayNameFor(model => model.WettenLijst[0].WetID)
         </th>
-        <th>
+        <th class="'bc-16">
             @Html.DisplayNameFor(model => model.WettenLijst[0].WetNaam)
         </th>
-        <th>
+        <th class="'bc-08">
+            @Html.DisplayNameFor(model => model.WettenLijst[0].WetType)
+        </th>
+        <th class="bc-36">
             @Html.DisplayNameFor(model => model.WettenLijst[0].WetOmschrijving)
         </th>
-        <th>
+        <th class="bc-16">
             @Html.DisplayNameFor(model => model.WettenLijst[0].WetLink)
         </th>
-        <th></th>
+        <th class="bc16"></th>
     </tr>
 
     @foreach (var item in Model.WettenLijst)
     {
 <tr>
-    <td>
+    <td class="bc-08">
         @Html.DisplayFor(modelItem => item.WetID)
     </td>
-    <td>
-    @Html.DisplayFor(modelItem => item.WetNaam)
+    <td class="bc-16">
+        @Html.DisplayFor(modelItem => item.WetNaam)
     </td>
-    <td>
+    <td class="bc-08">
+        @Html.DisplayFor(modelItem => item.WetType)
+    </td>
+    <td class="bc-36">
         @Html.DisplayFor(modelItem => item.WetOmschrijving)
     </td>
-    <td>
+    <td class="bc-16">
         @Html.DisplayFor(modelItem => item.WetLink)
     </td>
-    <td>
+    <td class="bc-16">
         @Html.ActionLink("Bewerk", "Edit", new { WetID = item.WetID }) |
         @Html.ActionLink("Details", "Details", new { WetID = item.WetID }) |
         @Html.ActionLink("Verwijder", "Delete", new { WetID = item.WetID })

@@ -1,56 +1,160 @@
-﻿@model BelofteCheck.Partijen
+﻿@model BelofteCheck.ViewModels.PartijenVM
 
-@{
-    ViewBag.Title = "Delete";
-}
+<h2>@Html.DisplayFor(model => model.MessageSection.Title) &nbsp;
+@Html.EditorFor(model => model.DeleteAllowed, new { htmlAttributes = new { @class = "bc-dacheck", @disabled = "disabled" } })</h2>
 
-<h2>Delete</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>@Html.DisplayFor(model => model.MessageSection.Message)</h3>
+
+
 <div>
-    <h4>Partijen</h4>
+
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.PartijNaam)
-        </dt>
+    <table class="bc-table2">
+        @if (Model.ZetelLijst != null)
+        {
+            var i = 0;
+            foreach (var item1 in Model.ZetelLijst)
+            {
+                if (i == 0)
+                {
+                    <tr>
 
-        <dd>
-            @Html.DisplayFor(model => model.PartijNaam)
-        </dd>
+                        <th class="bc-08">
+                            @Html.DisplayNameFor(model => model.partij.PartijID)
+                        </th>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.AantalZetels)
-        </dt>
+                        <th class="bc-16">
+                            @Html.DisplayFor(model => model.partij.PartijNaam)
+                        </th>
+                        <th class="bc-08">
+                            @Html.DisplayNameFor(model => model.ZetelLijst[i].VanDatum)
+                        </th>
+                        <th class="bc-08">
+                            @Html.DisplayNameFor(model => model.ZetelLijst[i].TotDatum)
+                        </th>
+                        <th class="bc-08">
+                            @Html.DisplayNameFor(model => model.ZetelLijst[i].AantalZetels)
+                        </th>
 
-        <dd>
-            @Html.DisplayFor(model => model.AantalZetels)
-        </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.VanDatum)
-        </dt>
+                    </tr>
+                    <tr>
 
-        <dd>
-            @Html.DisplayFor(model => model.VanDatum)
-        </dd>
+                        <td class="bc-08">
+                            @Html.DisplayFor(model => model.partij.PartijID)
+                        </td>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.TotDatum)
-        </dt>
+                        <td class="bc-16">
+                            @Html.DisplayFor(model => model.partij.PartijNaam)
+                        </td>
+                        <td class="bc-08">
+                            @Html.TextBoxFor(model => model.ZetelLijst[i].VanDatum, "{0:dd-MM-yyyy}", new { @readonly = "readonly" } )
+                            
+                        </td>
+                        <td class="bc-08">
+                            @Html.TextBoxFor(model => model.ZetelLijst[i].TotDatum, "{0:dd-MM-yyyy}", new { @readonly = "readonly" })
+                        </td>
+                        <td class="bc-08">
+                            @Html.DisplayFor(model => model.ZetelLijst[i].AantalZetels)
+                        </td>
 
-        <dd>
-            @Html.DisplayFor(model => model.TotDatum)
-        </dd>
 
-    </dl>
+                    </tr>
+                }
+                else
+                {
+    <tr>
 
-    @using (Html.BeginForm()) {
+        <td class="bc-08">
+            &nbsp;
+        </td>
+
+        <td class="bc-16">
+            &nbsp;
+        </td>
+        <td class="bc-08">
+            @Html.TextBoxFor(model => model.ZetelLijst[i].VanDatum, "{0:dd-MM-yyyy}", new { @readonly = "readonly" })
+
+        </td>
+        <td class="bc-08">
+            @Html.TextBoxFor(model => model.ZetelLijst[i].TotDatum, "{0:dd-MM-yyyy}", new { @readonly = "readonly" })
+        </td>
+        <td class="bc-08">
+            @Html.DisplayFor(model => model.ZetelLijst[i].AantalZetels)
+        </td>
+
+
+    </tr>
+                }
+
+
+                i = i + 1;
+            }
+        }
+    </table>
+
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            <input type="submit" value="Verwijder" class="bc-button bc-active" /> &nbsp;
+            @Html.ActionLink("Naar Overzicht", "Index")
         </div>
     }
+
+    <p>&nbsp;</p>
+    <h4>Stemgedrag</h4>
+    <table class="bc-table">
+        @if (Model.StemmingenLijst != null)
+        {
+            var i = 0;
+            foreach (var item1 in Model.StemmingenLijst)
+            {
+                if (i == 0)
+                {
+                    <tr>
+                        <th class="bc-16">
+                            @Html.DisplayNameFor(Item1 => Item1.StemmingenLijst[i].WetID)
+                        </th>
+                        <th class="bc-40">
+                            @Html.DisplayNameFor(Item1 => Item1.StemmingenLijst[i].WetNaam)
+                        </th>
+                        <th class="bc-10">
+                            @Html.DisplayNameFor(Item1 => Item1.StemmingenLijst[i].Voor)
+                        </th>
+                        <th class="bc-10">
+                            @Html.DisplayNameFor(Item1 => Item1.StemmingenLijst[i].Tegen)
+                        </th>
+                        <th class="bc-10">
+                            @Html.DisplayNameFor(Item1 => Item1.StemmingenLijst[i].Blanco)
+                        </th>
+                    </tr>
+
+                }
+                <tr>
+
+                    <td class="bc-16">
+                        @Html.DisplayFor(Item1 => Item1.StemmingenLijst[i].WetID)
+
+                    </td>
+                    <td class="bc-40">
+                        @Html.DisplayFor(Item1 => Item1.StemmingenLijst[i].WetNaam)
+
+                    </td>
+                    <td class="bc-10">
+                        @Html.DisplayFor(Item1 => Item1.StemmingenLijst[i].Voor)
+                    </td>
+                    <td class="bc-10">
+                        @Html.DisplayFor(Item1 => Item1.StemmingenLijst[i].Tegen)
+                    </td>
+                    <td class="bc-10">
+                        @Html.DisplayFor(Item1 => Item1.StemmingenLijst[i].Blanco)
+                    </td>
+                </tr>
+                i = i + 1;
+            }
+        }
+    </table>
 </div>

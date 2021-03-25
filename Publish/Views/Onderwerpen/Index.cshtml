@@ -10,25 +10,25 @@
 </p>
 <table class="table">
     <tr>
-        <th>
+        <th class="bc-16">
             @Html.DisplayNameFor(model => model.OnderwerpenLijst[0].OnderwerpID)
         </th>
-        <th>
+        <th class="bc-40">
             @Html.DisplayNameFor(model => model.OnderwerpenLijst[0].Omschrijving)
         </th>
-        <th></th>
+        <th class="bc-16"></th>
     </tr>
 
     @foreach (var item in Model.OnderwerpenLijst)
     {
     <tr>
-        <td>
+        <td class="bc-16">
             @Html.DisplayFor(modelItem => item.OnderwerpID)
         </td>
-        <td>
+        <td class="bc40">
             @Html.DisplayFor(modelItem => item.Omschrijving)
         </td>
-        <td>
+        <td class="bc16">
             @Html.ActionLink("Bewerk", "Edit", new { OnderwerpID = item.OnderwerpID }) |
             @Html.ActionLink("Bekijk", "Details", new { OnderwerpID = item.OnderwerpID }) |
             @Html.ActionLink("Verwijder", "Delete", new { OnderwerpID = item.OnderwerpID })

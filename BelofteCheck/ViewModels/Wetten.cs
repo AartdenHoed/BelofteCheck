@@ -2,7 +2,7 @@
 
 namespace BelofteCheck
 {
-    
+
     public partial class Wetten
     {
         public void Fill(WettenVM vm)
@@ -12,7 +12,7 @@ namespace BelofteCheck
             this.WetNaam = vm.wet.WetNaam.Trim();
             this.WetOmschrijving = vm.wet.WetOmschrijving.Trim();
             this.WetType = vm.wet.WetType.Trim().ToUpper();
-            
+
         }
     }
 }

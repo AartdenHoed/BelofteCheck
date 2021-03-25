@@ -32,6 +32,6 @@ namespace BelofteCheck.ViewModels
         [DataType(DataType.Date)]
         [DisplayName("Tot en met (dd-mm-jjjj)")]
         public System.DateTime TotDatum { get; set; }
-        
+
     }
 }

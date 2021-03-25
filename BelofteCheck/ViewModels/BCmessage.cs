@@ -17,8 +17,8 @@ namespace BelofteCheck.ViewModels
             this.Title = title;
 
         }
-       
-    }       
-    
+
+    }
+
 
 }

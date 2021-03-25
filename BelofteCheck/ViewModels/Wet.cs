@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 
 namespace BelofteCheck.ViewModels
 {
     public class Wet
-    {  
+    {
         [Required]
         [DisplayName("Unieke wet ID")]
         [MaxLength(32)]
-        
+
         public string WetID { get; set; }
 
         [Required]
@@ -35,7 +31,7 @@ namespace BelofteCheck.ViewModels
         [MaxLength(16)]
         public string WetType { get; set; }
 
-        
+
 
 
     }

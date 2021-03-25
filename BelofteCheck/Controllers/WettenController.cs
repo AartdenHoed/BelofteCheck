@@ -1,10 +1,10 @@
-﻿using System;
+﻿using BelofteCheck.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
-using BelofteCheck.ViewModels;
 
 namespace BelofteCheck.Controllers
 {
@@ -72,7 +72,8 @@ namespace BelofteCheck.Controllers
             string level = wettenVM.MessageSection.Info;
             string msg = "Wetgegevens en gekoppelde onderwerpen";
 
-            if (WetID == null) {
+            if (WetID == null)
+            {
                 TempData["BCmessage"] = "Specificeer een geldige Wet ID!";
                 TempData["BCerrorlevel"] = wettenVM.MessageSection.Warning;
 
@@ -114,6 +115,16 @@ namespace BelofteCheck.Controllers
             {
                 msg = "Deze wet heeft geen gekoppelde onderwerpen. Gebruik BEWERK om minstens één onderwerp te koppelen";
                 level = "W";
+            }
+
+            if (TempData.ContainsKey("BCmessage"))
+            {
+                msg = TempData["BCmessage"].ToString();
+            }
+            if (TempData.ContainsKey("BCerrorlevel"))
+            {
+                level = TempData["BCerrorlevel"].ToString();
+
             }
 
             wettenVM.Fill(q);
@@ -217,8 +228,8 @@ namespace BelofteCheck.Controllers
                         join o in db.Onderwerpen on 1 equals 1 into ljoin2
                         from lj2 in ljoin2.DefaultIfEmpty()
                         join s in db.WetScope on
-                        new { wi = w.WetID, ond = lj2.OnderwerpID} equals
-                        new { wi = s.WetID, ond = s.OnderwerpID} into ljoin1
+                        new { wi = w.WetID, ond = lj2.OnderwerpID } equals
+                        new { wi = s.WetID, ond = s.OnderwerpID } into ljoin1
                         from lj1 in ljoin1.DefaultIfEmpty()
                         select new WetObject
                         {
@@ -249,7 +260,7 @@ namespace BelofteCheck.Controllers
             {
                 if (!String.IsNullOrEmpty(wo.Toelichting))
                 {
-                    gekoppeld = true;    
+                    gekoppeld = true;
                 }
             }
             if (!gekoppeld)
@@ -263,7 +274,7 @@ namespace BelofteCheck.Controllers
 
             return View(wettenVM);
         }
-    
+
 
         // POST: Wetten/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
@@ -282,12 +293,12 @@ namespace BelofteCheck.Controllers
                 {
                     db.Entry(wetten).State = EntityState.Modified;
                     db.SaveChanges();
-                    
+
                     foreach (Onderwerp o in wettenVM.OnderwerpenLijst)
                     {
-                        WetScope searchdb = db.WetScope.Find( wettenVM.wet.WetID, o.OnderwerpID);
+                        WetScope searchdb = db.WetScope.Find(wettenVM.wet.WetID, o.OnderwerpID);
                         if (o.Geselecteerd)
-                        {                            
+                        {
                             if (searchdb == null)
                             {
                                 WetScope ws = new WetScope();
@@ -296,8 +307,10 @@ namespace BelofteCheck.Controllers
                             }
                             else
                             {
-                                searchdb.Fill(wettenVM.wet.WetID, o);
-                                db.Entry(searchdb).State = EntityState.Modified;
+                                WetScope ws1 = new WetScope();
+                                ws1.Fill(wettenVM.wet.WetID, o);
+                                db.WetScope.Attach(ws1);
+                                db.Entry(ws1).State = EntityState.Modified;
                             }
                             db.SaveChanges();
                         }
@@ -311,7 +324,7 @@ namespace BelofteCheck.Controllers
 
                         }
                     }
-                   
+
                 }
                 catch (Exception ex)
                 {
@@ -322,14 +335,15 @@ namespace BelofteCheck.Controllers
                     wettenVM.MessageSection.SetMessage(title, elevel, emsg);
                     return View(wettenVM);
                 }
-                TempData["BCmessage"] = "Wet " + wettenVM.wet.WetNaam.Trim() + " is gewijzigd";
+                TempData["BCmessage"] = "Wet '" + wettenVM.wet.WetNaam.Trim() + "' is gewijzigd";
                 TempData["BCerrorlevel"] = wettenVM.MessageSection.Info;
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", new { WetID = wettenVM.wet.WetID });
+
             }
 
             string level = wettenVM.MessageSection.Error;
-            string msg = "ERROR - Wet " + wettenVM.wet.WetNaam.Trim() + " is NIET gewijzigd";
+            string msg = "ERROR - Wet '" + wettenVM.wet.WetNaam.Trim() + "' is NIET gewijzigd";
             wettenVM.MessageSection.SetMessage(title, level, msg);
             return View(wettenVM);
 
@@ -409,7 +423,7 @@ namespace BelofteCheck.Controllers
 
                 return RedirectToAction("Error");
             }
-            
+
             Wetten wetten = db.Wetten.Find(WetID);
 
             if (wetten == null)
@@ -439,7 +453,7 @@ namespace BelofteCheck.Controllers
             }
             else
             {
-                msg = "Unknown error"; 
+                msg = "Unknown error";
             }
             if (TempData.ContainsKey("BCerrorlevel"))
             {

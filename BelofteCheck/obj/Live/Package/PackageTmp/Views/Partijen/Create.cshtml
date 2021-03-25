@@ -1,70 +1,45 @@
-﻿@model BelofteCheck.Partijen
+﻿@model BelofteCheck.ViewModels.PartijenVM
 
-@{
-    ViewBag.Title = "Create";
-}
+<h2>@Html.DisplayFor(model => model.MessageSection.Title)</h2>
 
-<h2>Create</h2>
+<h3>@Html.DisplayFor(model => model.MessageSection.Message)</h3>
 
-
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
-        <h4>Partijen</h4>
+        
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            @Html.LabelFor(model => model.PartijID, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.partij.PartijID, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.PartijID, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.PartijID, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.partij.PartijID, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.partij.PartijID, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.PartijNaam, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.partij.PartijNaam, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.PartijNaam, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.PartijNaam, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.partij.PartijNaam, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.partij.PartijNaam, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.AantalZetels, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.AantalZetels, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.AantalZetels, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.VanDatum, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.VanDatum, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.VanDatum, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.TotDatum, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.TotDatum, new { htmlAttributes = new { @class = "form-control"} })
-                @Html.ValidationMessageFor(model => model.TotDatum, "", new { @class = "text-danger" })
-            </div>
-        </div>
+        
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Aanmaken" class="bc-button" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Naar Overzicht", "Index")
 </div>
 
 @section Scripts {

@@ -1,4 +1,6 @@
-﻿body {
+﻿html, body {
+    height: 100%;
+    margin: 0;
     padding: 1%;
 }
 
@@ -21,32 +23,32 @@
 
 .bc-mid {
     width: 100%;
-    height: 80%;
+    height: 85%;
     float: left;
     background-color: lightgreen;
 }
 .bc-left {
-    width: 10%;
-    height: 80%;
+    width: 15%;
+    height: 100%;
     float: left;
     background-color: lightgreen;
 }
 .bc-content {
     width: 80%;
-    height: 80%;
+    height: 100%;
     float: left;
     background-color: lightyellow;
-    padding: 1%;
+    padding: 1% 1% 1% 1%;
 }
 .bc-right {
-    width: 10%;
-    height: 80%;
+    width: 5%;
+    height: 100%;
     float: left;
     background-color: lightgreen;
 }
 .bc-foot {
     width: 100%;
-    height: 10%;
+    height: 5%;
     float: left;
     background-color: lightgreen;
     text-align: center;
@@ -66,8 +68,8 @@
 
 }
 .bc-table {
-    width: 100%;
-    margin: 1;
+    width: 98%;
+    margin: 1%;
     text-align: left;
 }
 
@@ -91,9 +93,34 @@
     margin: 0; 
     padding: 1%;
 }
+.bc-table2 {
+    width: 98%;
+    margin: 1%;
+    text-align: left;
+}
+
+.bc-table2 tr:nth-child(even) {
+    background-color: lightgoldenrodyellow;
+}
+
+.bc-table2 tr:nth-child(odd) {
+    background-color: lightgray;
+}
+
+.bc-table2 th {
+    background-color: lightblue;
+    text-align: left;
+    margin: 0;
+    padding: 1%;
+}
+
+.bc-table2 td {
+    text-align: left;
+    margin: 0;
+    padding: 1%;
+}
 .bc-08 {
     width: 8%;
-
 }
 .bc-16 {
     width: 16%;
@@ -113,8 +140,241 @@
     margin: 1%;
    
 }
+.bc-field textarea {
+    font-size: inherit;
+    color: black;
+    font-family: sans-serif;
+}
+.bc-field select {
+    width: 95%;
+}
+.bc-field {
+    display: block;
+    box-sizing: border-box;
+    width: 95%;
+    height: auto;
+    padding: 1%;
+    margin: 1%;
+    font-size: inherit;
+    color: black;
+    background-color: lightgray;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+    -moz-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+    -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+    transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+}
+input[disabled], textarea[disabled],
+select[disabled='disabled'] {
+    -webkit-text-fill-color: rgba(0, 0, 0, 1);
+    color: rgba(0, 0, 0, 1);
+}
+input[readonly], textarea[readonly],
+select[readonly='readonly'] {
+    -webkit-text-fill-color: #333333;
+    color: #333333;
+    background-color: #eeeeee;
+}
 
+.bc-field:focus:not([readonly]),
+.bc-field:active:not([readonly]) {
+    border-color: darkblue;
+    background-color: lightblue;
+    color: black;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+    -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+}
 
+.bc-field:read-only {
+    -webkit-text-fill-color: #333333;
+    color: #333333;
+    background-color: #eeeeee;
+}
+
+.bc-field:disabled {
+    -webkit-text-fill-color: #333333;
+    color: #333333;
+    background-color: #eeeeee;
+}
+
+.bc-field:enabled:read-only {
+    -webkit-text-fill-color: #333333;
+    color: #333333;
+    background-color: #eeeeee;
+}
+
+.bc-field:enabled:not([readonly]) {
+    background-color: antiquewhite;
+    color: black;
+}
+/*
+.bc-field::-webkit-outer-spin-button,
+.bc-field::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  margin: 1%;
+}
+    */
+.bc-error {
+    color: #b94a48;
+}
+.bc-button {
+    color: black;
+    background-color: lightskyblue;
+    border-color: darkblue;
+    font-size: larger;
+    margin: 3%;
+    border-radius: 12px;
+}
+.bc-button:hover {
+    background-color: lightgreen;
+}
+.bc-button:disabled:hover {
+    background-color: red;
+}
+
+.bc-animation:before {
+    content: 'Verkiezingsbelofte';    
+    animation: tekst 12s  infinite;
     
+}
+.bc-animation {
+    width: 25%;
+    height: 25%;
+    background-color: lawngreen;
+    position: relative;
+    left: 10%;
+    top: 10%;
+    animation: myfirst 12s infinite;
+    font-size: 200%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+.bc-image {
+    background-image: url('/Pictures/2e Kamer.jpg');
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+}
 
+@keyframes tekst {
+    0% {     
+        color: black;
+        content: "Verkiezingsbelofte";
+        opacity: 1;
+    }
+    12% {
+        color: black;
+        content: "Verkiezingsbelofte";
+        opacity: 0;
+    }
+    13% {
+        opacity: 0;
+        color: black;
+        content: "Verkozen";
+    }
+    25% {
+        opacity: 1;
+        color: black;
+        content: "Verkozen";
+    }
+    37% {
+        opacity: 0;
+        color: black;
+        content: "Verkozen";
+    }
+    38% {
+        color: white;
+        opacity: 0;
+        content: "Tweede Kamer";
+    }
+    50% {
+        color: white;
+        opacity: 1;
+        content: "Tweede Kamer";
+    }
+    62% {
+        color: white;
+        opacity: 0;
+        content: "Tweede Kamer";
+    }
+    63% {
+        color: white;
+        opacity: 0;
+        content: "Gebroken Belofte";
+    }
+    75% {
+        color: white;
+        opacity: 1;
+        content: "Gebroken Belofte";
+    }
+    87% {
+        color: white;
+        opacity: 0;
+        content: "Gebroken Belofte";
+    }
+    88% {
+        opacity: 0;
+        color: black;
+        content: "Verkiezingsbelofte";
+    }
+    100% {
+        opacity: 1;
+        color: black;
+        content: "Verkiezingsbelofte";
+    }
+}
+@keyframes myfirst {
+    0% {
+        background-color: lawngreen;
+        left: 10%;
+        top: 10%;
+    }
+    25% {
+        background-color: yellow;
+        left: 65%;
+        top: 10%;        
+    }
+    50% {
+        background-color: blue;
+        left: 65%;
+        top: 65%;        
+    }
+    75% {
+        background-color: red;
+        left: 10%;
+        top: 65%;
+       
+    }
+    100% {
+        background-color: lawngreen;
+        left: 10%;
+        top: 10%;
+        
+    }
+}
+.bc-marquee {
+    width: 80%;
+    direction: rtl;
+    height: 10%;
+    color: white;
+    font-size: 200%;
+    animation: infinite;
 
+}
+.bc-marquee2 {
+    margin-top: 10%;
+    margin-left: 20%;
+}

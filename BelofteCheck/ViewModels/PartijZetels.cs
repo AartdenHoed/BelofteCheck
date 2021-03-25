@@ -2,7 +2,7 @@
 
 namespace BelofteCheck
 {
-    
+
     public partial class PartijZetels
     {
         public void Fill(string partijid, ZetelObject zo)
@@ -11,7 +11,7 @@ namespace BelofteCheck
             this.AantalZetels = zo.AantalZetels;
             this.VanDatum = zo.VanDatum;
             this.TotDatum = zo.TotDatum;
-            
+
 
         }
     }

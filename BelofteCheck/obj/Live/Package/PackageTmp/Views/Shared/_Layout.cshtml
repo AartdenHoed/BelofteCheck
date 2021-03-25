@@ -30,7 +30,7 @@
                     @if (Request.IsAuthenticated)
 
                     {
-                        using (Html.BeginForm("Logoff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                        using (Html.BeginForm("Logoff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "bc-ullink" }))
                         {
                             @Html.AntiForgeryToken()
 
@@ -69,7 +69,7 @@
 
         <div class="bc-foot">
             <footer>
-                <p>&copy; @DateTime.Now.Year - BelofteCheck.nl - Versie 0.2</p>
+                <p>&copy; @DateTime.Now.Year - BelofteCheck.nl - Versie 0.4</p>
             </footer>
         </div>
     </div>

@@ -1,51 +1,41 @@
-﻿@model IEnumerable<BelofteCheck.Partijen>
+﻿@model BelofteCheck.ViewModels.PartijenListVM
 
-@{
-    ViewBag.Title = "Index";
-}
 
-<h2>Index</h2>
+<h2>@Html.DisplayFor(model => model.MessageSection.Title)</h2>
+
+<h3>@Html.DisplayFor(model => model.MessageSection.Message)</h3>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Nieuw", "Create")
 </p>
 <table class="table">
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.PartijNaam)
+        <th class="bc16">
+            @Html.DisplayNameFor(model => model.PartijenLijst[0].PartijID)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.AantalZetels)
+        <th class="bc-36">
+            @Html.DisplayNameFor(model => model.PartijenLijst[0].PartijNaam)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.VanDatum)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TotDatum)
-        </th>
-        <th></th>
+       
+        <th class="bc-16"></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.PartijNaam)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AantalZetels)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.VanDatum)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TotDatum)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { PartijID=item.PartijID }) |
-            @Html.ActionLink("Details", "Details", new { PartijID=item.PartijID }) |
-            @Html.ActionLink("Delete", "Delete", new { PartijID=item.PartijID })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model.PartijenLijst)
+    {
+<tr>
+    <td class="bc-16">
+        @Html.DisplayFor(modelItem => item.PartijID)
+    </td>
+    <td class="bc-36">
+        @Html.DisplayFor(modelItem => item.PartijNaam)
+    </td>
+    
+    <td class="bc-16">
+        @Html.ActionLink("Bewerk", "Edit", new { PartijID = item.PartijID }) |
+        @Html.ActionLink("Bekijk", "Details", new { PartijID = item.PartijID }) |
+        @Html.ActionLink("Verwijder", "Delete", new { PartijID = item.PartijID })
+    </td>
+</tr>
+    }
 
 </table>
