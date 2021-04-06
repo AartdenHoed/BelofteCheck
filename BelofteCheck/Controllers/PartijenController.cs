@@ -20,7 +20,7 @@ namespace BelofteCheck.Controllers
 
             string msg = "Selecteer een bewerking op een partij of voeg een partij toe";
             string level = partijenListVM.MessageSection.Info;
-            string title = "Overzicht";
+            string title = "Overzicht P A R T I J E N";
 
             var q = db.Partijen.ToList();
 
@@ -539,6 +539,86 @@ namespace BelofteCheck.Controllers
             TempData["BCmessage"] = "Partij '" + partijen.PartijID.Trim() + "' is succesvol verwijderd";
             TempData["BCerrorlevel"] = partijenVM.MessageSection.Info;
             return RedirectToAction("Index");
+        }
+        public ActionResult Verify()
+        {
+            ZetelControleVM zetelcontroleVM = new ZetelControleVM();
+            string title = "Kamerzetel Controle";
+            string level = zetelcontroleVM.MessageSection.Info;
+            string msg = "Check of alle 2e kamer-periodes correct zijn gevuld met 150 zetels";
+            
+
+            var query = from pz in db.PartijZetels
+                        group pz by new { pz.VanDatum } into grp1
+                        select new { VanDatum = grp1.Key.VanDatum,
+                                    TotDatum = grp1.Min(pz => pz.TotDatum) }
+                        into grp2
+                        orderby grp2.VanDatum descending
+                        select new TijdVak
+                        {
+                            VanDatum = grp2.VanDatum,
+                            TotDatum = grp2.TotDatum
+
+                        } 
+                        ;                        
+
+            zetelcontroleVM.Periodes = query.ToList();
+
+            DateTime todate = DateTime.MaxValue;
+            foreach (TijdVak tv in zetelcontroleVM.Periodes)
+            {
+                if (todate != DateTime.MaxValue)
+                {
+                    tv.TotDatum = todate;
+                }
+                todate = tv.VanDatum.AddDays(-1);
+
+            }
+
+            zetelcontroleVM.Periodes.Sort((x, y) => DateTime.Compare(x.VanDatum, y.VanDatum));
+
+            int aantalfouten = 0;
+            foreach (TijdVak tv2 in zetelcontroleVM.Periodes)
+            {
+                var query1 = from p in db.Partijen
+                             join j1 in db.PartijZetels on p.PartijID equals j1.PartijID
+                             where ((j1.VanDatum <= tv2.VanDatum) && (j1.TotDatum >= tv2.TotDatum))
+                             select new KamerZetels
+                             {
+                                 PartijID = p.PartijID,
+                                 PartijNaam = p.PartijNaam,
+                                 AantalZetels = j1.AantalZetels,
+                                 
+                             };
+                var q = query1.ToList();
+                foreach (KamerZetels kz in q)
+                {
+                    KamerZetels x = new KamerZetels
+                    {
+                        AantalZetels = kz.AantalZetels,
+                        PartijID = kz.PartijID,
+                        PartijNaam = kz.PartijNaam
+                    };
+                    tv2.ZetelVerdeling.Add(x);
+
+                }
+                if (tv2.ZetelCheck != "ok")
+                {
+                    aantalfouten += 1;
+                }
+            }
+
+            if (aantalfouten == 0)
+            {
+                title = title + " (geen fouten gevonden)";
+            }
+            else
+            {
+                title = title + " ("+ aantalfouten.ToString() + " fouten gevonden)";
+                level = zetelcontroleVM.MessageSection.Warning;
+            }
+            zetelcontroleVM.MessageSection.SetMessage(title, level, msg);
+            return View(zetelcontroleVM);
         }
         public ActionResult Error()
         {

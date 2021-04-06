@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="BCmodel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="BCmodel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Onderwerpen">
           <Key>
             <PropertyRef Name="OnderwerpID" />
@@ -17,7 +17,7 @@
             <PropertyRef Name="PartijID" />
           </Key>
           <Property Name="PartijID" Type="char" MaxLength="8" Nullable="false" />
-          <Property Name="PartijNaam" Type="char" MaxLength="32" Nullable="false" />
+          <Property Name="PartijNaam" Type="char" MaxLength="64" Nullable="false" />
         </EntityType>
         <EntityType Name="PartijZetels">
           <Key>
@@ -157,8 +157,7 @@
             <End Role="WetScope" EntitySet="WetScope" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="BCmodel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -175,7 +174,7 @@
             <PropertyRef Name="PartijID" />
           </Key>
           <Property Name="PartijID" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="PartijNaam" Type="String" MaxLength="32" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="PartijNaam" Type="String" MaxLength="64" FixedLength="true" Unicode="false" Nullable="false" />
           <NavigationProperty Name="PartijZetels" Relationship="Self.FK_PartijZetels_Partijen" FromRole="Partijen" ToRole="PartijZetels" />
           <NavigationProperty Name="Stemmingen" Relationship="Self.FK_Stemmingen_Partijen" FromRole="Partijen" ToRole="Stemmingen" />
         </EntityType>

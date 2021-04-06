@@ -3,15 +3,15 @@
     ViewBag.Title = "Manage";
 }
 
-<h2>@ViewBag.Title.</h2>
+<h2 class="bc-h">@ViewBag.Title.</h2>
 
 <p class="text-success">@ViewBag.StatusMessage</p>
 <div>
-    <h4>Change your account settings</h4>
+    <h4 class="bc-h">Change your account settings</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>Password:</dt>
-        <dd>
+    <dl class="bc-dl">
+        <dt class="bc-dt">Password:</dt>
+        <dd class="bc-dd">
             [
             @if (Model.HasPassword)
             {
@@ -23,8 +23,8 @@
             }
             ]
         </dd>
-        <dt>External Logins:</dt>
-        <dd>
+        <dt class="bc-dt">External Logins:</dt>
+        <dd class="bc-dd">
             @Model.Logins.Count [
             @Html.ActionLink("Manage", "ManageLogins") ]
         </dd>
@@ -37,8 +37,8 @@
              Uncomment the following block after you have set up two-factor authentication
         *@
         @*  
-            <dt>Phone Number:</dt>
-            <dd>
+            <dt class="bc-dt">Phone Number:</dt>
+            <dd class="bc-dd">
                 @(Model.PhoneNumber ?? "None")
                 @if (Model.PhoneNumber != null)
                 {
@@ -56,8 +56,8 @@
                 }
             </dd>
         *@
-        <dt>Two-Factor Authentication:</dt>
-        <dd>
+        <dt class="bc-dt">Two-Factor Authentication:</dt>
+        <dd class="bc-dd">
             <p>
                 There are no two-factor authentication providers configured. See <a href="https://go.microsoft.com/fwlink/?LinkId=403804">this article</a>
                 for details on setting up this ASP.NET application to support two-factor authentication.

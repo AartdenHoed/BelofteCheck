@@ -1,64 +1,105 @@
-﻿@model BelofteCheck.Stemmingen
+﻿@model BelofteCheck.ViewModels.StemmingenListVM
+<h2 class="bc-h">@Html.DisplayFor(model => model.MessageSection.Title)</h2>
 
-@{
-    ViewBag.Title = "Delete";
+<h3 class="bc-h">@Html.DisplayFor(model => model.MessageSection.Message)</h3>
+
+<dl class="bc-dl">
+    <dt class="bc-dt">
+        @Html.DisplayNameFor(model => model.StemLijst[0].StemDatum)
+    </dt>
+    <dd class="bc-dd">
+        @Html.DisplayFor(model => model.StemLijst[0].StemDatum)
+    </dd>
+    <dt class="bc-dt">
+        @Html.DisplayNameFor(model => model.StemLijst[0].WetID)
+    </dt>
+
+    <dd class="bc-dd">
+        @Html.DisplayFor(model => model.StemLijst[0].WetID)
+    </dd>
+    <dt class="bc-dt">
+        @Html.DisplayNameFor(model => model.StemLijst[0].WetNaam)
+    </dt>
+
+    <dd class="bc-dd">
+        @Html.DisplayFor(model => model.StemLijst[0].WetNaam)
+    </dd>
+    <dt class="bc-dt">
+        @Html.DisplayNameFor(model => model.StemLijst[0].WetType)
+    </dt>
+
+    <dd class="bc-dd">
+        @Html.DisplayFor(model => model.StemLijst[0].WetType)
+    </dd>
+    <dt class="bc-dt">
+        @Html.DisplayNameFor(model => model.StemLijst[0].WetOmschrijving)
+    </dt>
+
+    <dd class="bc-dd">
+        @Html.DisplayFor(model => model.StemLijst[0].WetOmschrijving)
+    </dd>
+    <dt class="bc-dt">
+        @Html.DisplayNameFor(model => model.StemLijst[0].WetLink)
+    </dt>
+
+    <dd class="bc-dd">
+        @Html.DisplayFor(model => model.StemLijst[0].WetLink)
+    </dd>
+
+
+</dl>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-actions no-color">
+        <input type="submit" value="Verwijder" class="bc-button" /> &nbsp;
+        @Html.ActionLink("Naar Overzicht", "Index")
+    </div>
 }
 
-<h2>Delete</h2>
-
-<h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>Stemmingen</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Voor)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Voor)
-        </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Tegen)
-        </dt>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.StemLijst[0].PartijID)
+            </th>
 
-        <dd>
-            @Html.DisplayFor(model => model.Tegen)
-        </dd>
+            <th>
+                @Html.DisplayNameFor(model => model.StemLijst[0].Voor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StemLijst[0].Tegen)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StemLijst[0].Blanco)
+            </th>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Blanco)
-        </dt>
+        </tr>
 
-        <dd>
-            @Html.DisplayFor(model => model.Blanco)
-        </dd>
+        @foreach (var item in Model.StemLijst)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PartijID)
+                </td>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Partijen.PartijNaam)
-        </dt>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Voor)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Tegen)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Blanco)
+                </td>
 
-        <dd>
-            @Html.DisplayFor(model => model.Partijen.PartijNaam)
-        </dd>
+            </tr>
+        }
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Wetten.WetNaam)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Wetten.WetNaam)
-        </dd>
-
-    </dl>
-
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
-        </div>
-    }
+    </table>
 </div>
+

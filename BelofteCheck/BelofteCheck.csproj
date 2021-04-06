@@ -227,6 +227,7 @@
     <Compile Include="ViewModels\PartijenVM.cs" />
     <Compile Include="ViewModels\PartijenListVM.cs" />
     <Compile Include="ViewModels\Partij.cs" />
+    <Compile Include="ViewModels\ZetelControleVM.cs" />
     <Compile Include="ViewModels\ZetelObject.cs" />
     <Compile Include="ViewModels\Wet.cs" />
     <Compile Include="ViewModels\Onderwerp.cs" />
@@ -258,8 +259,6 @@
     <Content Include="Content\Site.css" />
     <Content Include="Pictures\2e Kamer.jpg" />
     <Content Include="Pictures\Under Construction.jpg" />
-    <Content Include="Connection-debug.config" />
-    <Content Include="Connection-live.config" />
     <EntityDeploy Include="BCmodel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>BCmodel.Designer.cs</LastGenOutput>
@@ -454,6 +453,7 @@
     <Content Include="Views\Stemmingen\Create.cshtml" />
     <Content Include="Views\Stemmingen\CreatEdit.cshtml" />
     <Content Include="Views\Stemmingen\Error.cshtml" />
+    <Content Include="Views\Partijen\Verify.cshtml" />
     <None Include="Web.Live.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

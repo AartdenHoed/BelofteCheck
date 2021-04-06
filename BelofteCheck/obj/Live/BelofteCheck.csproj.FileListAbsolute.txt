@@ -71,7 +71,6 @@ D:\AartenHetty\OneDrive\ADHC Development\BelofteCheck.git\BelofteCheck\bin\Micro
 D:\AartenHetty\OneDrive\ADHC Development\BelofteCheck.git\BelofteCheck\bin\Microsoft.Owin.Host.SystemWeb.xml
 D:\AartenHetty\OneDrive\ADHC Development\BelofteCheck.git\BelofteCheck\bin\Microsoft.Owin.Security.xml
 D:\AartenHetty\OneDrive\ADHC Development\BelofteCheck.git\BelofteCheck\bin\Microsoft.Owin.Security.Facebook.xml
-D:\AartenHetty\OneDrive\ADHC Development\BelofteCheck.git\BelofteCheck\bin\Microsoft.Owin.Security.Cookies.xml
 D:\AartenHetty\OneDrive\ADHC Development\BelofteCheck.git\BelofteCheck\bin\Microsoft.Owin.Security.Google.xml
 D:\AartenHetty\OneDrive\ADHC Development\BelofteCheck.git\BelofteCheck\bin\Microsoft.Owin.Security.Twitter.xml
 D:\AartenHetty\OneDrive\ADHC Development\BelofteCheck.git\BelofteCheck\bin\Microsoft.Owin.Security.MicrosoftAccount.xml

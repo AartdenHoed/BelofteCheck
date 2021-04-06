@@ -12,7 +12,7 @@
       <PropertyRef Name="PartijID" />
     </Key>
     <Property Name="PartijID" Type="char" MaxLength="8" Nullable="false" />
-    <Property Name="PartijNaam" Type="char" MaxLength="32" Nullable="false" />
+    <Property Name="PartijNaam" Type="char" MaxLength="64" Nullable="false" />
   </EntityType>
   <EntityType Name="PartijZetels">
     <Key>

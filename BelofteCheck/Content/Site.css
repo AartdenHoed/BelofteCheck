@@ -151,6 +151,12 @@
     overflow-wrap: break-word;
     word-break: break-all;
 }
+.bc-84 {
+    width: 84%;
+    max-width: 84%;
+    overflow-wrap: break-word;
+    word-break: break-all;
+}
 .bc-area textarea {
     width: 90%; 
     max-width: 90%;
@@ -422,3 +428,12 @@ select[readonly='readonly'] {
 .bc-h {
     margin: 1%;
 }
+.bc-blue1 {
+    background-color: deepskyblue;
+    border-top: 3px solid black;
+}
+.bc-blue2 {
+    background-color: deepskyblue;
+    border-bottom: 3px solid black;
+}
+

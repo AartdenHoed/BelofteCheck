@@ -20,7 +20,7 @@ namespace BelofteCheck.Controllers
 
             string msg = "Selecteer een bewerking op een onderwerp of voeg een onderwerp toe";
             string level = onderwerpenListVM.MessageSection.Info;
-            string title = "Overzicht";
+            string title = "Overzicht O N D E R W E R P E N";
             var q = db.Onderwerpen.ToList();
             if (q.Count == 0)
             {

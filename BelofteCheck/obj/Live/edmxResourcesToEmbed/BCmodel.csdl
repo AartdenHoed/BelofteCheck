@@ -13,7 +13,7 @@
       <PropertyRef Name="PartijID" />
     </Key>
     <Property Name="PartijID" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
-    <Property Name="PartijNaam" Type="String" MaxLength="32" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="PartijNaam" Type="String" MaxLength="64" FixedLength="true" Unicode="false" Nullable="false" />
     <NavigationProperty Name="PartijZetels" Relationship="Self.FK_PartijZetels_Partijen" FromRole="Partijen" ToRole="PartijZetels" />
     <NavigationProperty Name="Stemmingen" Relationship="Self.FK_Stemmingen_Partijen" FromRole="Partijen" ToRole="Stemmingen" />
   </EntityType>

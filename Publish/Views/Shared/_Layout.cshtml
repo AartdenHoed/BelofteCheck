@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>BelofteCheck.nl - Controleer het stemgedrag van de Tweede Kamer</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
@@ -20,58 +20,65 @@
 
         <div class="bc-mid">
             <div class="bc-left">
+                <div class="bc-lefttop">
 
-                <ul class="bc-ullink">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Over ons", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                    <li>&nbsp;</li>
+                    <ul class="bc-ullink">
+                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                        <li>@Html.ActionLink("Over ons", "About", "Home")</li>
+                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                        <li>&nbsp;</li>
 
-                    @if (Request.IsAuthenticated)
+                        @if (Request.IsAuthenticated)
 
-                    {
-                        using (Html.BeginForm("Logoff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "bc-ullink" }))
                         {
-                            @Html.AntiForgeryToken()
+                            using (Html.BeginForm("Logoff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "bc-ullink" }))
+                            {
+                                @Html.AntiForgeryToken()
 
 
-                            <li>Aangemeld als:</li>
+                                <li>Aangemeld als:</li>
 
-                            <li>    @Html.ActionLink(User.Identity.GetUserName(), "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })</li>
-                            <li>&nbsp;</li>
-                            <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+                                <li>    @Html.ActionLink(User.Identity.GetUserName(), "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })</li>
+                                <li>&nbsp;</li>
+                                <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
 
-                            <li>&nbsp;</li>
-                            <li>@Html.ActionLink("Nieuwe Gebruiker", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-                            <li>@Html.ActionLink("Partijen", "Index", "Partijen")</li>
-                            <li>@Html.ActionLink("Onderwerpen", "Index", "Onderwerpen")</li>
-                            <li>@Html.ActionLink("Wetten", "Index", "Wetten")</li>
+                                <li>&nbsp;</li>
+                                <li>@Html.ActionLink("Nieuwe Gebruiker", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+                                <li>@Html.ActionLink("Partijen", "Index", "Partijen")</li>
+                                <li>@Html.ActionLink("Onderwerpen", "Index", "Onderwerpen")</li>
+                                <li>@Html.ActionLink("Wetten", "Index", "Wetten")</li>
+                                <li>@Html.ActionLink("Stemmingen", "Index", "Stemmingen")</li>
+
+                            }
+                        }
+                        else
+                        {
+
+                            <li>@Html.ActionLink("Aanmelden", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
 
                         }
-                    }
-                    else
-                    {
-
-                        <li>@Html.ActionLink("Aanmelden", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
-
-                    }
-                </ul>
+                    </ul>
+                </div>
+                <div class="bc-foot">
+                    <footer>
+                        <p>&copy; @DateTime.Now.Year - BelofteCheck.nl - Versie 0.7</p>
+                    </footer>
+                </div>
 
             </div>
             <div class="bc-content">
                 @RenderBody()
+
             </div>
+
             <div class="bc-right">
                 &nbsp;
             </div>
         </div>
+        
 
 
-        <div class="bc-foot">
-            <footer>
-                <p>&copy; @DateTime.Now.Year - BelofteCheck.nl - Versie 0.4</p>
-            </footer>
-        </div>
+
     </div>
 
     @Scripts.Render("~/bundles/jquery")

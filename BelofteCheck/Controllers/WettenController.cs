@@ -20,7 +20,7 @@ namespace BelofteCheck.Controllers
 
             string msg = "Selecteer een bewerking op een wet of voeg een wet toe";
             string level = wettenListVM.MessageSection.Info;
-            string title = "Overzicht";
+            string title = "Overzicht W E T T E N";
 
             try
             {

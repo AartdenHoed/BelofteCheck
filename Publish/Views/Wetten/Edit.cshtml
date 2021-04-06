@@ -1,58 +1,65 @@
 ﻿@model BelofteCheck.ViewModels.WettenVM
 
-<h2>@Html.DisplayFor(model => model.MessageSection.Title)</h2>
+<h2 class="bc-h">@Html.DisplayFor(model => model.MessageSection.Title)</h2>
 
-<h3>@Html.DisplayFor(model => model.MessageSection.Message)</h3>
+<h3 class="bc-h">@Html.DisplayFor(model => model.MessageSection.Message)</h3>
 
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
-<div class="form-horizontal">
+    <div>
 
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <div class="form-group">
-        @Html.LabelFor(model => model.wet.WetID, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.wet.WetID, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
-            @Html.ValidationMessageFor(model => model.wet.WetID, "", new { @class = "text-danger" })
-        </div>
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <hr />
+        <dl class="bc-dl">
+            <dt class="bc-dt">
+                @Html.LabelFor(model => model.wet.WetID)
+            </dt>
+            <dd class="bc-dd">
+                @Html.EditorFor(model => model.wet.WetID, new { htmlAttributes = new { @readonly = "readonly" } })
+                @Html.ValidationMessageFor(model => model.wet.WetID, "", new { @class = "text-danger" })
+            </dd>
+
+
+            <dt class="bc-dt">
+                @Html.LabelFor(model => model.wet.WetNaam)
+            </dt>
+            <dd class="bc-dd">
+                @Html.EditorFor(model => model.wet.WetNaam, new { htmlAttributes = new { @class = "bc-input40" } })
+                @Html.ValidationMessageFor(model => model.wet.WetNaam, "", new { @class = "text-danger" })
+            </dd>
+
+
+            <dt class="bc-dt">
+                @Html.LabelFor(model => model.wet.WetType)
+            </dt>
+            <dd class="bc-dd">
+                @Html.EditorFor(model => model.wet.WetType)
+                @Html.ValidationMessageFor(model => model.wet.WetType, "", new { @class = "text-danger" })
+            </dd>
+
+
+            <dt class="bc-dt">
+                @Html.LabelFor(model => model.wet.WetOmschrijving)
+            </dt>
+            <dd class="bc-dd">
+                @Html.EditorFor(model => model.wet.WetOmschrijving, new { htmlAttributes = new { @rows = "3", @class = "bc-input" } })
+                @Html.ValidationMessageFor(model => model.wet.WetOmschrijving, "", new { @class = "text-danger" })
+            </dd>
+
+
+            <dt class="bc-dt">
+                @Html.LabelFor(model => model.wet.WetLink)
+            </dt>
+            <dd class="bc-dd">
+                @Html.EditorFor(model => model.wet.WetLink, new { htmlAttributes = new {@class = "bc-input" } })
+                @Html.ValidationMessageFor(model => model.wet.WetLink, "", new { @class = "text-danger" })
+            </dd>
+        </dl>
     </div>
-
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.wet.WetNaam, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.wet.WetNaam, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.wet.WetNaam, "", new { @class = "text-danger" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.wet.WetType, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.wet.WetType, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.wet.WetType, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.wet.WetOmschrijving, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.wet.WetOmschrijving, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.wet.WetOmschrijving, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.wet.WetLink, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.wet.WetLink, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.wet.WetLink, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             <input type="submit" value="Opslaan" class="bc-button" /> &nbsp;
@@ -64,7 +71,7 @@
 
 
     <p>&nbsp;</p>
-    <h4>Gerelateerde onderwerpen</h4>
+    <h4 class="bc-h">Gerelateerde onderwerpen</h4>
     <div class="form-group">
         <table class="bc-table">
             @if (Model.OnderwerpenLijst != null)
@@ -127,7 +134,7 @@
         </table>
 
     </div>
-</div>
+ 
 }
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

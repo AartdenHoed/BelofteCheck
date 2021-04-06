@@ -1,104 +1,104 @@
 ﻿@model BelofteCheck.ViewModels.WettenVM
-
-
-<h2>@Html.DisplayFor(model => model.MessageSection.Title)</h2>
-
-<h3>@Html.DisplayFor(model => model.MessageSection.Message)</h3>
 <div>
 
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.wet.WetID)
-        </dt>
+    <h2 class="bc-h">@Html.DisplayFor(model => model.MessageSection.Title)</h2>
 
-        <dd>
-            @Html.DisplayFor(model => model.wet.WetID)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.wet.WetNaam)
-        </dt>
+    <h3 class="bc-h">@Html.DisplayFor(model => model.MessageSection.Message)</h3>
+   
 
-        <dd>
-            @Html.DisplayFor(model => model.wet.WetNaam)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.wet.WetType)
-        </dt>
+        <hr />
+        <dl class="bc-dl">
+            <dt class="bc-dt">
+                @Html.DisplayNameFor(model => model.wet.WetID)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.wet.WetType)
-        </dd>
+            <dd class="bc-dd">
+                @Html.DisplayFor(model => model.wet.WetID)
+            </dd>
+            <dt class="bc-dt">
+                @Html.DisplayNameFor(model => model.wet.WetNaam)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.wet.WetOmschrijving)
-        </dt>
+            <dd class="bc-dd">
+                @Html.DisplayFor(model => model.wet.WetNaam)
+            </dd>
+            <dt class="bc-dt">
+                @Html.DisplayNameFor(model => model.wet.WetType)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.wet.WetOmschrijving)
-        </dd>
+            <dd class="bc-dd">
+                @Html.DisplayFor(model => model.wet.WetType)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.wet.WetLink)
-        </dt>
+            <dt class="bc-dt">
+                @Html.DisplayNameFor(model => model.wet.WetOmschrijving)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.wet.WetLink)
-        </dd>
+            <dd class="bc-dd">
+                @Html.DisplayFor(model => model.wet.WetOmschrijving)
+            </dd>
 
-    </dl>
+            <dt class="bc-dt">
+                @Html.DisplayNameFor(model => model.wet.WetLink)
+            </dt>
+
+            <dd class="bc-dd">
+                @Html.DisplayFor(model => model.wet.WetLink)
+            </dd>
+
+        </dl>
 
 
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Verwijderen" class="bc-button" /> &nbsp;
-            @Html.ActionLink("Naar Overzicht", "Index")
-        </div>
-    }
-    <p>&nbsp;</p>
-    <h4>Gerelateerde onderwerpen</h4>
-    <table class="bc-table">
-        @if (Model.OnderwerpenLijst != null)
+        @using (Html.BeginForm())
         {
-            var i = 0;
-            foreach (var item1 in Model.OnderwerpenLijst)
-            {
-                if (i == 0)
-                {
-                    <tr>
-                        <th class="bc-16">
-                            @Html.DisplayNameFor(Item1 => Item1.OnderwerpenLijst[i].OnderwerpID)
-                        </th>
-                        <th class="bc-40">
-                            @Html.DisplayNameFor(Item1 => Item1.OnderwerpenLijst[i].Omschrijving)
-                        </th>
-                        <th class="bc-40">
-                            @Html.DisplayNameFor(Item1 => Item1.OnderwerpenLijst[i].Toelichting)
-                        </th>
-                    </tr>
+            @Html.AntiForgeryToken()
 
-                }
-                <tr>
-
-                    <td class="bc-16">
-                        @Html.DisplayFor(Item1 => Item1.OnderwerpenLijst[i].OnderwerpID)
-
-                    </td>
-                    <td class="bc-40">
-                        @Html.DisplayFor(Item1 => Item1.OnderwerpenLijst[i].Omschrijving)
-
-                    </td>
-                    <td class="bc-40">
-                        @Html.DisplayFor(Item1 => Item1.OnderwerpenLijst[i].Toelichting)
-                    </td>
-                </tr>
-                i = i + 1;
-            }
+            <div class="form-actions no-color">
+                <input type="submit" value="Verwijderen" class="bc-button" /> &nbsp;
+                @Html.ActionLink("Naar Overzicht", "Index")
+            </div>
         }
+        <p>&nbsp;</p>
+        <h4 class="bc-h">Gerelateerde onderwerpen</h4>
+        <table class="bc-table">
+            @if (Model.OnderwerpenLijst != null)
+            {
+                var i = 0;
+                foreach (var item1 in Model.OnderwerpenLijst)
+                {
+                    if (i == 0)
+                    {
+                        <tr>
+                            <th class="bc-16">
+                                @Html.DisplayNameFor(Item1 => Item1.OnderwerpenLijst[i].OnderwerpID)
+                            </th>
+                            <th class="bc-40">
+                                @Html.DisplayNameFor(Item1 => Item1.OnderwerpenLijst[i].Omschrijving)
+                            </th>
+                            <th class="bc-40">
+                                @Html.DisplayNameFor(Item1 => Item1.OnderwerpenLijst[i].Toelichting)
+                            </th>
+                        </tr>
 
-    </table>
+                    }
+                    <tr>
 
-</div>
+                        <td class="bc-16">
+                            @Html.DisplayFor(Item1 => Item1.OnderwerpenLijst[i].OnderwerpID)
+
+                        </td>
+                        <td class="bc-40">
+                            @Html.DisplayFor(Item1 => Item1.OnderwerpenLijst[i].Omschrijving)
+
+                        </td>
+                        <td class="bc-40">
+                            @Html.DisplayFor(Item1 => Item1.OnderwerpenLijst[i].Toelichting)
+                        </td>
+                    </tr>
+                    i = i + 1;
+                }
+            }
+
+        </table>
+
+    </div>

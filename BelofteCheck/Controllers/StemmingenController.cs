@@ -20,7 +20,7 @@ namespace BelofteCheck.Controllers
 
             string msg = "Selecteer een bewerking op een stemming of voeg een stemming toe";
             string level = stemmingenlistvm.MessageSection.Info;
-            string title = "Overzicht";
+            string title = "Overzicht S T E M M I N G E N ";
 
             var query = from s in db.Stemmingen
                         group s by new { s.WetID, s.StemDatum } into grp
@@ -421,6 +421,7 @@ namespace BelofteCheck.Controllers
 
             
         }
+        
         public ActionResult Error()
         {
             StemmingenListVM stemmingenlistVM = new StemmingenListVM();

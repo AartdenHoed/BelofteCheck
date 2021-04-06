@@ -16,7 +16,7 @@ namespace BelofteCheck.ViewModels
 
         [Required]
         [DisplayName("Partijnaam")]
-        [MaxLength(32)]
+        [MaxLength(64)]
         public string PartijNaam { get; set; }
 
 

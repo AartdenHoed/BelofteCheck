@@ -5,7 +5,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <_PublishTargetUrl>D:\AartenHetty\OneDrive\ADHC Development\BelofteCheck.git\Publish</_PublishTargetUrl>
-    <History>True|2021-03-16T21:12:06.3768850Z;True|2021-03-16T10:15:12.1152562+01:00;</History>
+    <History>True|2021-04-01T10:26:56.4284894Z;True|2021-03-25T12:54:36.7512720+01:00;True|2021-03-16T22:12:06.3768850+01:00;True|2021-03-16T10:15:12.1152562+01:00;</History>
   </PropertyGroup>
   <ItemGroup>
     <File Include="BCmodel.edmx.diagram">
@@ -18,10 +18,10 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>09/10/2013 17:29:20</publishTime>
     </File>
     <File Include="bin/BelofteCheck.dll">
-      <publishTime>03/16/2021 22:12:00</publishTime>
+      <publishTime>04/01/2021 12:26:53</publishTime>
     </File>
     <File Include="bin/BelofteCheck.pdb">
-      <publishTime>03/16/2021 22:12:00</publishTime>
+      <publishTime>04/01/2021 12:26:53</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>03/02/2015 09:32:26</publishTime>
@@ -315,7 +315,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>03/14/2021 17:10:14</publishTime>
     </File>
     <File Include="Content/Site.css">
-      <publishTime>03/16/2021 22:09:34</publishTime>
+      <publishTime>04/01/2021 12:16:04</publishTime>
     </File>
     <File Include="favicon.ico">
       <publishTime>01/28/2021 10:34:11</publishTime>
@@ -693,103 +693,106 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>03/14/2021 17:10:01</publishTime>
     </File>
     <File Include="Views/Account/ConfirmEmail.cshtml">
-      <publishTime>01/28/2021 10:34:24</publishTime>
+      <publishTime>03/20/2021 18:00:08</publishTime>
     </File>
     <File Include="Views/Account/ExternalLoginConfirmation.cshtml">
-      <publishTime>03/14/2021 22:24:56</publishTime>
+      <publishTime>03/20/2021 18:00:07</publishTime>
     </File>
     <File Include="Views/Account/ExternalLoginFailure.cshtml">
-      <publishTime>01/28/2021 10:34:24</publishTime>
+      <publishTime>03/20/2021 18:00:07</publishTime>
     </File>
     <File Include="Views/Account/ForgotPassword.cshtml">
-      <publishTime>03/14/2021 22:24:56</publishTime>
+      <publishTime>03/20/2021 18:00:07</publishTime>
     </File>
     <File Include="Views/Account/ForgotPasswordConfirmation.cshtml">
       <publishTime>01/28/2021 10:34:24</publishTime>
     </File>
     <File Include="Views/Account/Login.cshtml">
-      <publishTime>03/14/2021 22:24:56</publishTime>
+      <publishTime>03/20/2021 18:00:07</publishTime>
     </File>
     <File Include="Views/Account/Register.cshtml">
-      <publishTime>03/14/2021 22:24:56</publishTime>
+      <publishTime>03/20/2021 18:00:07</publishTime>
     </File>
     <File Include="Views/Account/ResetPassword.cshtml">
-      <publishTime>03/14/2021 22:24:56</publishTime>
+      <publishTime>03/20/2021 18:00:07</publishTime>
     </File>
     <File Include="Views/Account/ResetPasswordConfirmation.cshtml">
       <publishTime>01/28/2021 10:34:24</publishTime>
     </File>
     <File Include="Views/Account/SendCode.cshtml">
-      <publishTime>03/14/2021 22:24:56</publishTime>
+      <publishTime>03/20/2021 18:00:07</publishTime>
     </File>
     <File Include="Views/Account/VerifyCode.cshtml">
-      <publishTime>03/14/2021 22:24:56</publishTime>
+      <publishTime>03/20/2021 18:00:07</publishTime>
     </File>
     <File Include="Views/Account/_ExternalLoginsListPartial.cshtml">
-      <publishTime>03/14/2021 22:24:56</publishTime>
+      <publishTime>03/20/2021 18:00:07</publishTime>
     </File>
     <File Include="Views/Home/About.cshtml">
-      <publishTime>02/03/2021 16:49:06</publishTime>
+      <publishTime>03/20/2021 18:00:08</publishTime>
     </File>
     <File Include="Views/Home/Contact.cshtml">
-      <publishTime>02/03/2021 16:49:57</publishTime>
+      <publishTime>03/20/2021 18:00:08</publishTime>
     </File>
     <File Include="Views/Home/Index.cshtml">
       <publishTime>03/16/2021 22:07:38</publishTime>
     </File>
     <File Include="Views/Manage/AddPhoneNumber.cshtml">
-      <publishTime>03/14/2021 22:24:56</publishTime>
+      <publishTime>03/20/2021 18:00:08</publishTime>
     </File>
     <File Include="Views/Manage/ChangePassword.cshtml">
-      <publishTime>03/14/2021 22:24:56</publishTime>
+      <publishTime>03/20/2021 18:00:08</publishTime>
     </File>
     <File Include="Views/Manage/Index.cshtml">
-      <publishTime>01/28/2021 10:34:24</publishTime>
+      <publishTime>03/20/2021 18:00:08</publishTime>
     </File>
     <File Include="Views/Manage/ManageLogins.cshtml">
-      <publishTime>03/14/2021 22:24:56</publishTime>
+      <publishTime>03/20/2021 18:00:07</publishTime>
     </File>
     <File Include="Views/Manage/SetPassword.cshtml">
-      <publishTime>03/14/2021 22:24:56</publishTime>
+      <publishTime>03/20/2021 18:00:07</publishTime>
     </File>
     <File Include="Views/Manage/VerifyPhoneNumber.cshtml">
-      <publishTime>03/14/2021 22:24:56</publishTime>
+      <publishTime>03/20/2021 18:00:07</publishTime>
     </File>
     <File Include="Views/Onderwerpen/Create.cshtml">
-      <publishTime>03/14/2021 22:24:56</publishTime>
+      <publishTime>03/22/2021 11:05:59</publishTime>
     </File>
     <File Include="Views/Onderwerpen/Delete.cshtml">
-      <publishTime>03/14/2021 22:24:56</publishTime>
+      <publishTime>03/20/2021 18:00:08</publishTime>
     </File>
     <File Include="Views/Onderwerpen/Details.cshtml">
-      <publishTime>02/18/2021 22:01:06</publishTime>
+      <publishTime>03/20/2021 18:00:08</publishTime>
     </File>
     <File Include="Views/Onderwerpen/Edit.cshtml">
-      <publishTime>03/14/2021 22:24:56</publishTime>
+      <publishTime>03/22/2021 10:56:24</publishTime>
     </File>
     <File Include="Views/Onderwerpen/Error.cshtml">
-      <publishTime>02/27/2021 23:18:18</publishTime>
+      <publishTime>03/20/2021 18:00:07</publishTime>
     </File>
     <File Include="Views/Onderwerpen/Index.cshtml">
-      <publishTime>03/01/2021 22:18:38</publishTime>
+      <publishTime>03/22/2021 10:31:38</publishTime>
     </File>
     <File Include="Views/Partijen/Create.cshtml">
-      <publishTime>03/14/2021 22:24:56</publishTime>
+      <publishTime>03/22/2021 11:13:48</publishTime>
     </File>
     <File Include="Views/Partijen/Delete.cshtml">
-      <publishTime>03/15/2021 22:36:32</publishTime>
+      <publishTime>03/20/2021 18:00:07</publishTime>
     </File>
     <File Include="Views/Partijen/Details.cshtml">
-      <publishTime>03/15/2021 22:35:14</publishTime>
+      <publishTime>03/20/2021 18:29:57</publishTime>
     </File>
     <File Include="Views/Partijen/Edit.cshtml">
-      <publishTime>03/15/2021 22:07:45</publishTime>
+      <publishTime>03/20/2021 18:27:03</publishTime>
     </File>
     <File Include="Views/Partijen/Error.cshtml">
-      <publishTime>02/27/2021 23:15:32</publishTime>
+      <publishTime>03/20/2021 18:00:07</publishTime>
     </File>
     <File Include="Views/Partijen/Index.cshtml">
-      <publishTime>03/02/2021 12:58:04</publishTime>
+      <publishTime>03/29/2021 21:34:54</publishTime>
+    </File>
+    <File Include="Views/Partijen/Verify.cshtml">
+      <publishTime>04/01/2021 12:16:50</publishTime>
     </File>
     <File Include="Views/Shared/Error.cshtml">
       <publishTime>01/28/2021 10:34:24</publishTime>
@@ -798,52 +801,58 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>01/28/2021 10:34:24</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>03/16/2021 10:59:25</publishTime>
+      <publishTime>04/01/2021 12:26:27</publishTime>
     </File>
     <File Include="Views/Shared/_LoginPartial.cshtml">
       <publishTime>02/12/2021 17:54:23</publishTime>
     </File>
     <File Include="Views/Stemmingen/Create.cshtml">
-      <publishTime>03/15/2021 16:15:54</publishTime>
+      <publishTime>03/25/2021 09:46:50</publishTime>
+    </File>
+    <File Include="Views/Stemmingen/CreatEdit.cshtml">
+      <publishTime>03/25/2021 11:58:22</publishTime>
     </File>
     <File Include="Views/Stemmingen/Delete.cshtml">
-      <publishTime>03/15/2021 16:15:56</publishTime>
+      <publishTime>03/25/2021 12:40:46</publishTime>
     </File>
     <File Include="Views/Stemmingen/Details.cshtml">
-      <publishTime>03/15/2021 16:15:57</publishTime>
+      <publishTime>03/25/2021 10:08:40</publishTime>
     </File>
     <File Include="Views/Stemmingen/Edit.cshtml">
-      <publishTime>03/15/2021 16:15:58</publishTime>
+      <publishTime>03/20/2021 18:00:07</publishTime>
+    </File>
+    <File Include="Views/Stemmingen/Error.cshtml">
+      <publishTime>03/23/2021 21:35:14</publishTime>
     </File>
     <File Include="Views/Stemmingen/Index.cshtml">
-      <publishTime>03/15/2021 16:15:59</publishTime>
+      <publishTime>03/25/2021 10:02:43</publishTime>
     </File>
     <File Include="Views/Web.config">
       <publishTime>01/28/2021 10:34:11</publishTime>
     </File>
     <File Include="Views/Wetten/Create.cshtml">
-      <publishTime>03/14/2021 22:21:24</publishTime>
+      <publishTime>03/22/2021 12:00:33</publishTime>
     </File>
     <File Include="Views/Wetten/Delete.cshtml">
-      <publishTime>03/14/2021 22:24:56</publishTime>
+      <publishTime>03/20/2021 18:00:08</publishTime>
     </File>
     <File Include="Views/Wetten/Details.cshtml">
-      <publishTime>03/14/2021 15:54:33</publishTime>
+      <publishTime>03/20/2021 18:00:08</publishTime>
     </File>
     <File Include="Views/Wetten/Edit.cshtml">
-      <publishTime>03/14/2021 22:24:56</publishTime>
+      <publishTime>03/22/2021 12:08:38</publishTime>
     </File>
     <File Include="Views/Wetten/Error.cshtml">
-      <publishTime>02/13/2021 21:55:02</publishTime>
+      <publishTime>03/20/2021 18:00:07</publishTime>
     </File>
     <File Include="Views/Wetten/Index.cshtml">
-      <publishTime>03/14/2021 15:54:32</publishTime>
+      <publishTime>03/24/2021 19:19:54</publishTime>
     </File>
     <File Include="Views/_ViewStart.cshtml">
       <publishTime>01/28/2021 10:34:11</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>03/16/2021 22:12:01</publishTime>
+      <publishTime>03/25/2021 12:54:34</publishTime>
     </File>
   </ItemGroup>
 </Project>
