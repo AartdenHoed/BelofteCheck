@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="22c586590df34f0ea921a02c8c0f1ca4" Name="Diagram1">
+        <EntityTypeShape EntityType="BCmodel.Onderwerpen" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BCmodel.Partijen" Width="1.5" PointX="10.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BCmodel.PartijZetels" Width="1.5" PointX="13.25" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BCmodel.Stemmingen" Width="1.5" PointX="8.5" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BCmodel.WetScope" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BCmodel.Wetten" Width="1.5" PointX="5.625" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="BCmodel.FK_WetScope_Onderwerpen" ManuallyRouted="false" />
+        <AssociationConnector Association="BCmodel.FK_PartijZetels_Partijen" ManuallyRouted="false" />
+        <AssociationConnector Association="BCmodel.FK_Stemmingen_Partijen" ManuallyRouted="false" />
+        <AssociationConnector Association="BCmodel.FK_Stemmingen_Wetten" ManuallyRouted="false" />
+        <AssociationConnector Association="BCmodel.FK_WetScope_Wetten" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

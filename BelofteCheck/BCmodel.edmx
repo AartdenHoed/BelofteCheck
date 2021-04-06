@@ -1,0 +1,413 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="BCmodel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Onderwerpen">
+          <Key>
+            <PropertyRef Name="OnderwerpID" />
+          </Key>
+          <Property Name="OnderwerpID" Type="char" MaxLength="32" Nullable="false" />
+          <Property Name="Omschrijving" Type="varchar" MaxLength="512" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Partijen">
+          <Key>
+            <PropertyRef Name="PartijID" />
+          </Key>
+          <Property Name="PartijID" Type="char" MaxLength="8" Nullable="false" />
+          <Property Name="PartijNaam" Type="char" MaxLength="64" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PartijZetels">
+          <Key>
+            <PropertyRef Name="PartijID" />
+            <PropertyRef Name="VanDatum" />
+          </Key>
+          <Property Name="PartijID" Type="char" MaxLength="8" Nullable="false" />
+          <Property Name="VanDatum" Type="datetime" Nullable="false" />
+          <Property Name="TotDatum" Type="datetime" Nullable="false" />
+          <Property Name="AantalZetels" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Stemmingen">
+          <Key>
+            <PropertyRef Name="WetID" />
+            <PropertyRef Name="PartijID" />
+            <PropertyRef Name="StemDatum" />
+          </Key>
+          <Property Name="WetID" Type="char" MaxLength="32" Nullable="false" />
+          <Property Name="PartijID" Type="char" MaxLength="8" Nullable="false" />
+          <Property Name="Voor" Type="int" Nullable="false" />
+          <Property Name="Tegen" Type="int" Nullable="false" />
+          <Property Name="Blanco" Type="int" Nullable="false" />
+          <Property Name="StemDatum" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WetScope">
+          <Key>
+            <PropertyRef Name="WetID" />
+            <PropertyRef Name="OnderwerpID" />
+          </Key>
+          <Property Name="WetID" Type="char" MaxLength="32" Nullable="false" />
+          <Property Name="OnderwerpID" Type="char" MaxLength="32" Nullable="false" />
+          <Property Name="Toelichting" Type="varchar" MaxLength="512" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Wetten">
+          <Key>
+            <PropertyRef Name="WetID" />
+          </Key>
+          <Property Name="WetID" Type="char" MaxLength="32" Nullable="false" />
+          <Property Name="WetNaam" Type="char" MaxLength="120" Nullable="false" />
+          <Property Name="WetOmschrijving" Type="varchar" MaxLength="512" Nullable="false" />
+          <Property Name="WetLink" Type="char" MaxLength="120" />
+          <Property Name="WetType" Type="char" MaxLength="16" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_PartijZetels_Partijen">
+          <End Role="Partijen" Type="Self.Partijen" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PartijZetels" Type="Self.PartijZetels" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Partijen">
+              <PropertyRef Name="PartijID" />
+            </Principal>
+            <Dependent Role="PartijZetels">
+              <PropertyRef Name="PartijID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Stemmingen_Partijen">
+          <End Role="Partijen" Type="Self.Partijen" Multiplicity="1" />
+          <End Role="Stemmingen" Type="Self.Stemmingen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Partijen">
+              <PropertyRef Name="PartijID" />
+            </Principal>
+            <Dependent Role="Stemmingen">
+              <PropertyRef Name="PartijID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Stemmingen_Wetten">
+          <End Role="Wetten" Type="Self.Wetten" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Stemmingen" Type="Self.Stemmingen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Wetten">
+              <PropertyRef Name="WetID" />
+            </Principal>
+            <Dependent Role="Stemmingen">
+              <PropertyRef Name="WetID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WetScope_Onderwerpen">
+          <End Role="Onderwerpen" Type="Self.Onderwerpen" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="WetScope" Type="Self.WetScope" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Onderwerpen">
+              <PropertyRef Name="OnderwerpID" />
+            </Principal>
+            <Dependent Role="WetScope">
+              <PropertyRef Name="OnderwerpID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WetScope_Wetten">
+          <End Role="Wetten" Type="Self.Wetten" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="WetScope" Type="Self.WetScope" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Wetten">
+              <PropertyRef Name="WetID" />
+            </Principal>
+            <Dependent Role="WetScope">
+              <PropertyRef Name="WetID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BCmodelStoreContainer">
+          <EntitySet Name="Onderwerpen" EntityType="Self.Onderwerpen" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Partijen" EntityType="Self.Partijen" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PartijZetels" EntityType="Self.PartijZetels" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Stemmingen" EntityType="Self.Stemmingen" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WetScope" EntityType="Self.WetScope" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Wetten" EntityType="Self.Wetten" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_PartijZetels_Partijen" Association="Self.FK_PartijZetels_Partijen">
+            <End Role="Partijen" EntitySet="Partijen" />
+            <End Role="PartijZetels" EntitySet="PartijZetels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Stemmingen_Partijen" Association="Self.FK_Stemmingen_Partijen">
+            <End Role="Partijen" EntitySet="Partijen" />
+            <End Role="Stemmingen" EntitySet="Stemmingen" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Stemmingen_Wetten" Association="Self.FK_Stemmingen_Wetten">
+            <End Role="Wetten" EntitySet="Wetten" />
+            <End Role="Stemmingen" EntitySet="Stemmingen" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WetScope_Onderwerpen" Association="Self.FK_WetScope_Onderwerpen">
+            <End Role="Onderwerpen" EntitySet="Onderwerpen" />
+            <End Role="WetScope" EntitySet="WetScope" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WetScope_Wetten" Association="Self.FK_WetScope_Wetten">
+            <End Role="Wetten" EntitySet="Wetten" />
+            <End Role="WetScope" EntitySet="WetScope" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BCmodel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Onderwerpen">
+          <Key>
+            <PropertyRef Name="OnderwerpID" />
+          </Key>
+          <Property Name="OnderwerpID" Type="String" MaxLength="32" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Omschrijving" Type="String" MaxLength="512" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="WetScope" Relationship="Self.FK_WetScope_Onderwerpen" FromRole="Onderwerpen" ToRole="WetScope" />
+        </EntityType>
+        <EntityType Name="Partijen">
+          <Key>
+            <PropertyRef Name="PartijID" />
+          </Key>
+          <Property Name="PartijID" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="PartijNaam" Type="String" MaxLength="64" FixedLength="true" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="PartijZetels" Relationship="Self.FK_PartijZetels_Partijen" FromRole="Partijen" ToRole="PartijZetels" />
+          <NavigationProperty Name="Stemmingen" Relationship="Self.FK_Stemmingen_Partijen" FromRole="Partijen" ToRole="Stemmingen" />
+        </EntityType>
+        <EntityType Name="PartijZetels">
+          <Key>
+            <PropertyRef Name="PartijID" />
+            <PropertyRef Name="VanDatum" />
+          </Key>
+          <Property Name="PartijID" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="VanDatum" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="TotDatum" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="AantalZetels" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Partijen" Relationship="Self.FK_PartijZetels_Partijen" FromRole="PartijZetels" ToRole="Partijen" />
+        </EntityType>
+        <EntityType Name="Stemmingen">
+          <Key>
+            <PropertyRef Name="WetID" />
+            <PropertyRef Name="PartijID" />
+            <PropertyRef Name="StemDatum" />
+          </Key>
+          <Property Name="WetID" Type="String" MaxLength="32" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="PartijID" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Voor" Type="Int32" Nullable="false" />
+          <Property Name="Tegen" Type="Int32" Nullable="false" />
+          <Property Name="Blanco" Type="Int32" Nullable="false" />
+          <Property Name="StemDatum" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Partijen" Relationship="Self.FK_Stemmingen_Partijen" FromRole="Stemmingen" ToRole="Partijen" />
+          <NavigationProperty Name="Wetten" Relationship="Self.FK_Stemmingen_Wetten" FromRole="Stemmingen" ToRole="Wetten" />
+        </EntityType>
+        <EntityType Name="WetScope">
+          <Key>
+            <PropertyRef Name="WetID" />
+            <PropertyRef Name="OnderwerpID" />
+          </Key>
+          <Property Name="WetID" Type="String" MaxLength="32" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="OnderwerpID" Type="String" MaxLength="32" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Toelichting" Type="String" MaxLength="512" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Onderwerpen" Relationship="Self.FK_WetScope_Onderwerpen" FromRole="WetScope" ToRole="Onderwerpen" />
+          <NavigationProperty Name="Wetten" Relationship="Self.FK_WetScope_Wetten" FromRole="WetScope" ToRole="Wetten" />
+        </EntityType>
+        <EntityType Name="Wetten">
+          <Key>
+            <PropertyRef Name="WetID" />
+          </Key>
+          <Property Name="WetID" Type="String" MaxLength="32" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="WetNaam" Type="String" MaxLength="120" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="WetOmschrijving" Type="String" MaxLength="512" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="WetLink" Type="String" MaxLength="120" FixedLength="true" Unicode="false" />
+          <Property Name="WetType" Type="String" MaxLength="16" FixedLength="true" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Stemmingen" Relationship="Self.FK_Stemmingen_Wetten" FromRole="Wetten" ToRole="Stemmingen" />
+          <NavigationProperty Name="WetScope" Relationship="Self.FK_WetScope_Wetten" FromRole="Wetten" ToRole="WetScope" />
+        </EntityType>
+        <Association Name="FK_WetScope_Onderwerpen">
+          <End Role="Onderwerpen" Type="Self.Onderwerpen" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="WetScope" Type="Self.WetScope" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Onderwerpen">
+              <PropertyRef Name="OnderwerpID" />
+            </Principal>
+            <Dependent Role="WetScope">
+              <PropertyRef Name="OnderwerpID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PartijZetels_Partijen">
+          <End Role="Partijen" Type="Self.Partijen" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PartijZetels" Type="Self.PartijZetels" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Partijen">
+              <PropertyRef Name="PartijID" />
+            </Principal>
+            <Dependent Role="PartijZetels">
+              <PropertyRef Name="PartijID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Stemmingen_Partijen">
+          <End Role="Partijen" Type="Self.Partijen" Multiplicity="1" />
+          <End Role="Stemmingen" Type="Self.Stemmingen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Partijen">
+              <PropertyRef Name="PartijID" />
+            </Principal>
+            <Dependent Role="Stemmingen">
+              <PropertyRef Name="PartijID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Stemmingen_Wetten">
+          <End Role="Wetten" Type="Self.Wetten" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Stemmingen" Type="Self.Stemmingen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Wetten">
+              <PropertyRef Name="WetID" />
+            </Principal>
+            <Dependent Role="Stemmingen">
+              <PropertyRef Name="WetID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WetScope_Wetten">
+          <End Role="Wetten" Type="Self.Wetten" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="WetScope" Type="Self.WetScope" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Wetten">
+              <PropertyRef Name="WetID" />
+            </Principal>
+            <Dependent Role="WetScope">
+              <PropertyRef Name="WetID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BCentities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Onderwerpen" EntityType="Self.Onderwerpen" />
+          <EntitySet Name="Partijen" EntityType="Self.Partijen" />
+          <EntitySet Name="PartijZetels" EntityType="Self.PartijZetels" />
+          <EntitySet Name="Stemmingen" EntityType="Self.Stemmingen" />
+          <EntitySet Name="WetScope" EntityType="Self.WetScope" />
+          <EntitySet Name="Wetten" EntityType="Self.Wetten" />
+          <AssociationSet Name="FK_WetScope_Onderwerpen" Association="Self.FK_WetScope_Onderwerpen">
+            <End Role="Onderwerpen" EntitySet="Onderwerpen" />
+            <End Role="WetScope" EntitySet="WetScope" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PartijZetels_Partijen" Association="Self.FK_PartijZetels_Partijen">
+            <End Role="Partijen" EntitySet="Partijen" />
+            <End Role="PartijZetels" EntitySet="PartijZetels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Stemmingen_Partijen" Association="Self.FK_Stemmingen_Partijen">
+            <End Role="Partijen" EntitySet="Partijen" />
+            <End Role="Stemmingen" EntitySet="Stemmingen" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Stemmingen_Wetten" Association="Self.FK_Stemmingen_Wetten">
+            <End Role="Wetten" EntitySet="Wetten" />
+            <End Role="Stemmingen" EntitySet="Stemmingen" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WetScope_Wetten" Association="Self.FK_WetScope_Wetten">
+            <End Role="Wetten" EntitySet="Wetten" />
+            <End Role="WetScope" EntitySet="WetScope" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="BCmodelStoreContainer" CdmEntityContainer="BCentities">
+          <EntitySetMapping Name="Onderwerpen">
+            <EntityTypeMapping TypeName="BCmodel.Onderwerpen">
+              <MappingFragment StoreEntitySet="Onderwerpen">
+                <ScalarProperty Name="OnderwerpID" ColumnName="OnderwerpID" />
+                <ScalarProperty Name="Omschrijving" ColumnName="Omschrijving" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Partijen">
+            <EntityTypeMapping TypeName="BCmodel.Partijen">
+              <MappingFragment StoreEntitySet="Partijen">
+                <ScalarProperty Name="PartijID" ColumnName="PartijID" />
+                <ScalarProperty Name="PartijNaam" ColumnName="PartijNaam" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PartijZetels">
+            <EntityTypeMapping TypeName="BCmodel.PartijZetels">
+              <MappingFragment StoreEntitySet="PartijZetels">
+                <ScalarProperty Name="PartijID" ColumnName="PartijID" />
+                <ScalarProperty Name="VanDatum" ColumnName="VanDatum" />
+                <ScalarProperty Name="TotDatum" ColumnName="TotDatum" />
+                <ScalarProperty Name="AantalZetels" ColumnName="AantalZetels" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Stemmingen">
+            <EntityTypeMapping TypeName="BCmodel.Stemmingen">
+              <MappingFragment StoreEntitySet="Stemmingen">
+                <ScalarProperty Name="WetID" ColumnName="WetID" />
+                <ScalarProperty Name="PartijID" ColumnName="PartijID" />
+                <ScalarProperty Name="Voor" ColumnName="Voor" />
+                <ScalarProperty Name="Tegen" ColumnName="Tegen" />
+                <ScalarProperty Name="Blanco" ColumnName="Blanco" />
+                <ScalarProperty Name="StemDatum" ColumnName="StemDatum" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WetScope">
+            <EntityTypeMapping TypeName="BCmodel.WetScope">
+              <MappingFragment StoreEntitySet="WetScope">
+                <ScalarProperty Name="WetID" ColumnName="WetID" />
+                <ScalarProperty Name="OnderwerpID" ColumnName="OnderwerpID" />
+                <ScalarProperty Name="Toelichting" ColumnName="Toelichting" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Wetten">
+            <EntityTypeMapping TypeName="BCmodel.Wetten">
+              <MappingFragment StoreEntitySet="Wetten">
+                <ScalarProperty Name="WetID" ColumnName="WetID" />
+                <ScalarProperty Name="WetNaam" ColumnName="WetNaam" />
+                <ScalarProperty Name="WetOmschrijving" ColumnName="WetOmschrijving" />
+                <ScalarProperty Name="WetLink" ColumnName="WetLink" />
+                <ScalarProperty Name="WetType" ColumnName="WetType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

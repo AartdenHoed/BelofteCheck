@@ -1,0 +1,185 @@
+﻿@model BelofteCheck.ViewModels.PartijenVM
+
+<h2 class="bc-h">@Html.DisplayFor(model => model.MessageSection.Title)</h2>
+
+<h3 class="bc-h">@Html.DisplayFor(model => model.MessageSection.Message)</h3>
+
+
+@using (Html.BeginForm())
+{
+    <hr />
+    @Html.AntiForgeryToken()
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div>
+
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <dl class="bc-dl">
+            <dt class="bc-dt">
+                @Html.LabelFor(model => model.partij.PartijID)
+            </dt>
+            <dd class="bc-dd">
+                @Html.EditorFor(model => model.partij.PartijID, new { htmlAttributes = new { @readonly = "readonly" } })
+                @Html.ValidationMessageFor(model => model.partij.PartijID, "", new { @class = "text-danger" })
+            </dd>
+
+
+            <dt class="bc-dt">
+                @Html.LabelFor(model => model.partij.PartijNaam)
+            </dt>
+            <dd class="bc-dd">
+                @Html.EditorFor(model => model.partij.PartijNaam, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.partij.PartijNaam, "", new { @class = "text-danger" })
+            </dd>
+
+    
+        </dl>
+    </div>
+
+
+    <div class="form-group">
+        <table class="bc-table2">
+            @if (Model.ZetelLijst != null)
+            {
+                var i = 0;
+                foreach (var item1 in Model.ZetelLijst)
+                {
+                    if (i == 0)
+                    {
+                        <tr>
+                            <th class="bc-08">
+                                @Html.LabelFor(Item1 => Item1.ZetelLijst[i].IncludeIfSelected)
+                            </th>
+
+                            <th class="bc-08">
+                                @Html.LabelFor(Item1 => Item1.ZetelLijst[i].VanDatum)
+                            </th>
+                            <th class="bc-08">
+                                @Html.LabelFor(Item1 => Item1.ZetelLijst[i].TotDatum)
+                            </th>
+                            <th class="bc-08">
+                                @Html.LabelFor(Item1 => Item1.ZetelLijst[i].AantalZetels)
+                            </th>
+                            <th class="bc-08">
+                                @Html.LabelFor(Item1 => Item1.ZetelLijst[i].InError)
+                            </th>
+                            <th class="bc-36">
+                                @Html.LabelFor(Item1 => Item1.ZetelLijst[i].ErrorMsg)
+                            </th>
+                        </tr>
+                    }
+
+                    <tr>
+                        <td class="bc-08">
+
+                            @Html.CheckBoxFor(Item1 => Item1.ZetelLijst[i].IncludeIfSelected, new { @class = "bc-areatrigger", @onchange = "setreq2(this)" })
+                        </td>
+
+                        <td class="bc-08">
+
+                            @Html.EditorFor(Item1 => Item1.ZetelLijst[i].VanDatum, "{0:yyyy-MM-dd}", new { htmlAttributes = new { @class = "bc-area bc-field" } })
+                            @Html.ValidationMessageFor(Item1 => Item1.ZetelLijst[i].VanDatum, "", new { @class = "bc-error" })
+
+
+                        </td>
+                        <td class="bc-08">
+
+                            @Html.EditorFor(Item1 => Item1.ZetelLijst[i].TotDatum, "{0:yyyy-MM-dd}", new { htmlAttributes = new { @class = "bc-area bc-field" } })
+                            @Html.ValidationMessageFor(Item1 => Item1.ZetelLijst[i].TotDatum, "", new { @class = "bc-error" })
+
+                        </td>
+                        <td class="bc-08">
+
+                            @Html.EditorFor(Item1 => Item1.ZetelLijst[i].AantalZetels, new { htmlAttributes = new { @class = "bc-area bc-field" } })
+                            @Html.ValidationMessageFor(Item1 => Item1.ZetelLijst[i].AantalZetels, "", new { @class = "bc-error" })
+
+                        </td>
+                        <td class="bc-08">
+
+                            @Html.EditorFor(Item1 => Item1.ZetelLijst[i].InError, new { htmlAttributes = new { @class = "bc-flag", @readonly = "readonly", @onchange = "setmsg(this)" } })
+                            @Html.ValidationMessageFor(Item1 => Item1.ZetelLijst[i].InError, "", new { @class = "bc-error" })
+
+                        </td>
+                        <td class="bc-36">
+                            @Html.EditorFor(Item1 => Item1.ZetelLijst[i].ErrorMsg, new { htmlAttributes = new { @class = "bc-emsg bc-field", @readonly = "readonly" } })
+                            @Html.ValidationMessageFor(Item1 => Item1.ZetelLijst[i].ErrorMsg, "", new { @class = "bc-error" })
+                        </td>
+
+                    </tr>
+
+
+
+                    i = i + 1;
+                }
+            }
+        </table>
+    </div>
+
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Opslaan" class="bc-button" /> &nbsp;
+            @Html.ActionLink("Naar Overzicht", "Index")
+        </div>
+    </div>
+
+    <p>&nbsp;</p>
+    <h4 class="bc-h">Stemgedrag</h4>
+    <table class="bc-table">
+        @if (Model.StemmingenLijst != null)
+        {
+            var i = 0;
+            foreach (var item2 in Model.StemmingenLijst)
+            {
+                if (i == 0)
+                {
+                    <tr>
+                        <th class="bc-16">
+                            @Html.DisplayNameFor(Item2 => Item2.StemmingenLijst[i].WetID)
+                        </th>
+                        <th class="bc-40">
+                            @Html.DisplayNameFor(Item2 => Item2.StemmingenLijst[i].WetNaam)
+                        </th>
+                        <th class="bc-10">
+                            @Html.DisplayNameFor(Item2 => Item2.StemmingenLijst[i].Voor)
+                        </th>
+                        <th class="bc-10">
+                            @Html.DisplayNameFor(Item2 => Item2.StemmingenLijst[i].Tegen)
+                        </th>
+                        <th class="bc-10">
+                            @Html.DisplayNameFor(Item2 => Item2.StemmingenLijst[i].Blanco)
+                        </th>
+                    </tr>
+
+                }
+                <tr>
+
+                    <td class="bc-16">
+                        @Html.DisplayFor(Item2 => Item2.StemmingenLijst[i].WetID)
+
+                    </td>
+                    <td class="bc-40">
+                        @Html.DisplayFor(Item2 => Item2.StemmingenLijst[i].WetNaam)
+
+                    </td>
+                    <td class="bc-10">
+                        @Html.DisplayFor(Item2 => Item2.StemmingenLijst[i].Voor)
+                    </td>
+                    <td class="bc-10">
+                        @Html.DisplayFor(Item2 => Item2.StemmingenLijst[i].Tegen)
+                    </td>
+                    <td class="bc-10">
+                        @Html.DisplayFor(Item2 => Item2.StemmingenLijst[i].Blanco)
+                    </td>
+                </tr>
+                i = i + 1;
+            }
+        }
+    </table>
+
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
