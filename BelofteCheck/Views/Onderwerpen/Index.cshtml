@@ -1,4 +1,5 @@
 ﻿@model BelofteCheck.ViewModels.OnderwerpenListVM
+@Html.HiddenFor(model => model.MessageSection.ErrorLevel, new { @class = "bc-msgtrigger", @onchange = "seterror(this)" })
 
 
 <h2 class="bc-h">@Html.DisplayFor(model => model.MessageSection.Title)</h2>
@@ -21,19 +22,19 @@
 
     @foreach (var item in Model.OnderwerpenLijst)
     {
-    <tr>
-        <td class="bc-16">
-            @Html.DisplayFor(modelItem => item.OnderwerpID)
-        </td>
-        <td class="bc40">
-            @Html.DisplayFor(modelItem => item.Omschrijving)
-        </td>
-        <td class="bc-40">
-            @Html.ActionLink("Bewerk", "Edit", new { OnderwerpID = item.OnderwerpID }) |
-            @Html.ActionLink("Bekijk", "Details", new { OnderwerpID = item.OnderwerpID }) |
-            @Html.ActionLink("Verwijder", "Delete", new { OnderwerpID = item.OnderwerpID })
-        </td>
-    </tr>
+        <tr>
+            <td class="bc-16">
+                @Html.DisplayFor(modelItem => item.OnderwerpID)
+            </td>
+            <td class="bc40">
+                @Html.DisplayFor(modelItem => item.Omschrijving)
+            </td>
+            <td class="bc-40">
+                @Html.ActionLink("Bewerk", "Edit", new { OnderwerpID = item.OnderwerpID }) |
+                @Html.ActionLink("Bekijk", "Details", new { OnderwerpID = item.OnderwerpID }) |
+                @Html.ActionLink("Verwijder", "Delete", new { OnderwerpID = item.OnderwerpID })
+            </td>
+        </tr>
     }
 
 </table>

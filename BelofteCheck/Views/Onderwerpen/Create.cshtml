@@ -1,4 +1,5 @@
 ﻿@model BelofteCheck.ViewModels.OnderwerpenVM
+@Html.HiddenFor(model => model.MessageSection.ErrorLevel, new { @class = "bc-msgtrigger", @onchange = "seterror(this)" })
 
 <h2 class="bc-h">@Html.DisplayFor(model => model.MessageSection.Title)</h2>
 
@@ -39,7 +40,7 @@
             <input type="submit" value="Aanmaken" class="bc-button" />
         </div>
     </div>
-    
+
 }
 
 <p>

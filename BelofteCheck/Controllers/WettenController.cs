@@ -75,7 +75,7 @@ namespace BelofteCheck.Controllers
             if (WetID == null)
             {
                 TempData["BCmessage"] = "Specificeer een geldige Wet ID!";
-                TempData["BCerrorlevel"] = wettenVM.MessageSection.Warning;
+                TempData["BCerrorlevel"] = wettenVM.MessageSection.Error;
 
                 return RedirectToAction("Error");
             }
@@ -105,7 +105,7 @@ namespace BelofteCheck.Controllers
             if (q == null)
             {
                 TempData["BCmessage"] = "Wet ID " + WetID.Trim() + " is niet gevonden";
-                TempData["BCerrorlevel"] = wettenVM.MessageSection.Warning;
+                TempData["BCerrorlevel"] = wettenVM.MessageSection.Error;
 
                 return RedirectToAction("Error");
             }
@@ -217,7 +217,7 @@ namespace BelofteCheck.Controllers
             if (WetID == null)
             {
                 TempData["BCmessage"] = "Specificeer een geldige Wet ID!";
-                TempData["BCerrorlevel"] = wettenVM.MessageSection.Warning;
+                TempData["BCerrorlevel"] = wettenVM.MessageSection.Error;
 
                 return RedirectToAction("Error");
             }
@@ -249,7 +249,7 @@ namespace BelofteCheck.Controllers
             if (q == null)
             {
                 TempData["BCmessage"] = "Wet ID " + WetID.Trim() + " is niet gevonden";
-                TempData["BCerrorlevel"] = wettenVM.MessageSection.Warning;
+                TempData["BCerrorlevel"] = wettenVM.MessageSection.Error;
 
                 return RedirectToAction("Error");
             }
@@ -362,7 +362,7 @@ namespace BelofteCheck.Controllers
             if (WetID == null)
             {
                 TempData["BCmessage"] = "Specificeer een geldige Wet ID!";
-                TempData["BCerrorlevel"] = wettenVM.MessageSection.Warning;
+                TempData["BCerrorlevel"] = wettenVM.MessageSection.Error;
 
                 return RedirectToAction("Error");
             }
@@ -392,7 +392,7 @@ namespace BelofteCheck.Controllers
             if (q == null)
             {
                 TempData["BCmessage"] = "Wet ID " + WetID.Trim() + " is niet gevonden";
-                TempData["BCerrorlevel"] = wettenVM.MessageSection.Warning;
+                TempData["BCerrorlevel"] = wettenVM.MessageSection.Error;
 
                 return RedirectToAction("Error");
             }
@@ -419,7 +419,7 @@ namespace BelofteCheck.Controllers
             if (WetID == null)
             {
                 TempData["BCmessage"] = "Specificeer een geldige Wet ID!";
-                TempData["BCerrorlevel"] = wettenVM.MessageSection.Warning;
+                TempData["BCerrorlevel"] = wettenVM.MessageSection.Error;
 
                 return RedirectToAction("Error");
             }
@@ -429,7 +429,7 @@ namespace BelofteCheck.Controllers
             if (wetten == null)
             {
                 TempData["BCmessage"] = "Wet ID " + WetID.Trim() + " is niet gevonden";
-                TempData["BCerrorlevel"] = wettenVM.MessageSection.Warning;
+                TempData["BCerrorlevel"] = wettenVM.MessageSection.Error;
 
                 return RedirectToAction("Error");
             }

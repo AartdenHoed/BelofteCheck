@@ -1,4 +1,5 @@
 ﻿@model BelofteCheck.ViewModels.StemmingenListVM
+@Html.HiddenFor(model => model.MessageSection.ErrorLevel, new { @class = "bc-msgtrigger", @onchange = "seterror(this)" })
 
 <h2 class="bc-h">@Html.DisplayFor(model => model.MessageSection.Title)</h2>
 
@@ -84,85 +85,85 @@
                     if (i == 0)
 
                     {
-            <tr>
-                <th class="bc-08">
-                    @Html.DisplayNameFor(Item1 => Item1.StemLijst[i].PartijID)
-                </th>
-                <th class="bc-16">
+                        <tr>
+                            <th class="bc-08">
+                                @Html.DisplayNameFor(Item1 => Item1.StemLijst[i].PartijID)
+                            </th>
+                            <th class="bc-16">
 
-                    @Html.DisplayNameFor(Item1 => Item1.StemLijst[i].PartijNaam)
-                </th>
-                <th class="bc-08">
+                                @Html.DisplayNameFor(Item1 => Item1.StemLijst[i].PartijNaam)
+                            </th>
+                            <th class="bc-08">
 
-                    @Html.DisplayNameFor(Item1 => Item1.StemLijst[i].Voor)
-                </th>
-                <th class="bc-08">
+                                @Html.DisplayNameFor(Item1 => Item1.StemLijst[i].Voor)
+                            </th>
+                            <th class="bc-08">
 
-                    @Html.DisplayNameFor(Item1 => Item1.StemLijst[i].Tegen)
-                </th>
-                <th class="bc-08">
+                                @Html.DisplayNameFor(Item1 => Item1.StemLijst[i].Tegen)
+                            </th>
+                            <th class="bc-08">
 
-                    @Html.DisplayNameFor(Item1 => Item1.StemLijst[i].Blanco)
-                </th>
-                <th class="bc-08">
+                                @Html.DisplayNameFor(Item1 => Item1.StemLijst[i].Blanco)
+                            </th>
+                            <th class="bc-08">
 
-                    @Html.DisplayNameFor(Item1 => Item1.StemLijst[i].PartijZetels)
-                </th>
-                <th class="bc-08">
+                                @Html.DisplayNameFor(Item1 => Item1.StemLijst[i].PartijZetels)
+                            </th>
+                            <th class="bc-08">
 
-                    @Html.DisplayNameFor(Item1 => Item1.StemLijst[i].Error)
-                </th>
-                <th class="bc-36">
+                                @Html.DisplayNameFor(Item1 => Item1.StemLijst[i].Error)
+                            </th>
+                            <th class="bc-36">
 
-                    @Html.DisplayNameFor(Item1 => Item1.StemLijst[i].Message)
-                </th>
+                                @Html.DisplayNameFor(Item1 => Item1.StemLijst[i].Message)
+                            </th>
 
-            </tr>
+                        </tr>
 
                     }
-        <tr>
+                    <tr>
 
-            <td class="bc-08">
-                @Html.EditorFor(Item1 => Item1.StemLijst[i].PartijID, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
-                @Html.ValidationMessageFor(Item1 => Item1.StemLijst[i].PartijID, "", new { @class = "text-danger" })
-            </td>
-            <td class="bc-16">
-                @Html.EditorFor(Item1 => Item1.StemLijst[i].PartijNaam, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
-                @Html.ValidationMessageFor(Item1 => Item1.StemLijst[i].PartijNaam, "", new { @class = "text-danger" })
-            </td>
-            <td class="bc-08">
-                @Html.EditorFor(Item1 => Item1.StemLijst[i].Voor, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(Item1 => Item1.StemLijst[i].Voor, "", new { @class = "text-danger" })
+                        <td class="bc-08">
+                            @Html.EditorFor(Item1 => Item1.StemLijst[i].PartijID, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                            @Html.ValidationMessageFor(Item1 => Item1.StemLijst[i].PartijID, "", new { @class = "text-danger" })
+                        </td>
+                        <td class="bc-16">
+                            @Html.EditorFor(Item1 => Item1.StemLijst[i].PartijNaam, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                            @Html.ValidationMessageFor(Item1 => Item1.StemLijst[i].PartijNaam, "", new { @class = "text-danger" })
+                        </td>
+                        <td class="bc-08">
+                            @Html.EditorFor(Item1 => Item1.StemLijst[i].Voor, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(Item1 => Item1.StemLijst[i].Voor, "", new { @class = "text-danger" })
 
-            </td>
-            <td class="bc-08">
-                @Html.EditorFor(Item1 => Item1.StemLijst[i].Tegen, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(Item1 => Item1.StemLijst[i].Tegen, "", new { @class = "text-danger" })
+                        </td>
+                        <td class="bc-08">
+                            @Html.EditorFor(Item1 => Item1.StemLijst[i].Tegen, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(Item1 => Item1.StemLijst[i].Tegen, "", new { @class = "text-danger" })
 
-            </td>
-            <td class="bc-08">
-                @Html.EditorFor(Item1 => Item1.StemLijst[i].Blanco, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(Item1 => Item1.StemLijst[i].Blanco, "", new { @class = "text-danger" })
+                        </td>
+                        <td class="bc-08">
+                            @Html.EditorFor(Item1 => Item1.StemLijst[i].Blanco, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(Item1 => Item1.StemLijst[i].Blanco, "", new { @class = "text-danger" })
 
-            </td>
-            <td class="bc-08">
-                @Html.EditorFor(Item1 => Item1.StemLijst[i].PartijZetels, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
-                @Html.ValidationMessageFor(Item1 => Item1.StemLijst[i].PartijZetels, "", new { @class = "text-danger" })
+                        </td>
+                        <td class="bc-08">
+                            @Html.EditorFor(Item1 => Item1.StemLijst[i].PartijZetels, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                            @Html.ValidationMessageFor(Item1 => Item1.StemLijst[i].PartijZetels, "", new { @class = "text-danger" })
 
-            </td>
-            <td class="bc-08">
-                @Html.EditorFor(Item1 => Item1.StemLijst[i].Error, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
-                @Html.ValidationMessageFor(Item1 => Item1.StemLijst[i].Error, "", new { @class = "text-danger" })
+                        </td>
+                        <td class="bc-08">
+                            @Html.EditorFor(Item1 => Item1.StemLijst[i].Error, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                            @Html.ValidationMessageFor(Item1 => Item1.StemLijst[i].Error, "", new { @class = "text-danger" })
 
-            </td>
-            <td class="bc-36">
-                @Html.EditorFor(Item1 => Item1.StemLijst[i].Message, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
-                @Html.ValidationMessageFor(Item1 => Item1.StemLijst[i].Message, "", new { @class = "text-danger" })
-                @Html.HiddenFor(Item1 => Item1.StemLijst[i].WetID, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
-                @Html.HiddenFor(Item1 => Item1.StemLijst[i].StemDatum, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
-            </td>
+                        </td>
+                        <td class="bc-36">
+                            @Html.EditorFor(Item1 => Item1.StemLijst[i].Message, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                            @Html.ValidationMessageFor(Item1 => Item1.StemLijst[i].Message, "", new { @class = "text-danger" })
+                            @Html.HiddenFor(Item1 => Item1.StemLijst[i].WetID, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                            @Html.HiddenFor(Item1 => Item1.StemLijst[i].StemDatum, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        </td>
 
-        </tr>
+                    </tr>
                     i = i + 1;
                 }
             }
@@ -170,7 +171,7 @@
         </table>
 
     </div>
- 
+
 }
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

@@ -68,7 +68,7 @@ namespace BelofteCheck.Controllers
             if (OnderwerpID == null)
             {
                 TempData["BCmessage"] = "Specificeer een geldige Onderwerp ID!";
-                TempData["BCerrorlevel"] = onderwerpenVM.MessageSection.Warning;
+                TempData["BCerrorlevel"] = onderwerpenVM.MessageSection.Error;
 
                 return RedirectToAction("Error");
             }
@@ -99,8 +99,7 @@ namespace BelofteCheck.Controllers
             if (q == null)
             {
                 TempData["BCmessage"] = "Ondewerp ID " + OnderwerpID.Trim() + " is niet gevonden";
-                TempData["BCerrorlevel"] = onderwerpenVM.MessageSection.Warning;
-
+                TempData["BCerrorlevel"] = onderwerpenVM.MessageSection.Error; 
                 return RedirectToAction("Error");
             }
             if (q[0].WetID == "<geen>")
@@ -184,7 +183,7 @@ namespace BelofteCheck.Controllers
             if (OnderwerpID == null)
             {
                 TempData["BCmessage"] = "Specificeer een geldige Onderwerp ID!";
-                TempData["BCerrorlevel"] = onderwerpenVM.MessageSection.Warning;
+                TempData["BCerrorlevel"] = onderwerpenVM.MessageSection.Error;
 
                 return RedirectToAction("Error");
             }
@@ -215,7 +214,7 @@ namespace BelofteCheck.Controllers
             if (q == null)
             {
                 TempData["BCmessage"] = "Ondewerp ID " + OnderwerpID.Trim() + " is niet gevonden";
-                TempData["BCerrorlevel"] = onderwerpenVM.MessageSection.Warning;
+                TempData["BCerrorlevel"] = onderwerpenVM.MessageSection.Error;
 
                 return RedirectToAction("Error");
             }
@@ -271,7 +270,7 @@ namespace BelofteCheck.Controllers
             if (OnderwerpID == null)
             {
                 TempData["BCmessage"] = "Specificeer een geldige Onderwerp ID!";
-                TempData["BCerrorlevel"] = onderwerpenVM.MessageSection.Warning;
+                TempData["BCerrorlevel"] = onderwerpenVM.MessageSection.Error;
 
                 return RedirectToAction("Error");
             }
@@ -302,14 +301,14 @@ namespace BelofteCheck.Controllers
             if (q == null)
             {
                 TempData["BCmessage"] = "Ondewerp ID " + OnderwerpID.Trim() + " is niet gevonden";
-                TempData["BCerrorlevel"] = onderwerpenVM.MessageSection.Warning;
+                TempData["BCerrorlevel"] = onderwerpenVM.MessageSection.Error;
 
                 return RedirectToAction("Error");
             }
             if (q[0].WetID == "<geen>")
             {
                 msg = "Dit onderwerp heeft geen gekoppelde wetten en kan dus worden gedelete";
-                level = onderwerpenVM.MessageSection.Warning; ;
+                level = onderwerpenVM.MessageSection.Info; ;
                 onderwerpenVM.DeleteAllowed = true;
             }
             else
@@ -337,7 +336,7 @@ namespace BelofteCheck.Controllers
             if (OnderwerpID == null)
             {
                 TempData["BCmessage"] = "Specificeer een geldige Onderwerp ID!";
-                TempData["BCerrorlevel"] = onderwerpenVM.MessageSection.Warning;
+                TempData["BCerrorlevel"] = onderwerpenVM.MessageSection.Error;
 
                 return RedirectToAction("Error");
             }
@@ -367,7 +366,7 @@ namespace BelofteCheck.Controllers
             if (q == null)
             {
                 TempData["BCmessage"] = "Ondewerp ID " + OnderwerpID.Trim() + " is niet gevonden";
-                TempData["BCerrorlevel"] = onderwerpenVM.MessageSection.Warning;
+                TempData["BCerrorlevel"] = onderwerpenVM.MessageSection.Error;
 
                 return RedirectToAction("Error");
             }

@@ -1,4 +1,5 @@
 ﻿@model BelofteCheck.ViewModels.WettenVM
+@Html.HiddenFor(model => model.MessageSection.ErrorLevel, new { @class = "bc-msgtrigger", @onchange = "seterror(this)" })
 
 <h2 class="bc-h">@Html.DisplayFor(model => model.MessageSection.Title)</h2>
 
@@ -62,7 +63,7 @@
                 @Html.ValidationMessageFor(model => model.wet.WetLink, "", new { @class = "text-danger" })
             </dd>
         </dl>
-</div>
+    </div>
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
@@ -135,7 +136,7 @@
 
         </table>
     </div>
-    
+
 }
 
 

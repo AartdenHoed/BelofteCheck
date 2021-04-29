@@ -82,7 +82,7 @@ namespace BelofteCheck.Controllers
             if ((wetid == null) || (stemdatum == null))
             {
                 TempData["BCmessage"] = "Specificeer een geldige Wet + Stemdatum";
-                TempData["BCerrorlevel"] = stemmingenVM.MessageSection.Warning;
+                TempData["BCerrorlevel"] = stemmingenVM.MessageSection.Error;
 
                 return RedirectToAction("Error");
             }
@@ -154,7 +154,7 @@ namespace BelofteCheck.Controllers
             if (wetid == null)
             {
                 TempData["BCmessage"] = "Specificeer een geldige WetID";
-                TempData["BCerrorlevel"] = stemmingenlistVM.MessageSection.Warning;
+                TempData["BCerrorlevel"] = stemmingenlistVM.MessageSection.Error;
 
                 return RedirectToAction("Error");
             }
@@ -162,7 +162,7 @@ namespace BelofteCheck.Controllers
             if (wet == null)
             {
                 TempData["BCmessage"] = "WetID '" + wetid.Trim() + "' is niet gevonden";
-                TempData["BCerrorlevel"] = stemmingenlistVM.MessageSection.Warning;
+                TempData["BCerrorlevel"] = stemmingenlistVM.MessageSection.Error;
 
                 return RedirectToAction("Error");
             }
@@ -326,7 +326,7 @@ namespace BelofteCheck.Controllers
             if ((wetid == null) || (stemdatum == null))
             {
                 TempData["BCmessage"] = "Specificeer een geldige Wet + Stemdatum";
-                TempData["BCerrorlevel"] = stemmingenVM.MessageSection.Warning;
+                TempData["BCerrorlevel"] = stemmingenVM.MessageSection.Error;
 
                 return RedirectToAction("Error");
             }
@@ -394,7 +394,7 @@ namespace BelofteCheck.Controllers
             if ((wetid == null) || (stemdatum == null))
             {
                 TempData["BCmessage"] = "Specificeer een geldige Wet ID en stemdatum!";
-                TempData["BCerrorlevel"] = stemmingenlistVM.MessageSection.Warning;
+                TempData["BCerrorlevel"] = stemmingenlistVM.MessageSection.Error;
 
                 return RedirectToAction("Error");
             }
@@ -406,7 +406,7 @@ namespace BelofteCheck.Controllers
             if (query.Count == 0)
             {
                 TempData["BCmessage"] = "Stemming voor Wet ID '" + wetid.Trim() + "' + op datum " + stemdatum.ToString("dd-MMMM-yyyy") + " is niet gevonden";
-                TempData["BCerrorlevel"] = stemmingenlistVM.MessageSection.Warning;
+                TempData["BCerrorlevel"] = stemmingenlistVM.MessageSection.Error;
 
                 return RedirectToAction("Error");
             }
@@ -471,7 +471,7 @@ namespace BelofteCheck.Controllers
             {                
                 //return stemmingenlistVM;
                 TempData["BCmessage"] = "Wet '" + wetid.Trim() + "' is onbekend...";
-                TempData["BCerrorlevel"] = stemmingenlistVM.MessageSection.Warning;
+                TempData["BCerrorlevel"] = stemmingenlistVM.MessageSection.Error;
                 
                 RedirectToAction("Error");
 

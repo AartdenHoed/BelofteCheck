@@ -70,7 +70,7 @@ namespace BelofteCheck.Controllers
             if (PartijID == null)
             {
                 TempData["BCmessage"] = "Specificeer een geldige Partij ID!";
-                TempData["BCerrorlevel"] = partijenVM.MessageSection.Warning;
+                TempData["BCerrorlevel"] = partijenVM.MessageSection.Error;
 
                 return RedirectToAction("Error");
             }
@@ -81,7 +81,7 @@ namespace BelofteCheck.Controllers
             if (partij == null)
             {
                 TempData["BCmessage"] = "Partij ID " + PartijID.Trim() + " is niet gevonden";
-                TempData["BCerrorlevel"] = partijenVM.MessageSection.Warning;
+                TempData["BCerrorlevel"] = partijenVM.MessageSection.Error;
 
                 return RedirectToAction("Error");
             }
@@ -214,7 +214,7 @@ namespace BelofteCheck.Controllers
             if (PartijID == null)
             {
                 TempData["BCmessage"] = "Specificeer een geldige Onderwerp ID!";
-                TempData["BCerrorlevel"] = partijenVM.MessageSection.Warning;
+                TempData["BCerrorlevel"] = partijenVM.MessageSection.Error;
 
                 return RedirectToAction("Error");
             }
@@ -223,7 +223,7 @@ namespace BelofteCheck.Controllers
             if (partij == null)
             {
                 TempData["BCmessage"] = "Partij ID " + PartijID.Trim() + " is niet gevonden";
-                TempData["BCerrorlevel"] = partijenVM.MessageSection.Warning;
+                TempData["BCerrorlevel"] = partijenVM.MessageSection.Error;
 
                 return RedirectToAction("Error");
             }
@@ -373,7 +373,7 @@ namespace BelofteCheck.Controllers
             if (PartijID == null)
             {
                 TempData["BCmessage"] = "Specificeer een geldige Partij ID!";
-                TempData["BCerrorlevel"] = partijenVM.MessageSection.Warning;
+                TempData["BCerrorlevel"] = partijenVM.MessageSection.Error;
 
                 return RedirectToAction("Error");
             }
@@ -384,7 +384,7 @@ namespace BelofteCheck.Controllers
             if (partij == null)
             {
                 TempData["BCmessage"] = "Partij ID " + PartijID.Trim() + " is niet gevonden";
-                TempData["BCerrorlevel"] = partijenVM.MessageSection.Warning;
+                TempData["BCerrorlevel"] = partijenVM.MessageSection.Error;
 
                 return RedirectToAction("Error");
             }
@@ -462,7 +462,7 @@ namespace BelofteCheck.Controllers
             if (PartijID == null)
             {
                 TempData["BCmessage"] = "Specificeer een geldige Partij ID!";
-                TempData["BCerrorlevel"] = partijenVM.MessageSection.Warning;
+                TempData["BCerrorlevel"] = partijenVM.MessageSection.Error;
 
                 return RedirectToAction("Error");
             }
@@ -476,7 +476,7 @@ namespace BelofteCheck.Controllers
             if (partij == null)
             {
                 TempData["BCmessage"] = "Partij ID " + PartijID.Trim() + " is niet gevonden";
-                TempData["BCerrorlevel"] = partijenVM.MessageSection.Warning;
+                TempData["BCerrorlevel"] = partijenVM.MessageSection.Error;
 
                 return RedirectToAction("Error");
             }

@@ -1,4 +1,5 @@
 ﻿@model BelofteCheck.ViewModels.WettenVM
+@Html.HiddenFor(model => model.MessageSection.ErrorLevel, new { @class = "bc-msgtrigger", @onchange = "seterror(this)" })
 
 <h2 class="bc-h">@Html.DisplayFor(model => model.MessageSection.Title)</h2>
 

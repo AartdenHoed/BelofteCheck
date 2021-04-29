@@ -1,8 +1,11 @@
-﻿@{
-    ViewBag.Title = "Over ons";
-}
-<h2 class="bc-h">@ViewBag.Title</h2>
-<h3 class="bc-h">@ViewBag.Message</h3>
+﻿@model BelofteCheck.ViewModels.HomeVM
+@Html.HiddenFor(model => model.MessageSection.ErrorLevel, new { @class = "bc-msgtrigger", @onchange = "seterror(this)" })
 
-<p>Deze site volgt het stemgedrag van de tweede-kamerfracties zodat je kan zien in welke mate zij de verkiezingsbeloften ook daadwerkelijk nakomen. 
-<br/>Tevens kan je zien welke partijen qua stemgedrag het dichtst in de buurt komen van jou eigen mening</p>
+<h2 class="bc-h">@Html.DisplayFor(model => model.MessageSection.Title)</h2>
+
+<h3 class="bc-h">@Html.DisplayFor(model => model.MessageSection.Message)</h3>
+
+<p>
+    Deze site volgt het stemgedrag van de tweede-kamerfracties zodat je kan zien in welke mate zij de verkiezingsbeloften ook daadwerkelijk nakomen.
+    <br />Tevens kan je zien welke partijen qua stemgedrag het dichtst in de buurt komen van jou eigen mening
+</p>

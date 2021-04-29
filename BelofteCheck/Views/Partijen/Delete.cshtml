@@ -1,7 +1,10 @@
 ﻿@model BelofteCheck.ViewModels.PartijenVM
+@Html.HiddenFor(model => model.MessageSection.ErrorLevel, new { @class = "bc-msgtrigger", @onchange = "seterror(this)" })
 
-<h2 class="bc-h">@Html.DisplayFor(model => model.MessageSection.Title) &nbsp;
-@Html.EditorFor(model => model.DeleteAllowed, new { htmlAttributes = new { @class = "bc-dacheck", @disabled = "disabled" } })</h2>
+<h2 class="bc-h">
+    @Html.DisplayFor(model => model.MessageSection.Title) &nbsp;
+@Html.EditorFor(model => model.DeleteAllowed, new { htmlAttributes = new { @class = "bc-dacheck", @disabled = "disabled" } })
+</h2>
 
 
 <h3 class="bc-h">@Html.DisplayFor(model => model.MessageSection.Message)</h3>
@@ -49,8 +52,8 @@
                             @Html.DisplayFor(model => model.partij.PartijNaam)
                         </td>
                         <td class="bc-08">
-                            @Html.TextBoxFor(model => model.ZetelLijst[i].VanDatum, "{0:dd-MM-yyyy}", new { @readonly = "readonly" } )
-                            
+                            @Html.TextBoxFor(model => model.ZetelLijst[i].VanDatum, "{0:dd-MM-yyyy}", new { @readonly = "readonly" })
+
                         </td>
                         <td class="bc-08">
                             @Html.TextBoxFor(model => model.ZetelLijst[i].TotDatum, "{0:dd-MM-yyyy}", new { @readonly = "readonly" })
@@ -64,28 +67,28 @@
                 }
                 else
                 {
-    <tr>
+                    <tr>
 
-        <td class="bc-08">
-            &nbsp;
-        </td>
+                        <td class="bc-08">
+                            &nbsp;
+                        </td>
 
-        <td class="bc-16">
-            &nbsp;
-        </td>
-        <td class="bc-08">
-            @Html.TextBoxFor(model => model.ZetelLijst[i].VanDatum, "{0:dd-MM-yyyy}", new { @readonly = "readonly" })
+                        <td class="bc-16">
+                            &nbsp;
+                        </td>
+                        <td class="bc-08">
+                            @Html.TextBoxFor(model => model.ZetelLijst[i].VanDatum, "{0:dd-MM-yyyy}", new { @readonly = "readonly" })
 
-        </td>
-        <td class="bc-08">
-            @Html.TextBoxFor(model => model.ZetelLijst[i].TotDatum, "{0:dd-MM-yyyy}", new { @readonly = "readonly" })
-        </td>
-        <td class="bc-08">
-            @Html.DisplayFor(model => model.ZetelLijst[i].AantalZetels)
-        </td>
+                        </td>
+                        <td class="bc-08">
+                            @Html.TextBoxFor(model => model.ZetelLijst[i].TotDatum, "{0:dd-MM-yyyy}", new { @readonly = "readonly" })
+                        </td>
+                        <td class="bc-08">
+                            @Html.DisplayFor(model => model.ZetelLijst[i].AantalZetels)
+                        </td>
 
 
-    </tr>
+                    </tr>
                 }
 
 

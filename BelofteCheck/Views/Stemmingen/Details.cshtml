@@ -1,4 +1,8 @@
 ﻿@model BelofteCheck.ViewModels.StemmingenListVM
+@Html.HiddenFor(model => model.MessageSection.ErrorLevel, new { @class = "bc-msgtrigger", @onchange = "seterror(this)" })
+
+@Html.HiddenFor(model => model.MessageSection.ErrorLevel, new { @class = "bc-msgtrigger", @onchange = "seterror(this)" })
+
 <h2 class="bc-h">@Html.DisplayFor(model => model.MessageSection.Title)</h2>
 
 <h3 class="bc-h">@Html.DisplayFor(model => model.MessageSection.Message)</h3>
@@ -51,7 +55,7 @@
 
 <div>
 
-   
+
     <table class="table">
         <tr>
             <th>
@@ -76,7 +80,7 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.PartijID)
                 </td>
-  
+
                 <td>
                     @Html.DisplayFor(modelItem => item.Voor)
                 </td>
@@ -93,6 +97,6 @@
     </table>
 </div>
 <p>
-    @Html.ActionLink("Bewerk", "Create", new {WetID = Model.StemLijst[0].WetID, StemDatum = Model.StemLijst[0].StemDatum }) |
+    @Html.ActionLink("Bewerk", "Create", new { WetID = Model.StemLijst[0].WetID, StemDatum = Model.StemLijst[0].StemDatum }) |
     @Html.ActionLink("Naar Overzicht", "Index")
 </p>

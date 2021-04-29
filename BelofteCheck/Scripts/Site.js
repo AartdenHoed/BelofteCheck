@@ -81,4 +81,29 @@ function setreq2(me) {
 
 $(".bc-areatrigger").trigger("change");
 
+function seterror(me) {
+    // alert("Seterror");
+
+    x = $(me).val();
+
+    // alert(x);
+    if (x == 'E') {
+              
+        $('.bc-h').css('background', 'red')
+       
+
+    }
+    if (x == 'W') {
+               
+        $('.bc-h').css('background', 'orange')
+        
+
+    }
+    
+    
+}
+
+$(".bc-msgtrigger").trigger("change");
+
+
 

@@ -222,6 +222,7 @@
       <DependentUpon>BCmodel.tt</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\BCmessage.cs" />
+    <Compile Include="ViewModels\HomeVM.cs" />
     <Compile Include="ViewModels\StemmingenListVM.cs" />
     <Compile Include="ViewModels\PartijZetels.cs" />
     <Compile Include="ViewModels\PartijenVM.cs" />
@@ -448,7 +449,6 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Stemmingen\Delete.cshtml" />
     <Content Include="Views\Stemmingen\Details.cshtml" />
-    <Content Include="Views\Stemmingen\Edit.cshtml" />
     <Content Include="Views\Stemmingen\Index.cshtml" />
     <Content Include="Views\Stemmingen\Create.cshtml" />
     <Content Include="Views\Stemmingen\CreatEdit.cshtml" />
