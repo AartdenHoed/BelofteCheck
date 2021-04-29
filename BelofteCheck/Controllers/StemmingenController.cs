@@ -167,7 +167,7 @@ namespace BelofteCheck.Controllers
                 return RedirectToAction("Error");
             }
 
-            // if dat not given, prompt for it
+            // if date not given, prompt for it
                         
             if (stemdatum == DateTime.MinValue)
             {
@@ -191,7 +191,7 @@ namespace BelofteCheck.Controllers
 
                 return View("Create", stemmingenlistVM);
             }
-            else // Dat is give, so present directly the edit screen for Stemming
+            else // Date is given, so present directly the edit screen for Stemming
             {
                 stemmingenlistVM = GetStemmingData(stemmingenlistVM);
                 if (stemmingenlistVM.ModelOk)
@@ -235,7 +235,7 @@ namespace BelofteCheck.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult CreatEdit(StemmingenListVM stemmingenlistVM)
         {
-            string level = " ";
+            string level = "";
             string msg = " ";
             string title = "Stemmingen wijzigen/toevoegen";
             if (ModelState.IsValid)
@@ -253,6 +253,8 @@ namespace BelofteCheck.Controllers
                         sobj.Error = "fout";
                         foutje = true;
                         sobj.Message = "Totaal aantal stemmen moet " + sobj.PartijZetels.ToString() + " zijn";
+                        msg = "Bij één of meer partijen klopt het aantal uitgebrachte stemmen niet met het totaal";
+                        level = stemmingenlistVM.MessageSection.Error;
                     }
                     else
                     {
@@ -554,6 +556,7 @@ namespace BelofteCheck.Controllers
 
             level = stemmingenlistVM.MessageSection.Info;
             msg = "Vul de stemgegevens in voor elke partij bij deze wet en selecteer OPSLAAN";
+            title = "Stemmingen wijzigen/toevoegen";
             stemmingenlistVM.MessageSection.SetMessage(title, level, msg);
             return stemmingenlistVM;
         }

@@ -16,8 +16,14 @@ namespace BelofteCheck.ViewModels
         public string PartijID { get; set; }
         public string PartijNaam { get; set; }
         public int PartijZetels { get; set; }
+        
+        [Range(0, 150, ErrorMessage = "Minimaal 0, maximaal 150")]
         public int Voor { get; set; }
+        
+        [Range(0, 150, ErrorMessage = "Minimaal 0, maximaal 150")]
         public int Tegen { get; set; }
+        
+        [Range(0, 150, ErrorMessage = "Minimaal 0, maximaal 150")]
         public int Blanco { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]

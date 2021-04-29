@@ -50,6 +50,13 @@ function setmsg(me) {
     if ((x == "fout") || (x == "n/a")) {
         //alert("show");
         $(me).parent().parent().find('.bc-emsg').show();
+        if (x == "fout") {
+            $(me).parent().parent().find('.bc-emsg').css('background', 'red');
+            $(me).css('background', 'red');
+        }
+        if (x == "n/a") {
+            $(me).parent().parent().find('.bc-emsg').css('background', 'green');
+        }
         
     }
     else {
@@ -89,14 +96,20 @@ function seterror(me) {
     // alert(x);
     if (x == 'E') {
               
-        $('.bc-h').css('background', 'red')
+        $('.bc-hm').css('background', 'red')
        
 
     }
     if (x == 'W') {
                
-        $('.bc-h').css('background', 'orange')
+        $('.bc-hm').css('background', 'orange')
         
+
+    }
+    if (x == 'I') {
+
+        $('.bc-hm').css('background', 'green')
+
 
     }
     

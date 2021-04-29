@@ -429,6 +429,9 @@ select[readonly='readonly'] {
     margin: 1%;
     
 }
+.bc-hm {
+    margin: 1%;
+}
 .bc-blue1 {
     background-color: deepskyblue;
     border-top: 3px solid black;
