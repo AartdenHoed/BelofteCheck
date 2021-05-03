@@ -61,46 +61,112 @@
         </div>
     }
     <p>&nbsp;</p>
-    <h4 class="bc-h">Gerelateerde onderwerpen</h4>
-    <table class="bc-table">
-        @if (Model.OnderwerpenLijst != null)
-        {
-            var i = 0;
-            foreach (var item1 in Model.OnderwerpenLijst)
-            {
-                if (i == 0)
-                {
-                    <tr>
-                        <th class="bc-16">
-                            @Html.DisplayNameFor(Item1 => Item1.OnderwerpenLijst[i].OnderwerpID)
-                        </th>
-                        <th class="bc-40">
-                            @Html.DisplayNameFor(Item1 => Item1.OnderwerpenLijst[i].Omschrijving)
-                        </th>
-                        <th class="bc-40">
-                            @Html.DisplayNameFor(Item1 => Item1.OnderwerpenLijst[i].Toelichting)
-                        </th>
-                    </tr>
+    <h4 class="bc-h">Stemmingen over deze wet</h4>
 
-                }
-                <tr>
+    @if (Model.Stemmingen.Count == 0)
+    {
+        <p>Geen stemmingen gevonden</p>
+    }
+    else
+    {
+        var j = 0;
+<table class="bc-table">
+    @foreach (var item0 in Model.Stemmingen)
+    {
+    if (j == 0)
+    {
+    <tr>
+        <th class="bc-16">
+            @Html.DisplayNameFor(Item0 => Item0.Stemmingen[j].WetID)
+        </th>
+        <th class="bc-16">
+            @Html.DisplayNameFor(Item0 => Item0.Stemmingen[j].StemDatum)
+        </th>
+        <th class="bc-08">
+            @Html.DisplayNameFor(Item0 => Item0.Stemmingen[j].Voor)
+        </th>
+        <th class="bc-08">
+            @Html.DisplayNameFor(Item0 => Item0.Stemmingen[j].Tegen)
+        </th>
+        <th class="bc-08">
+            @Html.DisplayNameFor(Item0 => Item0.Stemmingen[j].Blanco)
+        </th>
+        <th class="bc-16">
+            &nbsp;
+        </th>
+    </tr>
 
-                    <td class="bc-16">
-                        @Html.DisplayFor(Item1 => Item1.OnderwerpenLijst[i].OnderwerpID)
-
-                    </td>
-                    <td class="bc-40">
-                        @Html.DisplayFor(Item1 => Item1.OnderwerpenLijst[i].Omschrijving)
-
-                    </td>
-                    <td class="bc-40">
-                        @Html.DisplayFor(Item1 => Item1.OnderwerpenLijst[i].Toelichting)
-                    </td>
-                </tr>
-                i = i + 1;
+    }
+    <tr>
+        <td class="bc-16">
+            @Html.DisplayFor(Item0 => Item0.Stemmingen[j].WetID)
+        </td>
+        <td class="bc-16">
+            @Html.DisplayFor(Item0 => Item0.Stemmingen[j].StemDatum)
+        </td>
+        <td class="bc-08">
+            @Html.DisplayFor(Item0 => Item0.Stemmingen[j].Voor)
+        </td>
+        <td class="bc-08">
+            @Html.DisplayFor(Item0 => Item0.Stemmingen[j].Tegen)
+        </td>
+        <td class="bc-08">
+            @Html.DisplayFor(Item0 => Item0.Stemmingen[j].Blanco)
+        </td>
+        <td class="bc-16">
+            @Html.ActionLink("Bewerk", "Create", "Stemmingen", new { WetID = item0.WetID, StemDatum = item0.StemDatum }, null) |
+            @Html.ActionLink("Bekijk", "Details", "Stemmingen", new { WetID = item0.WetID, StemDatum = item0.StemDatum }, null) |
+            @Html.ActionLink("Verwijder", "Delete", "Stemmingen", new { WetID = item0.WetID, StemDatum = item0.StemDatum }, null)
+        </td>
+    </tr>
+    }
+</table>
             }
-        }
 
-    </table>
 
-</div>
+     
+
+        <p>&nbsp;</p>
+        <h4 class="bc-h">Gerelateerde onderwerpen</h4>
+        <table class="bc-table">
+            @if (Model.OnderwerpenLijst != null)
+            {
+                var i = 0;
+                foreach (var item1 in Model.OnderwerpenLijst)
+                {
+                    if (i == 0)
+                    {
+                        <tr>
+                            <th class="bc-16">
+                                @Html.DisplayNameFor(Item1 => Item1.OnderwerpenLijst[i].OnderwerpID)
+                            </th>
+                            <th class="bc-40">
+                                @Html.DisplayNameFor(Item1 => Item1.OnderwerpenLijst[i].Omschrijving)
+                            </th>
+                            <th class="bc-40">
+                                @Html.DisplayNameFor(Item1 => Item1.OnderwerpenLijst[i].Toelichting)
+                            </th>
+                        </tr>
+
+                    }
+                    <tr>
+
+                        <td class="bc-16">
+                            @Html.DisplayFor(Item1 => Item1.OnderwerpenLijst[i].OnderwerpID)
+
+                        </td>
+                        <td class="bc-40">
+                            @Html.DisplayFor(Item1 => Item1.OnderwerpenLijst[i].Omschrijving)
+
+                        </td>
+                        <td class="bc-40">
+                            @Html.DisplayFor(Item1 => Item1.OnderwerpenLijst[i].Toelichting)
+                        </td>
+                    </tr>
+                    i = i + 1;
+                }
+            }
+
+        </table>
+
+    </div>

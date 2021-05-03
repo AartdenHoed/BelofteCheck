@@ -118,5 +118,19 @@ function seterror(me) {
 
 $(".bc-msgtrigger").trigger("change");
 
+function zetelcheck(me) {
+
+    x = $(me).val();
+    //alert(x);
+    if (x == "fout") {
+         $(me).css('background', 'red');
+        }
+    else {
+        $(me).css('background', 'green');
+
+    }
+}
+$(".bc-zetel").trigger("change");
+
 
 

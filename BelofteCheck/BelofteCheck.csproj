@@ -228,6 +228,7 @@
     <Compile Include="ViewModels\PartijenVM.cs" />
     <Compile Include="ViewModels\PartijenListVM.cs" />
     <Compile Include="ViewModels\Partij.cs" />
+    <Compile Include="ViewModels\Stemming.cs" />
     <Compile Include="ViewModels\ZetelControleVM.cs" />
     <Compile Include="ViewModels\ZetelObject.cs" />
     <Compile Include="ViewModels\Wet.cs" />
@@ -383,6 +384,7 @@
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
+    <Content Include="Views\Shared\404.html" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

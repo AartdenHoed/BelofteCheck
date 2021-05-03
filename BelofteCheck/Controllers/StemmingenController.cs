@@ -147,7 +147,7 @@ namespace BelofteCheck.Controllers
             StemmingenListVM stemmingenlistVM = new StemmingenListVM();
             stemmingenlistVM.WetID = wetid;
             stemmingenlistVM.StemDatum = stemdatum;
-            string title = "Nieuwe Stemming";
+            string title = "Stemming toevoegen of wijzigen";
             string msg = " ";
             string level = " ";
 
@@ -194,7 +194,7 @@ namespace BelofteCheck.Controllers
             else // Date is given, so present directly the edit screen for Stemming
             {
                 stemmingenlistVM = GetStemmingData(stemmingenlistVM);
-                if (stemmingenlistVM.ModelOk)
+                if ((stemmingenlistVM.ModelOk) || (stemmingenlistVM.ZetelsOk))
                 {
 
                     return View("CreatEdit", stemmingenlistVM);
@@ -202,20 +202,23 @@ namespace BelofteCheck.Controllers
                 else
                 {
                     return View(stemmingenlistVM);
+                   
                 }
+                
             }
            
         }
 
-
-
         [HttpPost]
         [ValidateAntiForgeryToken]
+        // We get here after prompting for a date
         public ActionResult Create(StemmingenListVM stemmingenlistVM)
         {
             
             stemmingenlistVM = GetStemmingData(stemmingenlistVM);
-            if (stemmingenlistVM.ModelOk)
+            
+
+            if ((stemmingenlistVM.ModelOk) || (stemmingenlistVM.ZetelsOk))
             {
                 ModelState.Clear();
                 return View("CreatEdit", stemmingenlistVM);
@@ -223,7 +226,9 @@ namespace BelofteCheck.Controllers
             else
             {
                 return View(stemmingenlistVM);
+
             }
+            
 
             
         }
@@ -237,7 +242,7 @@ namespace BelofteCheck.Controllers
         {
             string level = "";
             string msg = " ";
-            string title = "Stemmingen wijzigen/toevoegen";
+            string title = "BESTAANDE stemming WIJZIGEN";
             if (ModelState.IsValid)
             {
                 bool foutje = false;
@@ -264,7 +269,7 @@ namespace BelofteCheck.Controllers
                 }
                 if (totaalzetels != 150)
                 {
-                    level = stemmingenlistVM.MessageSection.Warning;
+                    level = stemmingenlistVM.MessageSection.Error;
                     msg = "Totaal aantal stemmen moet uitkomen op 150 (nu: " + totaalzetels.ToString() + ")";
                     foutje = true;
 
@@ -339,12 +344,12 @@ namespace BelofteCheck.Controllers
                         where ((s.WetID == wetid) && (s.StemDatum == stemdatum))
                         select new
                         {
-                            PartijID = s.PartijID,
-                            WetID = s.WetID,
-                            StemDatum = s.StemDatum,
-                            Voor = s.Voor,
-                            Tegen = s.Tegen,
-                            Blanco = s.Blanco
+                            s.PartijID,
+                            s.WetID,
+                            s.StemDatum,
+                            s.Voor,
+                            s.Tegen,
+                            s.Blanco
 
                         }
                         into rj1
@@ -478,17 +483,17 @@ namespace BelofteCheck.Controllers
                 RedirectToAction("Error");
 
             }
-
+            // Determine which parties were active at that time
             var query1 = from p in db.Partijen
                          join j1 in db.PartijZetels on p.PartijID equals j1.PartijID
                          where ((j1.VanDatum <= stemdatum) && (j1.TotDatum >= stemdatum))
                          select new
                          {
-                             PartijID = p.PartijID,
-                             PartijNaam = p.PartijNaam,
-                             Zetels = j1.AantalZetels,
-                             VanDatum = j1.VanDatum,
-                             TotDatum = j1.TotDatum
+                             p.PartijID,
+                             p.PartijNaam,
+                             j1.AantalZetels,
+                             j1.VanDatum,
+                             j1.TotDatum
 
                          };
 
@@ -497,7 +502,7 @@ namespace BelofteCheck.Controllers
             stemmingenlistVM.ModelOk = true;
             if (actievepartijen.Count == 0)
             {
-                level = stemmingenlistVM.MessageSection.Warning;
+                level = stemmingenlistVM.MessageSection.Error;
                 msg = "Op de gegeven datum zijn geen partijen actief in de Tweede Kamer";
                 stemmingenlistVM.MessageSection.SetMessage(title, level, msg);
                 StemObject so = new StemObject
@@ -514,10 +519,26 @@ namespace BelofteCheck.Controllers
                 stemmingenlistVM.Fill(sl);
 
                 stemmingenlistVM.ModelOk = false;
+                stemmingenlistVM.ZetelsOk = false;
                 return stemmingenlistVM;
 
             }
-                        
+
+            // Check if the active parties have exactly 150 seats in total
+            stemmingenlistVM.ZetelsOk = true;
+            int totalseats = 0;
+            foreach (var activeparty in actievepartijen )
+            {
+                totalseats = totalseats + activeparty.AantalZetels;
+            }
+            if (totalseats != 150)
+            {
+                level = stemmingenlistVM.MessageSection.Error;
+                msg = "Op de opgegeven datum hebben de gezamenlijke partijen " + totalseats.ToString() + " zetels i.p.v. 150. Corrigeer dit eerst!";
+                stemmingenlistVM.MessageSection.SetMessage(title, level, msg);
+                stemmingenlistVM.ZetelsOk = false;
+
+            }                        
 
             var query3 = from s in db.Stemmingen
                          where (s.WetID == wetid) && (s.StemDatum == stemdatum)
@@ -545,7 +566,7 @@ namespace BelofteCheck.Controllers
                               WetOmschrijving = wetten.WetOmschrijving,
                               PartijID = a.PartijID,
                               PartijNaam = a.PartijNaam,
-                              PartijZetels = a.Zetels,
+                              PartijZetels = a.AantalZetels,
                               Voor = sub == null ? 0 : sub.Voor,
                               Tegen = sub == null ? 0 : sub.Tegen,
                               Blanco = sub == null ? 0 : sub.Blanco
@@ -553,11 +574,23 @@ namespace BelofteCheck.Controllers
 
             List<StemObject> vmlist = combine.ToList();
             stemmingenlistVM.Fill(vmlist);
+            int tot = stemmingenlistVM.TotaalBlanco + stemmingenlistVM.TotaalVoor + stemmingenlistVM.TotaalTegen;
+            if (tot == 0)
+            {
+                title = "Stemming TOEVOEGEN";
+            }
+            else
+            {
+                title = "BESTAANDE stemming WIJZIGEN";
+            }
 
-            level = stemmingenlistVM.MessageSection.Info;
-            msg = "Vul de stemgegevens in voor elke partij bij deze wet en selecteer OPSLAAN";
-            title = "Stemmingen wijzigen/toevoegen";
-            stemmingenlistVM.MessageSection.SetMessage(title, level, msg);
+            if (stemmingenlistVM.ZetelsOk)
+            {
+                level = stemmingenlistVM.MessageSection.Info;
+                msg = "Vul de stemgegevens in voor elke partij bij deze wet en selecteer OPSLAAN";
+                
+                stemmingenlistVM.MessageSection.SetMessage(title, level, msg);
+            }
             return stemmingenlistVM;
         }
     }

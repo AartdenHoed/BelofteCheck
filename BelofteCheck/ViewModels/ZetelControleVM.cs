@@ -32,6 +32,8 @@ namespace BelofteCheck.ViewModels
                 }
                 return r;
             } }
+
+        [MaxLength(4)]
         public string ZetelCheck
         {
             get

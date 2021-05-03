@@ -8,6 +8,7 @@ namespace BelofteCheck.ViewModels
 
     {
         public bool ModelOk { get; set; }
+        public bool ZetelsOk { get; set; }
         public string WetID { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]

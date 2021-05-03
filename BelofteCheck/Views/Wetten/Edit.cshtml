@@ -70,73 +70,135 @@
         </div>
     </div>
 
-
     <p>&nbsp;</p>
-    <h4 class="bc-h">Gerelateerde onderwerpen</h4>
-    <div class="form-group">
-        <table class="bc-table">
-            @if (Model.OnderwerpenLijst != null)
-            {
-                var i = 0;
+    <h4 class="bc-h">Stemmingen over deze wet</h4>
 
+    if (Model.Stemmingen.Count == 0)
+    {
+        <p>Geen stemmingen gevonden</p>
+    }
+    else
+    {
+        var j = 0;
+<table class="bc-table">
+    @foreach (var item0 in Model.Stemmingen)
+    {
+        if (j == 0)
+        {
+            <tr>
+                <th class="bc-16">
+                    @Html.DisplayNameFor(Item0 => Item0.Stemmingen[j].WetID)
+                </th>
+                <th class="bc-16">
+                    @Html.DisplayNameFor(Item0 => Item0.Stemmingen[j].StemDatum)
+                </th>
+                <th class="bc-08">
+                    @Html.DisplayNameFor(Item0 => Item0.Stemmingen[j].Voor)
+                </th>
+                <th class="bc-08">
+                    @Html.DisplayNameFor(Item0 => Item0.Stemmingen[j].Tegen)
+                </th>
+                <th class="bc-08">
+                    @Html.DisplayNameFor(Item0 => Item0.Stemmingen[j].Blanco)
+                </th>
+                <th class="bc-16">
+                    &nbsp;
+                </th>
+            </tr>
 
-                foreach (var item1 in Model.OnderwerpenLijst)
+        }
+        <tr>
+            <td class="bc-16">
+                @Html.DisplayFor(Item0 => Item0.Stemmingen[j].WetID)
+            </td>
+            <td class="bc-16">
+                @Html.DisplayFor(Item0 => Item0.Stemmingen[j].StemDatum)
+            </td>
+            <td class="bc-08">
+                @Html.DisplayFor(Item0 => Item0.Stemmingen[j].Voor)
+            </td>
+            <td class="bc-08">
+                @Html.DisplayFor(Item0 => Item0.Stemmingen[j].Tegen)
+            </td>
+            <td class="bc-08">
+                @Html.DisplayFor(Item0 => Item0.Stemmingen[j].Blanco)
+            </td>
+            <td class="bc-16">
+                @Html.ActionLink("Bewerk", "Create", "Stemmingen", new { WetID = item0.WetID, StemDatum = item0.StemDatum }, null) |
+                @Html.ActionLink("Bekijk", "Details", "Stemmingen", new { WetID = item0.WetID, StemDatum = item0.StemDatum }, null) |
+                @Html.ActionLink("Verwijder", "Delete", "Stemmingen", new { WetID = item0.WetID, StemDatum = item0.StemDatum }, null)
+            </td>
+        </tr>
+    }
+</table>
+            }
+        
+        <p>&nbsp;</p>
+        <h4 class="bc-h">Gerelateerde onderwerpen</h4>
+        <div class="form-group">
+            <table class="bc-table">
+                @if (Model.OnderwerpenLijst != null)
                 {
+                    var i = 0;
 
-                    if (i == 0)
 
+                    foreach (var item1 in Model.OnderwerpenLijst)
                     {
+
+                        if (i == 0)
+
+                        {
+                            <tr>
+                                <th class="bc-08">
+                                    @Html.DisplayNameFor(Item1 => Item1.OnderwerpenLijst[i].Geselecteerd)
+                                </th>
+                                <th class="bc-36">
+
+                                    @Html.DisplayNameFor(Item1 => Item1.OnderwerpenLijst[i].Toelichting)
+                                </th>
+                                <th class="bc-16">
+
+                                    @Html.DisplayNameFor(Item1 => Item1.OnderwerpenLijst[i].OnderwerpID)
+                                </th>
+                                <th class="bc-36">
+
+                                    @Html.DisplayNameFor(Item1 => Item1.OnderwerpenLijst[i].Omschrijving)
+                                </th>
+
+                            </tr>
+
+                        }
                         <tr>
-                            <th class="bc-08">
-                                @Html.DisplayNameFor(Item1 => Item1.OnderwerpenLijst[i].Geselecteerd)
-                            </th>
-                            <th class="bc-36">
 
-                                @Html.DisplayNameFor(Item1 => Item1.OnderwerpenLijst[i].Toelichting)
-                            </th>
-                            <th class="bc-16">
+                            <td class="bc-08">
+                                @Html.CheckBoxFor(Item1 => Item1.OnderwerpenLijst[i].Geselecteerd, new { @class = "bc-areatrigger form-control", @onchange = "setreq(this)" })
 
-                                @Html.DisplayNameFor(Item1 => Item1.OnderwerpenLijst[i].OnderwerpID)
-                            </th>
-                            <th class="bc-36">
+                            </td>
+                            <td class="bc-36">
+                                @Html.TextAreaFor(Item1 => Item1.OnderwerpenLijst[i].Toelichting, new { @class = "bc-area bc-field" })
+                                @Html.ValidationMessageFor(Item1 => Item1.OnderwerpenLijst[i].Toelichting, "", new { @class = "bc-error" })
 
-                                @Html.DisplayNameFor(Item1 => Item1.OnderwerpenLijst[i].Omschrijving)
-                            </th>
+                            </td>
+                            <td class="bc-16">
+                                @Html.EditorFor(Item1 => Item1.OnderwerpenLijst[i].OnderwerpID, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                @Html.ValidationMessageFor(Item1 => Item1.OnderwerpenLijst[i].OnderwerpID, "", new { @class = "text-danger" })
+
+                            </td>
+                            <td class="bc-36">
+                                @Html.EditorFor(Item1 => Item1.OnderwerpenLijst[i].Omschrijving, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                @Html.ValidationMessageFor(Item1 => Item1.OnderwerpenLijst[i].Omschrijving, "", new { @class = "text-danger" })
+                            </td>
 
                         </tr>
-
+                        i = i + 1;
                     }
-                    <tr>
-
-                        <td class="bc-08">
-                            @Html.CheckBoxFor(Item1 => Item1.OnderwerpenLijst[i].Geselecteerd, new { @class = "bc-areatrigger form-control", @onchange = "setreq(this)" })
-
-                        </td>
-                        <td class="bc-36">
-                            @Html.TextAreaFor(Item1 => Item1.OnderwerpenLijst[i].Toelichting, new { @class = "bc-area bc-field" })
-                            @Html.ValidationMessageFor(Item1 => Item1.OnderwerpenLijst[i].Toelichting, "", new { @class = "bc-error" })
-
-                        </td>
-                        <td class="bc-16">
-                            @Html.EditorFor(Item1 => Item1.OnderwerpenLijst[i].OnderwerpID, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
-                            @Html.ValidationMessageFor(Item1 => Item1.OnderwerpenLijst[i].OnderwerpID, "", new { @class = "text-danger" })
-
-                        </td>
-                        <td class="bc-36">
-                            @Html.EditorFor(Item1 => Item1.OnderwerpenLijst[i].Omschrijving, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
-                            @Html.ValidationMessageFor(Item1 => Item1.OnderwerpenLijst[i].Omschrijving, "", new { @class = "text-danger" })
-                        </td>
-
-                    </tr>
-                    i = i + 1;
                 }
-            }
 
-        </table>
+            </table>
 
-    </div>
+        </div>
 
-}
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+    }
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }

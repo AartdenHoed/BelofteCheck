@@ -70,7 +70,7 @@ namespace BelofteCheck.Controllers
             WettenVM wettenVM = new WettenVM();
             string title = "Details";
             string level = wettenVM.MessageSection.Info;
-            string msg = "Wetgegevens en gekoppelde onderwerpen";
+            string msg = "Wetgegevens en gekoppelde stemmingen en onderwerpen";
 
             if (WetID == null)
             {
@@ -126,6 +126,22 @@ namespace BelofteCheck.Controllers
                 level = TempData["BCerrorlevel"].ToString();
 
             }
+            // Get Stemmingen for current Wet
+            var st = from s in db.Stemmingen
+                     where s.WetID == WetID
+                     group s by new { s.WetID, s.StemDatum } into grp
+                     select new Stemming
+                        {
+                            WetID = grp.Key.WetID,
+                            StemDatum = grp.Key.StemDatum,
+                            Voor = grp.Sum(t => t.Voor),
+                            Tegen = grp.Sum(t => t.Tegen),
+                            Blanco = grp.Sum(t => t.Blanco)
+
+                        } 
+                        ;
+
+            wettenVM.Stemmingen = st.ToList();            
 
             wettenVM.Fill(q);
             wettenVM.MessageSection.SetMessage(title, level, msg);
@@ -269,6 +285,23 @@ namespace BelofteCheck.Controllers
                 level = "W";
             }
 
+            // Get Stemmingen for current Wet
+            var st = from s in db.Stemmingen
+                     where s.WetID == WetID
+                     group s by new { s.WetID, s.StemDatum } into grp
+                     select new Stemming
+                     {
+                         WetID = grp.Key.WetID,
+                         StemDatum = grp.Key.StemDatum,
+                         Voor = grp.Sum(t => t.Voor),
+                         Tegen = grp.Sum(t => t.Tegen),
+                         Blanco = grp.Sum(t => t.Blanco)
+
+                     }
+                        ;
+
+            wettenVM.Stemmingen = st.ToList();
+
             wettenVM.Fill(q);
             wettenVM.MessageSection.SetMessage(title, level, msg);
 
@@ -402,6 +435,29 @@ namespace BelofteCheck.Controllers
             {
                 msg = "Deze wet heeft geen gekoppelde onderwerpen. Gebruik BEWERK om minstens één onderwerp te koppelen";
                 level = "W";
+            }
+
+            // Get Stemmingen for current Wet
+            var st = from s in db.Stemmingen
+                     where s.WetID == WetID
+                     group s by new { s.WetID, s.StemDatum } into grp
+                     select new Stemming
+                     {
+                         WetID = grp.Key.WetID,
+                         StemDatum = grp.Key.StemDatum,
+                         Voor = grp.Sum(t => t.Voor),
+                         Tegen = grp.Sum(t => t.Tegen),
+                         Blanco = grp.Sum(t => t.Blanco)
+
+                     }
+                        ;
+
+            wettenVM.Stemmingen = st.ToList();
+
+            if (wettenVM.Stemmingen.Count != 0)
+            {
+                msg += " (hiermee verwijder je ook de getoonde stemmingen)";
+                level = wettenVM.MessageSection.Warning;
             }
 
             wettenVM.Fill(q);

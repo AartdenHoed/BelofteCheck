@@ -14,6 +14,8 @@ namespace BelofteCheck.ViewModels
         private List<Onderwerp> _OnderwerpenLijst = new List<Onderwerp>();
         public List<Onderwerp> OnderwerpenLijst { get { return _OnderwerpenLijst; } set { _OnderwerpenLijst = value; } }
 
+        private List<Stemming> _Stemmingen = new List<Stemming>();
+        public List<Stemming> Stemmingen { get { return _Stemmingen; } set { _Stemmingen = value; } }
 
         public void Fill(List<WetObject> wl)
         // Fill view model from DB query list

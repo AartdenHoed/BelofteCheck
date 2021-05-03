@@ -610,12 +610,12 @@ namespace BelofteCheck.Controllers
 
             if (aantalfouten == 0)
             {
-                title = title + " (geen fouten gevonden)";
+                msg += " (geen fouten gevonden)";
             }
             else
             {
-                title = title + " ("+ aantalfouten.ToString() + " fouten gevonden)";
-                level = zetelcontroleVM.MessageSection.Warning;
+                msg += " ("+ aantalfouten.ToString() + " fouten gevonden)";
+                level = zetelcontroleVM.MessageSection.Error;
             }
             zetelcontroleVM.MessageSection.SetMessage(title, level, msg);
             return View(zetelcontroleVM);

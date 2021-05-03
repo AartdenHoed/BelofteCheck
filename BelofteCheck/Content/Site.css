@@ -440,4 +440,6 @@ select[readonly='readonly'] {
     background-color: deepskyblue;
     border-bottom: 3px solid black;
 }
-
+.bc-zetel {
+    width: 32%;
+}
