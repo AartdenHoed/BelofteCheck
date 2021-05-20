@@ -35,10 +35,10 @@
                     <td class="bc-16">
                         @Html.DisplayNameFor(model => model.Periodes[i].ZetelTotaal) :
                         @Html.DisplayFor(model => model.Periodes[i].ZetelTotaal)
-                        @Html.Encode(" (")
+                        @Html.Encode(" ")
                         @Html.EditorFor(model => model.Periodes[i].ZetelCheck, new { htmlAttributes = new { @class = "bc-zetel", @readonly = "readonly", @onchange = "zetelcheck(this)" } })
 
-                        @Html.Encode(")")
+                        @Html.Encode(" ")
                     </td>
                     <td class="bc-84">
                         @if ((Model.Periodes[i].ZetelVerdeling != null) && (Model.Periodes[i].ZetelVerdeling.Count != 0))
